@@ -1,0 +1,20 @@
+{
+    "name": "elephox/templar",
+    "description": "A declarative templating engine for PHP.",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Ricardo Boss",
+            "email": "contact@ricardoboss.de"
+        }
+    ],
+    "require": {},
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "Elephox\\Templar\\": "src/"
+        }
+    }
+}
