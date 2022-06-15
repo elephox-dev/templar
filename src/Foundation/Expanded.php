@@ -6,18 +6,15 @@ namespace Elephox\Templar\Foundation;
 use Elephox\Templar\BuildWidget;
 use Elephox\Templar\Widget;
 
-class Center extends BuildWidget {
+class Expanded extends BuildWidget {
 	public function __construct(
 		private readonly Widget $child,
 	) {}
 
 	protected function build(): Widget {
-		return new Flex(
-			children: [
-				$this->child,
-			],
-			horizontalItemAlignment: HorizontalAlignment::Center,
-			verticalAlignment: VerticalAlignment::Center,
+		return new FlexChild(
+			$this->child,
+			grow: 1,
 		);
 	}
 }

@@ -3,12 +3,14 @@ declare(strict_types=1);
 
 namespace Elephox\Templar\Foundation;
 
-use Elephox\Templar\Widget;
+use Elephox\Templar\RenderContext;
+use Elephox\Templar\RenderWidget;
+use Elephox\Templar\BuildWidget;
 
-class Flex extends Widget
+class Flex extends RenderWidget
 {
 	/**
-	 * @param iterable<mixed, Widget> $children
+	 * @param iterable<mixed, BuildWidget> $children
 	 */
 	public function __construct(
 		private readonly iterable $children,
@@ -24,29 +26,34 @@ class Flex extends Widget
 		assert($this->contentAlignment === null || $this->wrap !== FlexWrap::NoWrap, "Content alignment has no effect when flex wrap is 'no-wrap'");
 	}
 
-	public function render(): string
+	public function render(RenderContext $context): string
 	{
 		return <<<HTML
 <div style="{$this->renderStyle()}">
-	{$this->renderChildren()}
+	{$this->renderChildren($context)}
 </div>
 HTML;
 	}
 
-	private function renderChildren(): string
+	private function renderChildren(RenderContext $context): string
 	{
 		$children = '';
 
+		$previousPositionContext = $context->positionContext;
+		$context->positionContext = PositionContext::Flex;
+
 		foreach ($this->children as $child) {
-			$children .= $child->render();
+			$children .= $child->render($context);
 		}
+
+		$context->positionContext = $previousPositionContext;
 
 		return $children;
 	}
 
 	private function renderStyle(): string
 	{
-		$style = "display: flex;";
+		$style = "display: flex;height: 100%;width: 100%;";
 
 		if ($this->direction !== null) {
 			$style .= "flex-direction: {$this->direction->value};";
@@ -57,15 +64,15 @@ HTML;
 		}
 
 		if ($this->horizontalItemAlignment !== null) {
-			$style .= "justify-content: $this->horizontalItemAlignment;";
+			$style .= "justify-content: {$this->horizontalItemAlignment->value};";
 		}
 
 		if ($this->verticalAlignment !== null) {
-			$style .= "align-items: $this->verticalAlignment;";
+			$style .= "align-items: {$this->verticalAlignment->value};";
 		}
 
 		if ($this->contentAlignment !== null) {
-			$style .= "align-content: $this->contentAlignment;";
+			$style .= "align-content: {$this->contentAlignment->value};";
 		}
 
 		if ($this->rowGap !== null && $this->columnGap !== null) {

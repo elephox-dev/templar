@@ -1,9 +1,9 @@
 <?php
-declare(strict_types=1);
 
 namespace Elephox\Templar;
 
-abstract class Widget
-{
-	abstract public function render(): string;
+abstract class Widget {
+	abstract protected function build(): Widget;
+
+	abstract public function render(RenderContext $context): string;
 }

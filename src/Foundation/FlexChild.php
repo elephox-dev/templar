@@ -3,9 +3,12 @@ declare(strict_types=1);
 
 namespace Elephox\Templar\Foundation;
 
+use Elephox\Templar\RenderContext;
+use Elephox\Templar\RenderException;
+use Elephox\Templar\RenderWidget;
 use Elephox\Templar\Widget;
 
-class FlexChild extends Widget
+class FlexChild extends RenderWidget
 {
 	public function __construct(
 		private readonly Widget $child,
@@ -16,11 +19,15 @@ class FlexChild extends Widget
 		private readonly ?VerticalAlignment $align = null,
 	) {}
 
-	public function render(): string
+	public function render(RenderContext $context): string
 	{
+		if ($context->positionContext !== PositionContext::Flex) {
+			throw new RenderException("FlexChild cannot be rendered outside of Flex container");
+		}
+
 		return <<<HTML
 <div style="{$this->renderStyle()}">
-	{$this->child->render()}
+	{$this->child->render($context)}
 </div>
 HTML;
 	}

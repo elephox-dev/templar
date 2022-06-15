@@ -11,6 +11,14 @@ class Length implements Stringable
 		return new Length(0, $unit);
 	}
 
+	public static function inPx(float $value): Length {
+		return new Length($value, Unit::Px);
+	}
+
+	public static function inRem(float $value): Length {
+		return new Length($value, Unit::Rem);
+	}
+
 	public function __construct(
 		private readonly float $value,
 		private readonly Unit $unit,
