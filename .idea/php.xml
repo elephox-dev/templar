@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="PhpIncludePathManager">
+    <include_path>
+      <path value="$PROJECT_DIR$/vendor/composer" />
+    </include_path>
+  </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />
   <component name="PhpRuntimeConfiguration">
     <extensions>
@@ -41,6 +46,7 @@
       <extension name="imap" enabled="false" />
       <extension name="inotify" enabled="false" />
       <extension name="interbase" enabled="false" />
+      <extension name="intl" enabled="false" />
       <extension name="judy" enabled="false" />
       <extension name="ldap" enabled="false" />
       <extension name="libevent" enabled="false" />
@@ -67,6 +73,8 @@
       <extension name="pdflib" enabled="false" />
       <extension name="pdo_ibm" enabled="false" />
       <extension name="pdo_mysql" enabled="false" />
+      <extension name="pdo_pgsql" enabled="false" />
+      <extension name="pdo_sqlite" enabled="false" />
       <extension name="pgsql" enabled="false" />
       <extension name="posix" enabled="false" />
       <extension name="pspell" enabled="false" />
@@ -76,7 +84,6 @@
       <extension name="redis" enabled="false" />
       <extension name="rrd" enabled="false" />
       <extension name="shmop" enabled="false" />
-      <extension name="snappy" enabled="false" />
       <extension name="snmp" enabled="false" />
       <extension name="soap" enabled="false" />
       <extension name="sockets" enabled="false" />
@@ -103,5 +110,10 @@
       <extension name="zend" enabled="false" />
       <extension name="zmq" enabled="false" />
     </extensions>
+  </component>
+  <component name="PhpUnit">
+    <phpunit_settings>
+      <PhpUnitSettings custom_loader_path="$PROJECT_DIR$/vendor/autoload.php" />
+    </phpunit_settings>
   </component>
 </project>
