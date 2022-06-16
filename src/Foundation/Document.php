@@ -13,8 +13,7 @@ class Document extends HtmlRenderWidget {
 		private readonly Head $head,
 		private readonly Body $body,
 		public ?DocumentMeta $documentMeta = null,
-	) {
-	}
+	) {}
 
 	public function render(RenderContext $context): string {
 		if ($this->documentMeta !== null) {
@@ -59,6 +58,9 @@ CSS;
 	}
 
 	public function getHashCode(): int {
-		return Templar::combineHashCodes($this->head->getHashCode(), $this->body->getHashCode());
+		return Templar::combineHashCodes(
+			$this->head->getHashCode(),
+			$this->body->getHashCode()
+		);
 	}
 }

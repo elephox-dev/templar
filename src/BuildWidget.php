@@ -3,8 +3,7 @@ declare(strict_types=1);
 
 namespace Elephox\Templar;
 
-abstract class BuildWidget extends Widget
-{
+abstract class BuildWidget extends Widget {
 	public function render(RenderContext $context): string {
 		return $this->build()->render($context);
 	}
@@ -14,6 +13,12 @@ abstract class BuildWidget extends Widget
 	}
 
 	public function getHashCode(): int {
-		return hexdec(substr(spl_object_hash($this), 0, 8));
+		return hexdec(
+			substr(
+				spl_object_hash($this),
+				0,
+				8,
+			)
+		);
 	}
 }

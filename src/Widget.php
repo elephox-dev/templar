@@ -8,7 +8,11 @@ abstract class Widget implements Hashable {
 	abstract public function render(RenderContext $context): string;
 
 	public function getStyleClassName(): string {
-		return str_replace('\\', '-', strtolower(static::class)) . '-' . $this->getHashCode();
+		return str_replace(
+				'\\',
+				'-',
+				strtolower(static::class),
+			) . '-' . $this->getHashCode();
 	}
 
 	abstract public function renderStyle(RenderContext $context): string;

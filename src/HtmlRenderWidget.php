@@ -35,13 +35,19 @@ HTML;
 
 		foreach ($attributes as $name => $value) {
 			if ($name === 'style') {
-				trigger_error('Style attributes should not be inline. Use HtmlRenderWidget::renderStyle instead', E_USER_NOTICE);
+				trigger_error(
+					'Style attributes should not be inline. Use HtmlRenderWidget::renderStyle instead',
+					E_USER_NOTICE,
+				);
 			}
 
 			$rendered[] = "$name=\"$value\"";
 		}
 
-		return implode(' ', $rendered);
+		return implode(
+			' ',
+			$rendered,
+		);
 	}
 
 	public function renderStyle(RenderContext $context): string {

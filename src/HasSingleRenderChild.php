@@ -12,8 +12,7 @@ trait HasSingleRenderChild {
 		return $this->child->render($context);
 	}
 
-	public function renderStyle(RenderContext $context): string
-	{
+	public function renderStyle(RenderContext $context): string {
 		$myStyle = parent::renderStyle($context);
 		$childStyle = $this->child->renderStyle($context);
 		return <<<CSS

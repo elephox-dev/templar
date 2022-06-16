@@ -7,7 +7,10 @@ use Elephox\Templar\RenderContext;
 
 class FullscreenBody extends Body {
 	public function render(RenderContext $context): string {
-		assert($context->parent instanceof FullscreenDocument, "FullscreenBody must be rendered inside of FullscreenDocument");
+		assert(
+			$context->parent instanceof FullscreenDocument,
+			"FullscreenBody must be rendered inside of FullscreenDocument"
+		);
 
 		return parent::render($context);
 	}

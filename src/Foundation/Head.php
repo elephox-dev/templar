@@ -39,6 +39,12 @@ HTML;
 	}
 
 	public function getHashCode(): int {
-		return hexdec(substr(md5($this->title ?? ''), 0, 8));
+		return hexdec(
+			substr(
+				md5($this->title ?? ''),
+				0,
+				8,
+			)
+		);
 	}
 }

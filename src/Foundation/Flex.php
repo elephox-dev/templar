@@ -15,8 +15,7 @@ use Elephox\Templar\RenderContext;
 use Elephox\Templar\Templar;
 use Elephox\Templar\VerticalAlignment;
 
-class Flex extends HtmlRenderWidget
-{
+class Flex extends HtmlRenderWidget {
 	/**
 	 * @param iterable<mixed, BuildWidget> $children
 	 */
@@ -32,16 +31,20 @@ class Flex extends HtmlRenderWidget
 		private readonly ?Length $width = null,
 		private readonly ?Length $height = null,
 	) {
-		assert($this->verticalAlignment !== VerticalAlignment::Auto, "Flex widget cannot align items vertically to 'auto'");
-		assert($this->contentAlignment === null || $this->wrap !== FlexWrap::NoWrap, "Content alignment has no effect when flex wrap is 'no-wrap'");
+		assert(
+			$this->verticalAlignment !== VerticalAlignment::Auto,
+			"Flex widget cannot align items vertically to 'auto'",
+		);
+		if ($this->contentAlignment === null || $this->wrap !== FlexWrap::NoWrap) {
+			trigger_error("Content alignment has no effect when flex wrap is 'no-wrap'");
+		}
 	}
 
 	protected function renderChild(RenderContext $context): string {
 		return $this->renderChildren($context);
 	}
 
-	private function renderChildren(RenderContext $context): string
-	{
+	private function renderChildren(RenderContext $context): string {
 		$children = '';
 
 		$previousPositionContext = $context->positionContext;
@@ -76,8 +79,7 @@ CSS;
 		return $childStyles;
 	}
 
-	protected function renderStyleContent(RenderContext $context): string
-	{
+	protected function renderStyleContent(RenderContext $context): string {
 		$style = "display: flex;";
 
 		if ($this->width !== null) {
@@ -110,9 +112,11 @@ CSS;
 
 		if ($this->rowGap !== null && $this->columnGap !== null) {
 			$style .= "gap: $this->rowGap $this->columnGap;";
-		} elseif ($this->rowGap !== null) {
+		}
+		elseif ($this->rowGap !== null) {
 			$style .= "row-gap: $this->rowGap;";
-		} elseif ($this->columnGap !== null) {
+		}
+		elseif ($this->columnGap !== null) {
 			$style .= "column-gap: $this->columnGap;";
 		}
 
@@ -132,6 +136,9 @@ CSS;
 		$hashCodes[] = $this->rowGap?->getHashCode();
 		$hashCodes[] = $this->columnGap?->getHashCode();
 
-		return Templar::combineHashCodes(...$hashCodes);
+		return Templar::combineHashCodes(
+			...
+			$hashCodes
+		);
 	}
 }

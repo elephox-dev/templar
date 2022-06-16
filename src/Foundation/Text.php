@@ -26,6 +26,12 @@ class Text extends HtmlRenderWidget {
 	}
 
 	public function getHashCode(): int {
-		return hexdec(substr(md5($this->text), 0, 8));
+		return hexdec(
+			substr(
+				md5($this->text),
+				0,
+				8,
+			)
+		);
 	}
 }

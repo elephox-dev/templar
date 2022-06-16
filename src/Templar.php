@@ -10,7 +10,13 @@ class Templar {
 			$hash = $hash * 31 + ($hashCode ?? 0);
 		}
 
-		return hexdec(substr(md5((string) $hash), 0, 8));
+		return hexdec(
+			substr(
+				md5((string) $hash),
+				0,
+				8,
+			)
+		);
 	}
 
 	protected function getDefaultRenderContext(): RenderContext {

@@ -68,7 +68,11 @@ class FlexChild extends HtmlRenderWidget {
 			$this->basis !== null ? ($this->basis instanceof Length
 				? $this->basis->getHashCode()
 				: hexdec(
-					substr(md5($this->basis), 0, 8)
+					substr(
+						md5($this->basis),
+						0,
+						8,
+					)
 				)) : null,
 			$this->align?->getHashCode(),
 		);
