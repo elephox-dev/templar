@@ -23,4 +23,8 @@ class Text extends HtmlRenderWidget {
 	protected function renderChild(RenderContext $context): string {
 		return $this->text;
 	}
+
+	protected function getTag(): string {
+		return 'span';
+	}
 }
