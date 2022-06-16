@@ -20,6 +20,8 @@ class Head extends HtmlRenderWidget {
 <style>
 	{$this->renderStyle($context)}
 </style>
+
+{$this->renderMetas($context)}
 HTML;
 	}
 
@@ -49,5 +51,12 @@ CSS;
 		}
 
 		return $style;
+	}
+
+	private function renderMetas(RenderContext $context): string {
+		return <<<HTML
+<meta charset="{$context->documentMeta?->charset}">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+HTML;
 	}
 }
