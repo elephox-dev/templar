@@ -35,7 +35,8 @@ class Flex extends HtmlRenderWidget {
 			$this->verticalAlignment !== VerticalAlignment::Auto,
 			"Flex widget cannot align items vertically to 'auto'",
 		);
-		if ($this->contentAlignment === null || $this->wrap !== FlexWrap::NoWrap) {
+
+		if ($this->contentAlignment !== null && $this->wrap === FlexWrap::NoWrap) {
 			trigger_error("Content alignment has no effect when flex wrap is 'no-wrap'");
 		}
 	}
