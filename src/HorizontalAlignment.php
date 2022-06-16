@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Elephox\Templar\Foundation;
+namespace Elephox\Templar;
 
-enum FlexContentAlignment: string
+enum HorizontalAlignment: string
 {
 	case Start = 'flex-start';
 	case Center = 'center';
@@ -11,6 +11,4 @@ enum FlexContentAlignment: string
 	case SpaceBetween = 'space-between';
 	case SpaceAround = 'space-around';
 	case SpaceEvenly = 'space-evenly';
-	case Stretch = 'stretch';
-	case BaseLine = 'baseline';
 }

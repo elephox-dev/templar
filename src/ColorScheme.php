@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Elephox\Templar\Foundation;
+namespace Elephox\Templar;
 
 class ColorScheme {
 	public function __construct(

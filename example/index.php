@@ -2,9 +2,9 @@
 declare(strict_types=1);
 
 use Elephox\Templar\BuildWidget;
-use Elephox\Templar\Foundation\Body;
 use Elephox\Templar\Foundation\Center;
-use Elephox\Templar\Foundation\Document;
+use Elephox\Templar\Foundation\FullscreenBody;
+use Elephox\Templar\Foundation\FullscreenDocument;
 use Elephox\Templar\Foundation\Head;
 use Elephox\Templar\Foundation\Text;
 use Elephox\Templar\Templar;
@@ -14,11 +14,11 @@ require_once '../vendor/autoload.php';
 
 class MyApp extends BuildWidget {
 	protected function build(): Widget {
-		return new Document(
-			new Head(
+		return new FullscreenDocument(
+			head: new Head(
 				title: 'My App',
 			),
-			new Body(
+			body: new FullscreenBody(
 				child: new Center(
 					child: new Text('Hello, world!'),
 				),

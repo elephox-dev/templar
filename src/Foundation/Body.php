@@ -3,20 +3,13 @@ declare(strict_types=1);
 
 namespace Elephox\Templar\Foundation;
 
-use Elephox\Templar\RenderContext;
-use Elephox\Templar\RenderWidget;
-use Elephox\Templar\Widget;
+use Elephox\Templar\HasSingleRenderChild;
+use Elephox\Templar\HtmlRenderWidget;
 
-class Body extends RenderWidget {
-	public function __construct(
-		private readonly Widget $child,
-	) {}
+class Body extends HtmlRenderWidget {
+	use HasSingleRenderChild;
 
-	public function render(RenderContext $context): string {
-		return <<<HTML
-<body>
-	{$this->child->render($context)}
-</body>
-HTML;
+	protected function getTag(): string {
+		return 'body';
 	}
 }

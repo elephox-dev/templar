@@ -16,7 +16,6 @@
       <extension name="ZendUtils" enabled="false" />
       <extension name="amqp" enabled="false" />
       <extension name="apache" enabled="false" />
-      <extension name="apcu" enabled="false" />
       <extension name="bz2" enabled="false" />
       <extension name="cassandra" enabled="false" />
       <extension name="couchbase" enabled="false" />
@@ -30,7 +29,6 @@
       <extension name="fann" enabled="false" />
       <extension name="ffmpeg" enabled="false" />
       <extension name="ftp" enabled="false" />
-      <extension name="gd" enabled="false" />
       <extension name="gearman" enabled="false" />
       <extension name="geoip" enabled="false" />
       <extension name="geos" enabled="false" />
@@ -46,7 +44,6 @@
       <extension name="imap" enabled="false" />
       <extension name="inotify" enabled="false" />
       <extension name="interbase" enabled="false" />
-      <extension name="intl" enabled="false" />
       <extension name="judy" enabled="false" />
       <extension name="ldap" enabled="false" />
       <extension name="libevent" enabled="false" />
@@ -63,7 +60,6 @@
       <extension name="mssql" enabled="false" />
       <extension name="mysql" enabled="false" />
       <extension name="mysql_xdevapi" enabled="false" />
-      <extension name="mysqli" enabled="false" />
       <extension name="ncurses" enabled="false" />
       <extension name="newrelic" enabled="false" />
       <extension name="oauth" enabled="false" />
@@ -74,7 +70,6 @@
       <extension name="pdo_ibm" enabled="false" />
       <extension name="pdo_mysql" enabled="false" />
       <extension name="pdo_pgsql" enabled="false" />
-      <extension name="pdo_sqlite" enabled="false" />
       <extension name="pgsql" enabled="false" />
       <extension name="posix" enabled="false" />
       <extension name="pspell" enabled="false" />
@@ -84,6 +79,7 @@
       <extension name="redis" enabled="false" />
       <extension name="rrd" enabled="false" />
       <extension name="shmop" enabled="false" />
+      <extension name="snappy" enabled="false" />
       <extension name="snmp" enabled="false" />
       <extension name="soap" enabled="false" />
       <extension name="sockets" enabled="false" />
@@ -102,7 +98,6 @@
       <extension name="wddx" enabled="false" />
       <extension name="win32service" enabled="false" />
       <extension name="wincache" enabled="false" />
-      <extension name="xhprof" enabled="false" />
       <extension name="xlswriter" enabled="false" />
       <extension name="xmlrpc" enabled="false" />
       <extension name="xsl" enabled="false" />

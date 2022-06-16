@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace Elephox\Templar\Foundation;
 
 use Elephox\Templar\BuildWidget;
+use Elephox\Templar\HorizontalAlignment;
+use Elephox\Templar\VerticalAlignment;
 use Elephox\Templar\Widget;
 
 class Center extends BuildWidget {

@@ -3,36 +3,33 @@ declare(strict_types=1);
 
 namespace Elephox\Templar\Foundation;
 
+use Elephox\Templar\HtmlRenderWidget;
 use Elephox\Templar\RenderContext;
-use Elephox\Templar\RenderWidget;
 
-class Head extends RenderWidget {
+class Head extends HtmlRenderWidget {
 	public function __construct(
 		private readonly ?string $title = null,
 	) {}
 
-	public function render(RenderContext $context): string {
+	protected function renderChild(RenderContext $context): string {
 		$title = $this->title ?? $context->documentMeta?->title;
 
 		return <<<HTML
-<head>
-	<title>$title</title>
-	
-	<style>
-		{$this->renderStyle($context)}
-	</style>
-</head>
+<title>$title</title>
+
+<style>
+	{$this->renderStyle($context)}
+</style>
 HTML;
+	}
+
+	protected function getTag(): string {
+		return 'head';
 	}
 
 	private function renderStyle(RenderContext $context): string {
 		$colors = $context->colorScheme;
 		$style = <<<CSS
-html, body {
-	height: 100%;
-	margin: 0;
-}
-
 body {
 	background-color: $colors->background;
 	color: $colors->foreground;

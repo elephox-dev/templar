@@ -3,13 +3,21 @@ declare(strict_types=1);
 
 namespace Elephox\Templar\Foundation;
 
+use Elephox\Templar\HasRenderedStyle;
+use Elephox\Templar\HasSingleRenderChild;
+use Elephox\Templar\HtmlRenderWidget;
+use Elephox\Templar\Length;
+use Elephox\Templar\PositionContext;
 use Elephox\Templar\RenderContext;
 use Elephox\Templar\RenderException;
-use Elephox\Templar\RenderWidget;
+use Elephox\Templar\VerticalAlignment;
 use Elephox\Templar\Widget;
 
-class FlexChild extends RenderWidget
+class FlexChild extends HtmlRenderWidget
 {
+	use HasSingleRenderChild;
+	use HasRenderedStyle;
+
 	public function __construct(
 		private readonly Widget $child,
 		private readonly ?int $order = null,
@@ -25,11 +33,7 @@ class FlexChild extends RenderWidget
 			throw new RenderException("FlexChild cannot be rendered outside of Flex container");
 		}
 
-		return <<<HTML
-<div style="{$this->renderStyle()}">
-	{$this->child->render($context)}
-</div>
-HTML;
+		return parent::render($context);
 	}
 
 	private function renderStyle(): string

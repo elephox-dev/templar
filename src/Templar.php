@@ -3,11 +3,6 @@ declare(strict_types=1);
 
 namespace Elephox\Templar;
 
-use Elephox\Templar\Foundation\Color;
-use Elephox\Templar\Foundation\ColorScheme;
-use Elephox\Templar\Foundation\Length;
-use Elephox\Templar\Foundation\TextStyle;
-
 class Templar {
 	public function render(Widget $widget): void {
 		$context = new RenderContext(

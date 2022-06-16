@@ -3,12 +3,22 @@ declare(strict_types=1);
 
 namespace Elephox\Templar\Foundation;
 
-use Elephox\Templar\RenderContext;
-use Elephox\Templar\RenderWidget;
 use Elephox\Templar\BuildWidget;
+use Elephox\Templar\FlexContentAlignment;
+use Elephox\Templar\FlexDirection;
+use Elephox\Templar\FlexWrap;
+use Elephox\Templar\HasRenderedStyle;
+use Elephox\Templar\HorizontalAlignment;
+use Elephox\Templar\HtmlRenderWidget;
+use Elephox\Templar\Length;
+use Elephox\Templar\PositionContext;
+use Elephox\Templar\RenderContext;
+use Elephox\Templar\VerticalAlignment;
 
-class Flex extends RenderWidget
+class Flex extends HtmlRenderWidget
 {
+	use HasRenderedStyle;
+
 	/**
 	 * @param iterable<mixed, BuildWidget> $children
 	 */
@@ -26,13 +36,8 @@ class Flex extends RenderWidget
 		assert($this->contentAlignment === null || $this->wrap !== FlexWrap::NoWrap, "Content alignment has no effect when flex wrap is 'no-wrap'");
 	}
 
-	public function render(RenderContext $context): string
-	{
-		return <<<HTML
-<div style="{$this->renderStyle()}">
-	{$this->renderChildren($context)}
-</div>
-HTML;
+	protected function renderChild(RenderContext $context): string {
+		return $this->renderChildren($context);
 	}
 
 	private function renderChildren(RenderContext $context): string
@@ -51,7 +56,7 @@ HTML;
 		return $children;
 	}
 
-	private function renderStyle(): string
+	private function renderStyle(RenderContext $context): string
 	{
 		$style = "display: flex;height: 100%;width: 100%;";
 
