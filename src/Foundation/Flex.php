@@ -7,18 +7,16 @@ use Elephox\Templar\BuildWidget;
 use Elephox\Templar\FlexContentAlignment;
 use Elephox\Templar\FlexDirection;
 use Elephox\Templar\FlexWrap;
-use Elephox\Templar\HasRenderedStyle;
 use Elephox\Templar\HorizontalAlignment;
 use Elephox\Templar\HtmlRenderWidget;
 use Elephox\Templar\Length;
 use Elephox\Templar\PositionContext;
 use Elephox\Templar\RenderContext;
+use Elephox\Templar\Templar;
 use Elephox\Templar\VerticalAlignment;
 
 class Flex extends HtmlRenderWidget
 {
-	use HasRenderedStyle;
-
 	/**
 	 * @param iterable<mixed, BuildWidget> $children
 	 */
@@ -31,6 +29,8 @@ class Flex extends HtmlRenderWidget
 		private readonly ?FlexWrap $wrap = null,
 		private readonly ?Length $rowGap = null,
 		private readonly ?Length $columnGap = null,
+		private readonly ?Length $width = null,
+		private readonly ?Length $height = null,
 	) {
 		assert($this->verticalAlignment !== VerticalAlignment::Auto, "Flex widget cannot align items vertically to 'auto'");
 		assert($this->contentAlignment === null || $this->wrap !== FlexWrap::NoWrap, "Content alignment has no effect when flex wrap is 'no-wrap'");
@@ -56,9 +56,37 @@ class Flex extends HtmlRenderWidget
 		return $children;
 	}
 
-	private function renderStyle(RenderContext $context): string
+	public function renderStyle(RenderContext $context): string {
+		$myStyleContent = $this->renderStyleContent($context);
+		$childStyles = $this->renderChildStyles($context);
+
+		return <<<CSS
+.{$this->getStyleClassName()} {
+	$myStyleContent
+}
+$childStyles
+CSS;
+	}
+
+	protected function renderChildStyles(RenderContext $context): string {
+		$childStyles = '';
+		foreach ($this->children as $child) {
+			$childStyles .= $child->renderStyle($context);
+		}
+		return $childStyles;
+	}
+
+	protected function renderStyleContent(RenderContext $context): string
 	{
-		$style = "display: flex;height: 100%;width: 100%;";
+		$style = "display: flex;";
+
+		if ($this->width !== null) {
+			$style .= "width: $this->width;";
+		}
+
+		if ($this->height !== null) {
+			$style .= "height: $this->height;";
+		}
 
 		if ($this->direction !== null) {
 			$style .= "flex-direction: {$this->direction->value};";
@@ -89,5 +117,21 @@ class Flex extends HtmlRenderWidget
 		}
 
 		return $style;
+	}
+
+	public function getHashCode(): int {
+		$hashCodes = [];
+		foreach ($this->children as $child) {
+			$hashCodes[] = $child->getHashCode();
+		}
+		$hashCodes[] = $this->horizontalItemAlignment?->getHashCode();
+		$hashCodes[] = $this->verticalAlignment?->getHashCode();
+		$hashCodes[] = $this->contentAlignment?->getHashCode();
+		$hashCodes[] = $this->direction?->getHashCode();
+		$hashCodes[] = $this->wrap?->getHashCode();
+		$hashCodes[] = $this->rowGap?->getHashCode();
+		$hashCodes[] = $this->columnGap?->getHashCode();
+
+		return Templar::combineHashCodes(...$hashCodes);
 	}
 }

@@ -17,4 +17,8 @@ class Expanded extends BuildWidget {
 			grow: 1,
 		);
 	}
+
+	public function getHashCode(): int {
+		return $this->child->getHashCode();
+	}
 }

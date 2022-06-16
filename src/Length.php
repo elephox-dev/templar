@@ -5,7 +5,7 @@ namespace Elephox\Templar;
 
 use Stringable;
 
-class Length implements Stringable
+class Length implements Stringable, Hashable
 {
 	public static function zero(Unit $unit = Unit::Px): Length {
 		return new Length(0, $unit);
@@ -17,6 +17,10 @@ class Length implements Stringable
 
 	public static function inRem(float $value): Length {
 		return new Length($value, Unit::Rem);
+	}
+
+	public static function inPercent(float $value): Length {
+		return new Length($value, Unit::Percent);
 	}
 
 	public function __construct(
@@ -38,5 +42,9 @@ class Length implements Stringable
 	public function __toString(): string
 	{
 		return sprintf('%.' . $this->precision . 'f%s', $this->value, $this->unit->value);
+	}
+
+	public function getHashCode(): int {
+		return hexdec(substr(md5($this->__toString()), 0, 8));
 	}
 }

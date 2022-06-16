@@ -17,10 +17,6 @@ class Head extends HtmlRenderWidget {
 		return <<<HTML
 <title>$title</title>
 
-<style>
-	{$this->renderStyle($context)}
-</style>
-
 {$this->renderMetas($context)}
 HTML;
 	}
@@ -29,34 +25,20 @@ HTML;
 		return 'head';
 	}
 
-	private function renderStyle(RenderContext $context): string {
-		$colors = $context->colorScheme;
-		$style = <<<CSS
-body {
-	background-color: $colors->background;
-	color: $colors->foreground;
-}
-CSS;
-
-		if ($context->darkColorScheme !== null) {
-			$darkColors = $context->darkColorScheme;
-			$style .= <<<CSS
-@media (prefers-color-scheme: dark) {
-	body {
-		background-color: $darkColors->background;
-		color: $darkColors->foreground;
-	}
-}
-CSS;
-		}
-
-		return $style;
+	protected function renderStyleContent(RenderContext $context): string {
+		return '';
 	}
 
 	private function renderMetas(RenderContext $context): string {
 		return <<<HTML
 <meta charset="{$context->documentMeta?->charset}">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="./style.css">
 HTML;
+	}
+
+	public function getHashCode(): int {
+		return hexdec(substr(md5($this->title ?? ''), 0, 8));
 	}
 }

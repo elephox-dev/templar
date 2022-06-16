@@ -3,18 +3,15 @@ declare(strict_types=1);
 
 namespace Elephox\Templar\Foundation;
 
-use Elephox\Templar\HasRenderedStyle;
 use Elephox\Templar\HtmlRenderWidget;
 use Elephox\Templar\RenderContext;
 
 class Text extends HtmlRenderWidget {
-	use HasRenderedStyle;
-
 	public function __construct(
 		private readonly string $text,
 	) {}
 
-	private function renderStyle(RenderContext $context): string {
+	protected function renderStyleContent(RenderContext $context): string {
 		$textStyle = $context->textStyle;
 
 		return "font-size: $textStyle->size; font-weight: $textStyle->weight; font-family: $textStyle->font;";
@@ -26,5 +23,9 @@ class Text extends HtmlRenderWidget {
 
 	protected function getTag(): string {
 		return 'span';
+	}
+
+	public function getHashCode(): int {
+		return hexdec(substr(md5($this->text), 0, 8));
 	}
 }

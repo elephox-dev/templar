@@ -24,14 +24,45 @@ HTML;
 	abstract protected function renderChild(RenderContext $context): string;
 
 	protected function renderAttributes(RenderContext $context): string {
-		$attributes = [];
+		$attributes = $this->getAttributes($context);
 
-		foreach ($this->getAttributes($context) as $name => $value) {
-			$attributes[] = "$name=\"$value\"";
+		if (isset($attributes['class'])) {
+			$attributes['class'] .= ' ' . $this->getStyleClassName();
+		}
+		else {
+			$attributes['class'] = $this->getStyleClassName();
 		}
 
-		return implode(' ', $attributes);
+		foreach ($attributes as $name => $value) {
+			if ($name === 'style') {
+				trigger_error('Style attributes should not be inline. Use HtmlRenderWidget::renderStyle instead', E_USER_NOTICE);
+			}
+
+			$rendered[] = "$name=\"$value\"";
+		}
+
+		return implode(' ', $rendered);
 	}
+
+	public function renderStyle(RenderContext $context): string {
+		if (in_array(
+			$this->getStyleClassName(),
+			$context->renderedClasses,
+			true
+		)) {
+			return '';
+		}
+
+		$context->renderedClasses[] = $this->getStyleClassName();
+
+		return <<<CSS
+.{$this->getStyleClassName()} {
+	{$this->renderStyleContent($context)}
+}
+CSS;
+	}
+
+	abstract protected function renderStyleContent(RenderContext $context): string;
 
 	protected function getAttributes(RenderContext $context): array {
 		return [];

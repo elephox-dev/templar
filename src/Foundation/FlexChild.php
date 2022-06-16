@@ -3,23 +3,21 @@ declare(strict_types=1);
 
 namespace Elephox\Templar\Foundation;
 
-use Elephox\Templar\HasRenderedStyle;
 use Elephox\Templar\HasSingleRenderChild;
 use Elephox\Templar\HtmlRenderWidget;
 use Elephox\Templar\Length;
 use Elephox\Templar\PositionContext;
 use Elephox\Templar\RenderContext;
 use Elephox\Templar\RenderException;
+use Elephox\Templar\Templar;
 use Elephox\Templar\VerticalAlignment;
 use Elephox\Templar\Widget;
 
-class FlexChild extends HtmlRenderWidget
-{
+class FlexChild extends HtmlRenderWidget {
 	use HasSingleRenderChild;
-	use HasRenderedStyle;
 
 	public function __construct(
-		private readonly Widget $child,
+		protected readonly Widget $child,
 		private readonly ?int $order = null,
 		private readonly ?int $grow = null,
 		private readonly ?int $shrink = null,
@@ -27,8 +25,7 @@ class FlexChild extends HtmlRenderWidget
 		private readonly ?VerticalAlignment $align = null,
 	) {}
 
-	public function render(RenderContext $context): string
-	{
+	public function render(RenderContext $context): string {
 		if ($context->positionContext !== PositionContext::Flex) {
 			throw new RenderException("FlexChild cannot be rendered outside of Flex container");
 		}
@@ -36,8 +33,7 @@ class FlexChild extends HtmlRenderWidget
 		return parent::render($context);
 	}
 
-	private function renderStyle(): string
-	{
+	protected function renderStyleContent(RenderContext $context): string {
 		$style = "";
 
 		if ($this->order !== null) {
@@ -61,5 +57,20 @@ class FlexChild extends HtmlRenderWidget
 		}
 
 		return $style;
+	}
+
+	public function getHashCode(): int {
+		return Templar::combineHashCodes(
+			$this->child->getHashCode(),
+			$this->order,
+			$this->grow,
+			$this->shrink,
+			$this->basis !== null ? ($this->basis instanceof Length
+				? $this->basis->getHashCode()
+				: hexdec(
+					substr(md5($this->basis), 0, 8)
+				)) : null,
+			$this->align?->getHashCode(),
+		);
 	}
 }

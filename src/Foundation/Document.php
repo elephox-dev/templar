@@ -6,6 +6,7 @@ namespace Elephox\Templar\Foundation;
 use Elephox\Templar\DocumentMeta;
 use Elephox\Templar\HtmlRenderWidget;
 use Elephox\Templar\RenderContext;
+use Elephox\Templar\Templar;
 
 class Document extends HtmlRenderWidget {
 	public function __construct(
@@ -40,5 +41,24 @@ class Document extends HtmlRenderWidget {
 		$head = $this->head->render($context);
 
 		return $head . $body;
+	}
+
+	public function renderStyle(RenderContext $context): string {
+		$myStyle = parent::renderStyle($context);
+		$headStyle = $this->head->renderStyle($context);
+		$bodyStyle = $this->body->renderStyle($context);
+		return <<<CSS
+$myStyle
+$headStyle
+$bodyStyle
+CSS;
+	}
+
+	protected function renderStyleContent(RenderContext $context): string {
+		return '';
+	}
+
+	public function getHashCode(): int {
+		return Templar::combineHashCodes($this->head->getHashCode(), $this->body->getHashCode());
 	}
 }
