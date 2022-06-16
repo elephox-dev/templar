@@ -8,7 +8,6 @@ use Elephox\Templar\HtmlRenderWidget;
 use Elephox\Templar\Length;
 use Elephox\Templar\PositionContext;
 use Elephox\Templar\RenderContext;
-use Elephox\Templar\RenderException;
 use Elephox\Templar\Templar;
 use Elephox\Templar\VerticalAlignment;
 use Elephox\Templar\Widget;
@@ -26,9 +25,10 @@ class FlexChild extends HtmlRenderWidget {
 	) {}
 
 	public function render(RenderContext $context): string {
-		if ($context->positionContext !== PositionContext::Flex) {
-			throw new RenderException("FlexChild cannot be rendered outside of Flex container");
-		}
+		assert(
+			$context->positionContext === PositionContext::Flex,
+			"FlexChild cannot be rendered outside of Flex container",
+		);
 
 		return parent::render($context);
 	}

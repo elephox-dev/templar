@@ -4,19 +4,17 @@ declare(strict_types=1);
 namespace Elephox\Templar;
 
 class Templar {
-	public static function combineHashCodes(?int ...$hashCodes): int {
+	public static function combineHashCodes(null|int|Hashable ...$hashCodes): int {
 		$hash = 0;
 		foreach ($hashCodes as $hashCode) {
-			$hash = $hash * 31 + ($hashCode ?? 0);
+			if ($hashCode instanceof Hashable) {
+				$hashCode = $hashCode->getHashCode();
+			}
+
+			$hash = (int)($hash * 31 + ($hashCode ?? 0));
 		}
 
-		return hexdec(
-			substr(
-				md5((string) $hash),
-				0,
-				8,
-			)
-		);
+		return $hash;
 	}
 
 	protected function getDefaultRenderContext(): RenderContext {
@@ -31,11 +29,6 @@ class Templar {
 				onSecondary: new Color(0xffffffff),
 				onTertiary: new Color(0xffffffff),
 				divider: new Color(0x888888ff),
-			),
-			textStyle: new TextStyle(
-				"sans-serif",
-				Length::inRem(1),
-				400,
 			),
 			darkColorScheme: new ColorScheme(
 				primary: new Color(0x0097ffff),

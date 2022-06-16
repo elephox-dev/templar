@@ -22,7 +22,7 @@ CSS;
 	}
 
 	protected function renderStyleContent(RenderContext $context): string {
-		return '';
+		return parent::renderStyleContent($context);
 	}
 
 	public function getHashCode(): int {

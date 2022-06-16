@@ -3,8 +3,9 @@ declare(strict_types=1);
 
 namespace Elephox\Templar;
 
-enum Unit: string {
+enum LengthUnit: string implements ValueUnit {
 	use HasEnumHashCode;
+	use EnumStringable;
 
 	case Px = 'px';
 	case Em = 'em';
