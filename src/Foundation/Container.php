@@ -24,18 +24,24 @@ class Container extends HtmlRenderWidget {
 	use RendersMargin;
 	use RendersBoxShadows;
 
+	protected readonly ?Length $width;
+	protected readonly ?Length $height;
+
 	public function __construct(
 		protected readonly ?Widget $child = null,
 		protected readonly null|Gradient|Color $color = null,
 		protected readonly array $shadows = [],
 		protected readonly null|EdgeInsets $padding = null,
 		protected readonly null|EdgeInsets $margin = null,
-		protected readonly null|Length $width = null,
-		protected readonly null|Length $height = null,
+		null|int|float|Length $width = null,
+		null|int|float|Length $height = null,
 	) {
 		if ($child !== null) {
 			$child->renderParent = $this;
 		}
+
+		$this->width = $width === null ? null : Length::wrap($width);
+		$this->height = $height === null ? null : Length::wrap($height);
 	}
 
 	protected function renderStyleContent(RenderContext $context): string {
@@ -56,11 +62,11 @@ class Container extends HtmlRenderWidget {
 		}
 
 		if ($this->padding !== null) {
-			$style .= $this->renderPadding($this->padding, $width, $height);
+			$style .= $this->renderPadding($this->padding);
 		}
 
 		if ($this->margin !== null) {
-			$style .= $this->renderMargin($this->margin, $width, $height);
+			$style .= $this->renderMargin($this->margin);
 		}
 
 		if (!empty($this->shadows)) {

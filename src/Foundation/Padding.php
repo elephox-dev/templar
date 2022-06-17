@@ -3,12 +3,9 @@ declare(strict_types=1);
 
 namespace Elephox\Templar\Foundation;
 
-use Elephox\Templar\CompoundLength;
 use Elephox\Templar\EdgeInsets;
 use Elephox\Templar\HasSingleRenderChild;
 use Elephox\Templar\HtmlRenderWidget;
-use Elephox\Templar\Length;
-use Elephox\Templar\MathOperator;
 use Elephox\Templar\RenderContext;
 use Elephox\Templar\RendersPadding;
 use Elephox\Templar\Templar;
@@ -28,11 +25,7 @@ class Padding extends HtmlRenderWidget {
 	}
 
 	protected function renderStyleContent(RenderContext $context): string {
-		$width = new CompoundLength([Length::inPercent(100)], MathOperator::Minus);
-		$height = new CompoundLength([Length::inPercent(100)], MathOperator::Minus);
-		$padding = $this->renderPadding($this->padding, $width, $height);
-
-		return "{$padding}width: {$width->toEmittable()}; height: {$height->toEmittable()};";
+		return $this->renderPadding($this->padding);
 	}
 
 	public function getHashCode(): int {

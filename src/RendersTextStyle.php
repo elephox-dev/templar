@@ -1,0 +1,32 @@
+<?php
+declare(strict_types=1);
+
+namespace Elephox\Templar;
+
+trait RendersTextStyle {
+	protected function renderTextStyle(TextStyle $textStyle): string {
+		$style = "";
+
+		if ($textStyle->font !== null) {
+			$style .= "font-family: $textStyle->font;";
+		}
+
+		if ($textStyle->weight !== null) {
+			$style .= "font-weight: $textStyle->weight;";
+		}
+
+		if ($textStyle->size !== null) {
+			$style .= "font-size: $textStyle->size;";
+		}
+
+		if ($textStyle->align !== null) {
+			$style .= "text-align: {$textStyle->align->value};";
+		}
+
+		if ($textStyle->color !== null) {
+			$style .= "color: $textStyle->color;";
+		}
+
+		return $style;
+	}
+}

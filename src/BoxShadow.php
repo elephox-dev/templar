@@ -5,12 +5,12 @@ namespace Elephox\Templar;
 
 class BoxShadow implements Emittable {
 	public static function fromElevation(int $elevation, ?Color $color = null): BoxShadow {
-		assert($elevation % 8 === 0, "Elevation must be a multiple of 8, was $elevation");
+		assert($elevation % 4 === 0, "Elevation must be a multiple of 4, was $elevation");
 
 		return new BoxShadow(
-			offset: new Offset(y: $elevation / 8),
-			blurRadius: $elevation,//$elevation * 2 / 3,
-			spreadRadius: -$elevation / 8,
+			offset: new Offset(y: $elevation / 4),
+			blurRadius: $elevation,
+			spreadRadius: -$elevation / 4,
 			color: $color,
 		);
 	}

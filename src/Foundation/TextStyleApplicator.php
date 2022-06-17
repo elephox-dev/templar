@@ -6,11 +6,13 @@ namespace Elephox\Templar\Foundation;
 use Elephox\Templar\HasSingleRenderChild;
 use Elephox\Templar\HtmlRenderWidget;
 use Elephox\Templar\RenderContext;
+use Elephox\Templar\RendersTextStyle;
 use Elephox\Templar\TextStyle;
 use Elephox\Templar\Widget;
 
 class TextStyleApplicator extends HtmlRenderWidget {
 	use HasSingleRenderChild;
+	use RendersTextStyle;
 
 	public function __construct(
 		protected readonly ?Widget $child,
@@ -30,22 +32,6 @@ class TextStyleApplicator extends HtmlRenderWidget {
 			return $style;
 		}
 
-		if ($textStyle->font !== null) {
-			$style .= "font-family: $textStyle->font;";
-		}
-
-		if ($textStyle->weight !== null) {
-			$style .= "font-weight: $textStyle->weight;";
-		}
-
-		if ($textStyle->size !== null) {
-			$style .= "font-size: $textStyle->size;";
-		}
-
-		if ($textStyle->align !== null) {
-			$style .= "text-align: {$textStyle->align->value};";
-		}
-
-		return $style;
+		return $this->renderTextStyle($textStyle) . $style;
 	}
 }
