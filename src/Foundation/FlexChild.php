@@ -16,13 +16,17 @@ class FlexChild extends HtmlRenderWidget {
 	use HasSingleRenderChild;
 
 	public function __construct(
-		protected readonly Widget $child,
+		protected readonly ?Widget $child,
 		private readonly ?int $order = null,
 		private readonly ?int $grow = null,
 		private readonly ?int $shrink = null,
 		private readonly null|Length|string $basis = null,
 		private readonly ?VerticalAlignment $align = null,
-	) {}
+	) {
+		if ($child !== null) {
+			$child->renderParent = $this;
+		}
+	}
 
 	public function render(RenderContext $context): string {
 		assert(

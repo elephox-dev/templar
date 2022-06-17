@@ -3,8 +3,7 @@ declare(strict_types=1);
 
 namespace Elephox\Templar\Foundation;
 
-use Elephox\Templar\BuildWidget;
-use Elephox\Templar\FlexContentAlignment;
+use Elephox\Templar\ContentAlignment;
 use Elephox\Templar\FlexDirection;
 use Elephox\Templar\FlexWrap;
 use Elephox\Templar\HorizontalAlignment;
@@ -14,22 +13,26 @@ use Elephox\Templar\PositionContext;
 use Elephox\Templar\RenderContext;
 use Elephox\Templar\Templar;
 use Elephox\Templar\VerticalAlignment;
+use Elephox\Templar\Widget;
 
 class Flex extends HtmlRenderWidget {
+	/** @var list<Widget> */
+	protected array $children = [];
+
 	/**
-	 * @param iterable<mixed, BuildWidget> $children
+	 * @param iterable<mixed, Widget> $children
 	 */
 	public function __construct(
-		private readonly iterable $children,
-		private readonly ?HorizontalAlignment $horizontalItemAlignment = null,
-		private readonly ?VerticalAlignment $verticalAlignment = null,
-		private readonly ?FlexContentAlignment $contentAlignment = null,
-		private readonly ?FlexDirection $direction = null,
-		private readonly ?FlexWrap $wrap = null,
-		private readonly ?Length $rowGap = null,
-		private readonly ?Length $columnGap = null,
-		private readonly ?Length $width = null,
-		private readonly ?Length $height = null,
+		iterable $children,
+		protected readonly ?HorizontalAlignment $horizontalItemAlignment = null,
+		protected readonly ?VerticalAlignment $verticalAlignment = null,
+		protected readonly ?ContentAlignment $contentAlignment = null,
+		protected readonly ?FlexDirection $direction = null,
+		protected readonly ?FlexWrap $wrap = null,
+		protected readonly ?Length $rowGap = null,
+		protected readonly ?Length $columnGap = null,
+		protected readonly ?Length $width = null,
+		protected readonly ?Length $height = null,
 	) {
 		assert(
 			$this->verticalAlignment !== VerticalAlignment::Auto,
@@ -38,6 +41,12 @@ class Flex extends HtmlRenderWidget {
 
 		if ($this->contentAlignment !== null && $this->wrap === FlexWrap::NoWrap) {
 			trigger_error("Content alignment has no effect when flex wrap is 'no-wrap'");
+		}
+
+		foreach ($children as $child) {
+			$child->renderParent = $this;
+
+			$this->children[] = $child;
 		}
 	}
 
@@ -138,8 +147,7 @@ CSS;
 		$hashCodes[] = $this->columnGap?->getHashCode();
 
 		return Templar::combineHashCodes(
-			...
-			$hashCodes
+			...$hashCodes
 		);
 	}
 }

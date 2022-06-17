@@ -30,6 +30,10 @@ class Color implements Stringable, Hashable {
 		return new Color($value);
 	}
 
+	public function mix(int|Color $other, float $t): Color {
+		return self::lerp($this, $other, $t);
+	}
+
 	public static function lerp(int|Color $a, int|Color $b, float $t): Color {
 		assert(
 			$t >= 0 && $t <= 1,

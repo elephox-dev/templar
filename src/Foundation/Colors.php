@@ -5,7 +5,7 @@ namespace Elephox\Templar\Foundation;
 
 use Elephox\Templar\Color;
 
-class Colors {
+abstract class Colors {
 	public static function Blue(): Color {
 		return new Color(0x0000FFFF);
 	}
@@ -30,24 +30,30 @@ class Colors {
 		return new Color(0xFFFF00FF);
 	}
 
+	public static function Grayscale(float $l): Color {
+		return new Color(
+			((int)(255 * $l)) << 24 | ((int)(255 * $l)) << 16 | ((int)(255 * $l)) << 8 | 0xFF
+		);
+	}
+
 	public static function Black(): Color {
-		return new Color(0x000000FF);
+		return self::Grayscale(0);
 	}
 
 	public static function DarkGray(): Color {
-		return new Color(0x444444FF);
+		return self::Grayscale(0.25);
 	}
 
 	public static function Gray(): Color {
-		return new Color(0x888888FF);
+		return self::Grayscale(0.5);
 	}
 
 	public static function LightGray(): Color {
-		return new Color(0xCCCCCCFF);
+		return self::Grayscale(0.75);
 	}
 
 	public static function White(): Color {
-		return new Color(0xFFFFFFFF);
+		return self::Grayscale(1.0);
 	}
 
 	public static function Transparent(): Color {
@@ -55,10 +61,14 @@ class Colors {
 	}
 
 	public static function SkyBlue(): Color {
-		return new Color(0x00CCFFFF);
+		return self::Blue()->mix(self::Cyan(), 0.75);
 	}
 
-	public static function NeonPink(): Color {
-		return new Color(0xFF0066FF);
+	public static function HotPink(): Color {
+		return self::Red()->mix(self::Magenta(), 0.5);
+	}
+
+	public static function Shadow(): Color {
+		return self::Grayscale(0.33);
 	}
 }

@@ -13,7 +13,10 @@ class Document extends HtmlRenderWidget {
 		private readonly Head $head,
 		private readonly Body $body,
 		public ?DocumentMeta $documentMeta = null,
-	) {}
+	) {
+		$this->head->renderParent = $this;
+		$this->body->renderParent = $this;
+	}
 
 	public function render(RenderContext $context): string {
 		if ($this->documentMeta !== null) {

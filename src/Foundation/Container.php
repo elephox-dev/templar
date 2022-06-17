@@ -4,23 +4,46 @@ declare(strict_types=1);
 namespace Elephox\Templar\Foundation;
 
 use Elephox\Templar\Color;
+use Elephox\Templar\CompoundLength;
+use Elephox\Templar\EdgeInsets;
 use Elephox\Templar\Gradient;
 use Elephox\Templar\HasSingleRenderChild;
 use Elephox\Templar\HtmlRenderWidget;
+use Elephox\Templar\Length;
+use Elephox\Templar\MathOperator;
 use Elephox\Templar\RenderContext;
+use Elephox\Templar\RendersBoxShadows;
+use Elephox\Templar\RendersMargin;
+use Elephox\Templar\RendersPadding;
 use Elephox\Templar\Templar;
 use Elephox\Templar\Widget;
 
 class Container extends HtmlRenderWidget {
 	use HasSingleRenderChild;
+	use RendersPadding;
+	use RendersMargin;
+	use RendersBoxShadows;
 
 	public function __construct(
-		protected readonly Widget $child,
+		protected readonly ?Widget $child = null,
 		protected readonly null|Gradient|Color $color = null,
-	) {}
+		protected readonly array $shadows = [],
+		protected readonly null|EdgeInsets $padding = null,
+		protected readonly null|EdgeInsets $margin = null,
+		protected readonly null|Length $width = null,
+		protected readonly null|Length $height = null,
+	) {
+		if ($child !== null) {
+			$child->renderParent = $this;
+		}
+	}
 
 	protected function renderStyleContent(RenderContext $context): string {
-		$style = 'width: 100%; height: 100%;';
+		$width = new CompoundLength([$this->width ?? Length::inPercent(100)], MathOperator::Minus);
+		$height =
+			new CompoundLength([$this->height ?? Length::inPercent(100)], MathOperator::Minus);
+
+		$style = '';
 
 		if ($this->color !== null) {
 			if ($this->color instanceof Gradient) {
@@ -32,12 +55,26 @@ class Container extends HtmlRenderWidget {
 			$style .= "$property: $this->color;";
 		}
 
+		if ($this->padding !== null) {
+			$style .= $this->renderPadding($this->padding, $width, $height);
+		}
+
+		if ($this->margin !== null) {
+			$style .= $this->renderMargin($this->margin, $width, $height);
+		}
+
+		if (!empty($this->shadows)) {
+			$style .= $this->renderBoxShadows($this->shadows);
+		}
+
+		$style .= "width: {$width->toEmittable()}; height: {$height->toEmittable()};";
+
 		return $style;
 	}
 
 	public function getHashCode(): int {
 		return Templar::combineHashCodes(
-			$this->child->getHashCode(),
+			$this->child?->getHashCode(),
 			$this->color?->getHashCode(),
 		);
 	}

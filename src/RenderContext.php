@@ -10,7 +10,6 @@ class RenderContext {
 		public ?ColorScheme $darkColorScheme = null,
 		public ?DocumentMeta $documentMeta = null,
 		public PositionContext $positionContext = PositionContext::Static,
-		public ?Widget $parent = null,
 		public array $renderedClasses = [],
 	) {}
 }

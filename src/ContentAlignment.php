@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Elephox\Templar;
 
-enum FlexContentAlignment: string {
+enum ContentAlignment: string {
 	use HasEnumHashCode;
 
 	case Start = 'flex-start';

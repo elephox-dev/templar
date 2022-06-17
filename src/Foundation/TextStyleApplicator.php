@@ -13,9 +13,13 @@ class TextStyleApplicator extends HtmlRenderWidget {
 	use HasSingleRenderChild;
 
 	public function __construct(
-		protected readonly Widget $child,
+		protected readonly ?Widget $child,
 		protected readonly ?TextStyle $textStyle = null,
-	) {}
+	) {
+		if ($child !== null) {
+			$child->renderParent = $this;
+		}
+	}
 
 	protected function renderStyleContent(RenderContext $context): string {
 		$style = "width: 100%;height: 100%;";

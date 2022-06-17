@@ -2,8 +2,10 @@
 declare(strict_types=1);
 
 use Elephox\Templar\Angle;
+use Elephox\Templar\BoxShadow;
 use Elephox\Templar\BuildWidget;
 use Elephox\Templar\DocumentMeta;
+use Elephox\Templar\EdgeInsets;
 use Elephox\Templar\Foundation\Center;
 use Elephox\Templar\Foundation\Colors;
 use Elephox\Templar\Foundation\Column;
@@ -12,13 +14,17 @@ use Elephox\Templar\Foundation\Expanded;
 use Elephox\Templar\Foundation\FullscreenBody;
 use Elephox\Templar\Foundation\FullscreenDocument;
 use Elephox\Templar\Foundation\Head;
-use Elephox\Templar\Foundation\SizedBox;
+use Elephox\Templar\Foundation\Padding;
+use Elephox\Templar\Foundation\Positioned;
+use Elephox\Templar\Foundation\Row;
+use Elephox\Templar\Foundation\Sizes;
 use Elephox\Templar\Foundation\Text;
 use Elephox\Templar\Length;
 use Elephox\Templar\LinearGradient;
+use Elephox\Templar\PositionContext;
 use Elephox\Templar\Templar;
-use Elephox\Templar\TextAlign;
 use Elephox\Templar\TextStyle;
+use Elephox\Templar\VerticalAlignment;
 use Elephox\Templar\Widget;
 
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -28,36 +34,80 @@ class MyApp extends BuildWidget {
 		return new FullscreenDocument(
 			head: new Head(),
 			body: new FullscreenBody(
-				child: new Center(
-					child: new Column(
-						children: [
-							new Text('Hello, world!'),
-							new SizedBox(
-								child: new Container(
-									child: new Text(
-										'Hello, world!',
-										align: TextAlign::Center,
-									),
-									//color: Color::lerp(0x0, Colors::Cyan, 0.5),
-									color: new LinearGradient(
-										[
-											Colors::SkyBlue(),
-											Colors::NeonPink(),
-										],
-										Angle::inDeg(165),
-									),
+				child: new Column(
+					children: [
+						new Positioned(
+							child: new Container(
+								child: new Row(
+									children: [
+										new Text('Hello, world!'),
+									],
+									verticalAlignment: VerticalAlignment::Center,
 								),
-								width: Length::inPx(200),
-								height: Length::inPx(200),
+								color: Colors::SkyBlue(),
+								shadows: [
+									BoxShadow::fromElevation(8, color: Colors::Shadow()),
+								],
+								padding: EdgeInsets::symmetric(horizontal: Length::inPx(10)),
+								height: Sizes::NavbarHeight(),
 							),
-							new Expanded(
-								child: new Center(
-									child: new Text('Hello, world!'),
-								),
+							position: PositionContext::Fixed,
+						),
+						new Padding(
+							child: new Column(
+								children: [
+									new Center(
+										child: new Container(
+											color: new LinearGradient(
+												[
+													Colors::SkyBlue(),
+													Colors::HotPink(),
+												],
+												Angle::inDeg(165),
+											),
+											shadows: [
+												BoxShadow::fromElevation(8),
+											],
+											margin: EdgeInsets::all(15),
+											width: Length::inPx(150),
+											height: Length::inPx(150),
+										),
+									),
+									new Center(
+										child: new Container(
+											color: Colors::Red(),
+											shadows: [
+												BoxShadow::fromElevation(16),
+											],
+											margin: EdgeInsets::all(15),
+											width: Length::inPx(150),
+											height: Length::inPx(150),
+										),
+									),
+									new Center(
+										child: new Container(
+											color: Colors::Green(),
+											shadows: [
+												BoxShadow::fromElevation(24),
+											],
+											margin: EdgeInsets::all(15),
+											width: Length::inPx(150),
+											height: Length::inPx(150),
+										),
+									),
+									new Expanded(
+										child: new Center(
+											child: new Text('Hello, world!'),
+										),
+									),
+									new Text('Hello, world!'),
+								],
 							),
-							new Text('Hello, world!'),
-						],
-					),
+							padding: EdgeInsets::all(Length::inRem(0.5))->add(
+								top: Sizes::NavbarHeight()
+							),
+						),
+					],
 				),
 				textStyle: new TextStyle(
 					font: 'sans-serif',

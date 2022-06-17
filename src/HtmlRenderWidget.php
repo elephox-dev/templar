@@ -5,14 +5,9 @@ namespace Elephox\Templar;
 
 abstract class HtmlRenderWidget extends RenderWidget {
 	public function render(RenderContext $context): string {
-		$previousParent = $context->parent;
-		$context->parent = $this;
-
 		$tag = $this->getTag();
 		$attributes = $this->renderAttributes($context);
 		$child = $this->renderChild($context);
-
-		$context->parent = $previousParent;
 
 		return <<<HTML
 <$tag $attributes>

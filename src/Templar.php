@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Elephox\Templar;
 
+use ErrorException;
+
 class Templar {
 	public static function combineHashCodes(null|int|Hashable ...$hashCodes): int {
 		$hash = 0;
@@ -48,6 +50,18 @@ class Templar {
 		header('Content-Type: text/html');
 
 		$context = $this->getDefaultRenderContext();
+
+		set_error_handler(
+			static function (
+				int $errno,
+				string $errstr,
+				?string $errfile = null,
+				?int $errline = null
+			): never {
+				/** @noinspection PhpUnhandledExceptionInspection */
+				throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
+			}
+		);
 
 		echo $widget->render($context);
 	}

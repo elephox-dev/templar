@@ -17,7 +17,9 @@ class SizedBox extends HtmlRenderWidget {
 		protected readonly Widget $child,
 		protected readonly ?Length $width = null,
 		protected readonly ?Length $height = null,
-	) {}
+	) {
+		$child->renderParent = $this;
+	}
 
 	public function getHashCode(): int {
 		return Templar::combineHashCodes(

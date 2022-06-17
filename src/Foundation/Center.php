@@ -11,10 +11,17 @@ use Elephox\Templar\Widget;
 
 class Center extends BuildWidget {
 	public function __construct(
-		private readonly Widget $child,
+		protected readonly Widget $child,
 	) {}
 
 	protected function build(): Widget {
+		if ($this->renderParent instanceof Flex) {
+			return new FlexChild(
+				child: $this->child,
+				align: VerticalAlignment::Center,
+			);
+		}
+
 		return new Flex(
 			children: [
 				$this->child,

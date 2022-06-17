@@ -8,7 +8,7 @@ use Elephox\Templar\Widget;
 
 class Expanded extends BuildWidget {
 	public function __construct(
-		private readonly Widget $child,
+		protected readonly Widget $child,
 	) {}
 
 	protected function build(): Widget {
