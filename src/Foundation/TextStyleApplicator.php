@@ -24,7 +24,7 @@ class TextStyleApplicator extends HtmlRenderWidget {
 	}
 
 	protected function renderStyleContent(RenderContext $context): string {
-		$style = "width: 100%;height: 100%;";
+		$style = "";
 
 		$textStyle = $context->textStyle?->overwriteFrom($this->textStyle) ?? $this->textStyle;
 

@@ -71,7 +71,16 @@ HTML;
 			$line = htmlentities($line);
 			$length = strlen($line);
 			$trimmed = ltrim($line);
-			$firstCharacterIdx = $length - strlen($trimmed);
+			$trimmedLength = strlen($trimmed);
+
+			if ($trimmedLength === 0) {
+				$firstCharacterIndexes[] = $firstMeaningfulCharacterIndex;
+				$line = $trimmed;
+
+				continue;
+			}
+
+			$firstCharacterIdx = $length - $trimmedLength;
 			$firstCharacterIndexes[] = $firstCharacterIdx;
 			if ($firstCharacterIdx < $firstMeaningfulCharacterIndex) {
 				$firstMeaningfulCharacterIndex = $firstCharacterIdx;

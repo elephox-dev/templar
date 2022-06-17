@@ -30,25 +30,23 @@ class NavigationBar extends BuildWidget {
 			);
 		}
 
-		return new Positioned(
-			child: new TextStyleApplicator(
-				child: new Container(
-					child: new Row(
-						children: $elements,
-						verticalAlignment: VerticalAlignment::Center,
-					),
-					color: Colors::SkyBlue(),
-					shadows: [
-						BoxShadow::fromElevation(8, color: Colors::Shadow()),
-					],
-					padding: EdgeInsets::symmetric(horizontal: Length::inPx(10)),
-					height: Sizes::NavbarHeight(),
+		return new TextStyleApplicator(
+			child: new Container(
+				child: new Row(
+					children: $elements,
+					verticalAlignment: VerticalAlignment::Center,
 				),
-				textStyle: new TextStyle(
-					color: Colors::White(),
-				),
+				color: Colors::SkyBlue(),
+				shadows: [
+					BoxShadow::fromElevation(8, color: Colors::Shadow()),
+				],
+				padding: EdgeInsets::symmetric(horizontal: Length::inPx(10)),
+				position: PositionContext::Fixed,
+				height: Sizes::NavbarHeight(),
 			),
-			position: PositionContext::Fixed,
+			textStyle: new TextStyle(
+				color: Colors::White(),
+			),
 		);
 	}
 }

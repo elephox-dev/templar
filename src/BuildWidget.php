@@ -15,7 +15,11 @@ abstract class BuildWidget extends Widget {
 	}
 
 	public function renderStyle(RenderContext $context): string {
-		return $this->build()->renderStyle($context);
+		try {
+			return $this->build()->renderStyle($context);
+		} catch (Throwable $e) {
+			return (new ThrowableWidget($e))->renderStyle($context);
+		}
 	}
 
 	public function getHashCode(): int {

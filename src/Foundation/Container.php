@@ -11,6 +11,7 @@ use Elephox\Templar\HasSingleRenderChild;
 use Elephox\Templar\HtmlRenderWidget;
 use Elephox\Templar\Length;
 use Elephox\Templar\MathOperator;
+use Elephox\Templar\PositionContext;
 use Elephox\Templar\RenderContext;
 use Elephox\Templar\RendersBoxShadows;
 use Elephox\Templar\RendersMargin;
@@ -33,6 +34,7 @@ class Container extends HtmlRenderWidget {
 		protected readonly array $shadows = [],
 		protected readonly null|EdgeInsets $padding = null,
 		protected readonly null|EdgeInsets $margin = null,
+		protected readonly ?PositionContext $position = null,
 		null|int|float|Length $width = null,
 		null|int|float|Length $height = null,
 	) {
@@ -71,6 +73,10 @@ class Container extends HtmlRenderWidget {
 
 		if (!empty($this->shadows)) {
 			$style .= $this->renderBoxShadows($this->shadows);
+		}
+
+		if ($this->position !== null) {
+			$style .= "position: {$this->position->value};";
 		}
 
 		$style .= "width: {$width->toEmittable()}; height: {$height->toEmittable()};";
