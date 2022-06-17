@@ -71,6 +71,12 @@ class Templar {
 
 		$context = $this->getDefaultRenderContext();
 
+		echo <<<CSS
+* {
+  box-sizing: border-box;
+}
+CSS;
+
 		echo $widget->renderStyle($context);
 	}
 }
