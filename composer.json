@@ -21,7 +21,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Elephox\\Templar\\Tests\\": "test/"
+            "Elephox\\Templar\\Tests\\": "tests/"
         }
     }
 }

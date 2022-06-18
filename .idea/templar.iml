@@ -3,8 +3,8 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" packagePrefix="Elephox\Templar\" />
-      <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" packagePrefix="Elephox\Templar\Tests\" />
       <sourceFolder url="file://$MODULE_DIR$/test/Unit" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" packagePrefix="Elephox\Templar\Tests\" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian/code-unit" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian/cli-parser" />
