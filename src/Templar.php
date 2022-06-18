@@ -46,9 +46,7 @@ class Templar {
 		);
 	}
 
-	public function render(Widget $widget): void {
-		header('Content-Type: text/html');
-
+	public function render(Widget $widget): string {
 		$context = $this->getDefaultRenderContext();
 
 		set_error_handler(
@@ -63,20 +61,22 @@ class Templar {
 			}
 		);
 
-		echo $widget->render($context);
+		return $widget->render($context);
 	}
 
-	public function renderStyle(Widget $widget): void {
-		header('Content-Type: text/css');
-
+	public function renderStyle(Widget $widget): string {
 		$context = $this->getDefaultRenderContext();
 
-		echo <<<CSS
-* {
-  box-sizing: border-box;
-}
-CSS;
+		$style = "* {box-sizing: border-box;}";
+		$style .= $widget->renderStyle($context);
 
-		echo $widget->renderStyle($context);
+		if ($context->darkColorScheme !== null) {
+			$context->renderedClasses = [];
+			$darkTheme = $widget->renderStyle($context->withColorScheme($context->darkColorScheme));
+
+			$style .= "@media (prefers-color-scheme: dark) {{$darkTheme}}";
+		}
+
+		return $style;
 	}
 }

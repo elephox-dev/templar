@@ -32,6 +32,9 @@ class TextStyleApplicator extends HtmlRenderWidget {
 			return $style;
 		}
 
-		return $this->renderTextStyle($textStyle) . $style;
+		return $this->renderTextStyle(
+				$textStyle,
+				$context
+			) . $style;
 	}
 }

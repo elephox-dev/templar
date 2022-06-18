@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Elephox\Templar;
 
 trait RendersTextStyle {
-	protected function renderTextStyle(TextStyle $textStyle): string {
+	protected function renderTextStyle(TextStyle $textStyle, RenderContext $context): string {
 		$style = "";
 
 		if ($textStyle->font !== null) {
@@ -23,8 +23,9 @@ trait RendersTextStyle {
 			$style .= "text-align: {$textStyle->align->value};";
 		}
 
-		if ($textStyle->color !== null) {
-			$style .= "color: $textStyle->color;";
+		$color = $textStyle->color ?? $context->colorScheme->foreground;
+		if ($color !== null) {
+			$style .= "color: $color;";
 		}
 
 		return $style;

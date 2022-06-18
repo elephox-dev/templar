@@ -27,8 +27,9 @@ class Body extends TextStyleApplicator {
 	protected function renderStyleContent(RenderContext $context): string {
 		$style = parent::renderStyleContent($context);
 
-		if ($this->color !== null) {
-			$style .= "background-color: $this->color;";
+		$color = $this->color ?? $context->colorScheme->background;
+		if ($color !== null) {
+			$style .= "background-color: $color;";
 		}
 
 		return $style;

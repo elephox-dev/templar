@@ -101,13 +101,32 @@ class Color implements Stringable, Hashable {
 			'Opacity must be between 0 and 1',
 		);
 
-		$alpha = (int)round($opacity * 0xFF);
+		$alpha = (int) round($opacity * 0xFF);
 
 		return self::fromRGBA(
 			($this->value >> 24) & 0xFF,
 			($this->value >> 16) & 0xFF,
 			($this->value >> 8) & 0xFF,
 			$alpha,
+		);
+	}
+
+	public function with(
+		?int $red = null,
+		?int $green = null,
+		?int $blue = null,
+		?int $alpha = null
+	): Color {
+		$red = $red ?? ($this->value >> 24) & 0xFF;
+		$green = $green ?? ($this->value >> 16) & 0xFF;
+		$blue = $blue ?? ($this->value >> 8) & 0xFF;
+		$alpha = $alpha ?? $this->value & 0xFF;
+
+		return self::fromRGBA(
+			$red,
+			$green,
+			$blue,
+			$alpha
 		);
 	}
 

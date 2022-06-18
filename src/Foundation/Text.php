@@ -27,7 +27,10 @@ class Text extends HtmlRenderWidget {
 		}
 
 		if ($this->style !== null) {
-			$style .= $this->renderTextStyle($this->style);
+			$style .= $this->renderTextStyle(
+				$this->style,
+				$context
+			);
 		}
 
 		return $style;

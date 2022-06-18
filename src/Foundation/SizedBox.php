@@ -14,11 +14,13 @@ class SizedBox extends HtmlRenderWidget {
 	use HasSingleRenderChild;
 
 	public function __construct(
-		protected readonly Widget $child,
+		protected readonly ?Widget $child,
 		protected readonly ?Length $width = null,
 		protected readonly ?Length $height = null,
 	) {
-		$child->renderParent = $this;
+		if ($this->child !== null) {
+			$this->child->renderParent = $this;
+		}
 	}
 
 	public function getHashCode(): int {

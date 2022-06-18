@@ -29,6 +29,6 @@ class FullscreenBody extends Body {
 	protected function renderStyleContent(RenderContext $context): string {
 		$style = parent::renderStyleContent($context);
 
-		return "{$style}margin: 0; padding: 0;box-sizing: border-box;";
+		return $style . "margin: 0; padding: 0;box-sizing: border-box;";
 	}
 }

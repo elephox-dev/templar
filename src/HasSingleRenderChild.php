@@ -19,10 +19,20 @@ trait HasSingleRenderChild {
 	public function renderStyle(RenderContext $context): string {
 		$myStyle = parent::renderStyle($context);
 		$childStyle = $this->child?->renderStyle($context) ?? '';
-		return <<<CSS
-$myStyle
-$childStyle
-CSS;
+
+		if ($myStyle === '' && $childStyle === '') {
+			return '';
+		}
+
+		if ($myStyle === '') {
+			return $childStyle;
+		}
+
+		if ($childStyle === '') {
+			return $myStyle;
+		}
+
+		return $myStyle . $childStyle;
 	}
 
 	protected function renderStyleContent(RenderContext $context): string {

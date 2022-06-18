@@ -70,15 +70,18 @@ class Flex extends HtmlRenderWidget {
 	}
 
 	public function renderStyle(RenderContext $context): string {
-		$myStyleContent = $this->renderStyleContent($context);
 		$childStyles = $this->renderChildStyles($context);
+		$myStyleContent = parent::renderStyle($context);
 
-		return <<<CSS
-.{$this->getStyleClassName()} {
-	$myStyleContent
-}
-$childStyles
-CSS;
+		if ($myStyleContent === '') {
+			return $childStyles;
+		}
+
+		if ($childStyles === '') {
+			return $myStyleContent;
+		}
+
+		return $myStyleContent . $childStyles;
 	}
 
 	protected function renderChildStyles(RenderContext $context): string {
@@ -134,20 +137,14 @@ CSS;
 	}
 
 	public function getHashCode(): int {
-		$hashCodes = [];
-		foreach ($this->children as $child) {
-			$hashCodes[] = $child->getHashCode();
-		}
-		$hashCodes[] = $this->horizontalItemAlignment?->getHashCode();
-		$hashCodes[] = $this->verticalAlignment?->getHashCode();
-		$hashCodes[] = $this->contentAlignment?->getHashCode();
-		$hashCodes[] = $this->direction?->getHashCode();
-		$hashCodes[] = $this->wrap?->getHashCode();
-		$hashCodes[] = $this->rowGap?->getHashCode();
-		$hashCodes[] = $this->columnGap?->getHashCode();
-
 		return Templar::combineHashCodes(
-			...$hashCodes
+			$this->horizontalItemAlignment?->getHashCode(),
+			$this->verticalAlignment?->getHashCode(),
+			$this->contentAlignment?->getHashCode(),
+			$this->direction?->getHashCode(),
+			$this->wrap?->getHashCode(),
+			$this->rowGap?->getHashCode(),
+			$this->columnGap?->getHashCode(),
 		);
 	}
 }

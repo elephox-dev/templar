@@ -56,11 +56,7 @@ HTML;
 
 		$context->renderedClasses[] = $this->getStyleClassName();
 
-		return <<<CSS
-.{$this->getStyleClassName()} {
-	{$this->renderStyleContent($context)}
-}
-CSS;
+		return ".{$this->getStyleClassName()} {{$this->renderStyleContent($context)}}";
 	}
 
 	abstract protected function renderStyleContent(RenderContext $context): string;

@@ -49,11 +49,8 @@ class Document extends HtmlRenderWidget {
 		$myStyle = parent::renderStyle($context);
 		$headStyle = $this->head->renderStyle($context);
 		$bodyStyle = $this->body->renderStyle($context);
-		return <<<CSS
-$myStyle
-$headStyle
-$bodyStyle
-CSS;
+
+		return $myStyle . $headStyle . $bodyStyle;
 	}
 
 	protected function renderStyleContent(RenderContext $context): string {

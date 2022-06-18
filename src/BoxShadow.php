@@ -3,25 +3,18 @@ declare(strict_types=1);
 
 namespace Elephox\Templar;
 
-use Elephox\Templar\Foundation\Colors;
-
 class BoxShadow implements Emittable {
-	public static function ambient(): BoxShadow {
-		return new BoxShadow(
-			blurRadius: 10,
-			spreadRadius: -5,
-			color: Colors::Shadow(),
+	public static function ambient(int $elevation, ?Color $color = null): AmbientBoxShadow {
+		return new AmbientBoxShadow(
+			$elevation,
+			$color
 		);
 	}
 
-	public static function fromElevation(int $elevation, ?Color $color = null): BoxShadow {
-		$sigmoid = static fn (float $x) => 1.0 / (1.0 + exp(-$x));
-
-		return new BoxShadow(
-			offset: new Offset(y: $sigmoid($elevation) * 10.0),
-			blurRadius: $sigmoid($elevation) * 10.0,
-			spreadRadius: $sigmoid($elevation) * -5.0,
-			color: $color ?? Colors::Shadow(),
+	public static function fromElevation(int $elevation, ?Color $color = null): ElevatedBoxShadow {
+		return new ElevatedBoxShadow(
+			$elevation,
+			$color
 		);
 	}
 
@@ -71,7 +64,7 @@ class BoxShadow implements Emittable {
 	}
 
 	public function toEmittable(): string {
-		return (string)$this;
+		return (string) $this;
 	}
 
 	public function getHashCode(): int {

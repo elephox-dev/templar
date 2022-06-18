@@ -82,8 +82,4 @@ class Length extends Value implements EmittableLength {
 	public function asY(): Offset {
 		return new Offset(y: $this);
 	}
-
-	public function toEmittable(): string {
-		return (string)$this;
-	}
 }

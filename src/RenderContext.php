@@ -12,4 +12,18 @@ class RenderContext {
 		public PositionContext $positionContext = PositionContext::Static,
 		public array $renderedClasses = [],
 	) {}
+
+	public function withColorScheme(
+		ColorScheme $colorScheme,
+		?ColorScheme $darkColorScheme = null
+	): RenderContext {
+		return new RenderContext(
+			$colorScheme,
+			$this->textStyle,
+			$darkColorScheme ?? $this->darkColorScheme,
+			$this->documentMeta,
+			$this->positionContext,
+			$this->renderedClasses,
+		);
+	}
 }

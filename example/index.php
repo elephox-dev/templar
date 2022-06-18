@@ -15,11 +15,14 @@ use Elephox\Templar\Foundation\Head;
 use Elephox\Templar\Foundation\LateWidget;
 use Elephox\Templar\Foundation\NavigationBar;
 use Elephox\Templar\Foundation\Padding;
+use Elephox\Templar\Foundation\Row;
 use Elephox\Templar\Foundation\Sizes;
 use Elephox\Templar\Foundation\Text;
+use Elephox\Templar\HorizontalAlignment;
 use Elephox\Templar\Length;
 use Elephox\Templar\Templar;
 use Elephox\Templar\TextStyle;
+use Elephox\Templar\VerticalAlignment;
 use Elephox\Templar\Widget;
 
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -35,10 +38,10 @@ class MyApp extends BuildWidget {
 						new Padding(
 							child: new LateWidget(
 								function () {
-									$container = [];
-									$count = 10;
+									$containers = [];
+									$count = 7;
 									for ($i = 0; $i < $count; $i++) {
-										$container[] = new Center(
+										$containers[] = new Center(
 											child: new Container(
 												child: new Center(new Text((string) ($i * 4))),
 												color: Color::fromRGBA(
@@ -47,11 +50,9 @@ class MyApp extends BuildWidget {
 													0,
 													0xFF
 												),
-												shadows: [
-													BoxShadow::ambient(),
-													BoxShadow::fromElevation(4 * $i),
-												],
-												margin: EdgeInsets::symmetric(vertical: 8),
+												shadows: BoxShadow::fromElevation(4 * $i)
+													->withAmbient(),
+												margin: EdgeInsets::all(8),
 												width: 50,
 												height: 50,
 											),
@@ -59,7 +60,13 @@ class MyApp extends BuildWidget {
 									}
 
 									return new Column(
-										children: $container,
+										children: [
+											new Row(
+												children: $containers,
+												horizontalItemAlignment: HorizontalAlignment::Center,
+												verticalAlignment: VerticalAlignment::Center,
+											),
+										],
 									);
 								}
 							),
@@ -87,8 +94,12 @@ if (str_ends_with(
 	$_SERVER['REQUEST_URI'],
 	'.css'
 )) {
-	$templar->renderStyle(new MyApp());
+	header('Content-Type: text/css');
+
+	echo $templar->renderStyle(new MyApp());
 } else {
+	header('Content-Type: text/html');
+
 	/** @noinspection PhpUnhandledExceptionInspection */
-	$templar->render(new MyApp());
+	echo $templar->render(new MyApp());
 }
