@@ -5,23 +5,23 @@
     "type": "library",
     "authors": [
         {
-          "name": "Ricardo Boss",
-          "email": "contact@ricardoboss.de"
+            "name": "Ricardo Boss",
+            "email": "contact@ricardoboss.de"
         }
     ],
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "autoload": {
-    "psr-4": {
-      "Elephox\\Templar\\": "src/"
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "Elephox\\Templar\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Elephox\\Templar\\Tests\\": "test/"
+        }
     }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Elephox\\Templar\\Tests\\": "test/"
-    }
-  },
-  "require-dev": {
-    "phpunit/phpunit": "^9.5"
-  }
 }
