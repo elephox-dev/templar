@@ -69,6 +69,6 @@ abstract class Colors {
 	}
 
 	public static function Shadow(): Color {
-		return self::Grayscale(0.33);
+		return self::Grayscale(0.5)->withOpacity(0.75);
 	}
 }

@@ -3,15 +3,25 @@ declare(strict_types=1);
 
 namespace Elephox\Templar;
 
+use Elephox\Templar\Foundation\Colors;
+
 class BoxShadow implements Emittable {
+	public static function ambient(): BoxShadow {
+		return new BoxShadow(
+			blurRadius: 10,
+			spreadRadius: -5,
+			color: Colors::Shadow(),
+		);
+	}
+
 	public static function fromElevation(int $elevation, ?Color $color = null): BoxShadow {
-		assert($elevation % 4 === 0, "Elevation must be a multiple of 4, was $elevation");
+		$sigmoid = static fn (float $x) => 1.0 / (1.0 + exp(-$x));
 
 		return new BoxShadow(
-			offset: new Offset(y: $elevation / 4),
-			blurRadius: $elevation,
-			spreadRadius: -$elevation / 4,
-			color: $color,
+			offset: new Offset(y: $sigmoid($elevation) * 10.0),
+			blurRadius: $sigmoid($elevation) * 10.0,
+			spreadRadius: $sigmoid($elevation) * -5.0,
+			color: $color ?? Colors::Shadow(),
 		);
 	}
 
@@ -32,18 +42,18 @@ class BoxShadow implements Emittable {
 
 		assert(
 			$this->blurRadius === null || $this->blurRadius->value() >= 0,
-			'Blur radius must be non-negative.'
+			"Blur radius must be non-negative, got $this->blurRadius",
 		);
 		assert(
 			$this->spreadRadius === null || $this->blurRadius !== null,
-			'Spread radius requires blur radius to be set.'
+			"Spread radius requires blur radius to be set, got $this->spreadRadius",
 		);
 
 		// TODO: check length units are possible for each property (e.g. % for blur radius?)
 	}
 
 	public function __toString(): string {
-		$shadow = "{$this->offset->x} {$this->offset->y}";
+		$shadow = (string) $this->offset;
 
 		if ($this->blurRadius !== null) {
 			$shadow .= " $this->blurRadius";
@@ -66,8 +76,7 @@ class BoxShadow implements Emittable {
 
 	public function getHashCode(): int {
 		return Templar::combineHashCodes(
-			$this->offsetX,
-			$this->offsetY,
+			$this->offset,
 			$this->blurRadius,
 			$this->spreadRadius,
 			$this->color,

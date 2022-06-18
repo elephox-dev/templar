@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Elephox\Templar;
 
-class Offset {
+class Offset implements Hashable {
 	public static function both(null|int|float|Length $length): Offset {
 		return new Offset(
 			x: $length,
@@ -27,6 +27,16 @@ class Offset {
 	}
 
 	public function with(null|int|float|Length $x = null, null|int|float|Length $y = null): Offset {
-		return new Offset($x ?? $this->x, $y ?? $this->y);
+		return new Offset(
+			$x ?? $this->x,
+			$y ?? $this->y
+		);
+	}
+
+	public function getHashCode(): int {
+		return Templar::combineHashCodes(
+			$this->x->getHashCode(),
+			$this->y->getHashCode(),
+		);
 	}
 }
