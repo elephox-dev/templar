@@ -12,10 +12,18 @@ class LinearGradient extends Gradient {
 		protected readonly Angle|GradientDirection $direction = GradientDirection::ToRight,
 	) {
 		parent::__construct($stops);
+
+		assert(
+			count($this->stops) >= 2,
+			"LinearGradient must have at least two stops, got " . count($this->stops)
+		);
 	}
 
 	public function getHashCode(): int {
-		return 0;
+		return Templar::combineHashCodes(
+			$this->direction,
+			...$this->stops,
+		);
 	}
 
 	public function __toString(): string {
