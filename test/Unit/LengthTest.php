@@ -11,6 +11,8 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers \Elephox\Templar\Length
  * @covers \Elephox\Templar\Offset
+ * @covers \Elephox\Templar\Value
+ * @uses   \Elephox\Templar\EnumStringable
  */
 class LengthTest extends TestCase {
 	public function wrapValuesProvider(): iterable {
@@ -249,5 +251,28 @@ class LengthTest extends TestCase {
 			2,
 			$o2->y->precision()
 		);
+	}
+
+	public function testToString(): void {
+		$l = Length::inPx(1.2);
+		static::assertSame(
+			'1.2px',
+			(string)$l,
+		);
+		static::assertSame((string)$l, $l->toEmittable());
+
+		$l = Length::inRem(1.2);
+		static::assertSame(
+			'1.2rem',
+			(string)$l,
+		);
+		static::assertSame((string)$l, $l->toEmittable());
+
+		$l = Length::zero();
+		static::assertSame(
+			'0',
+			(string)$l,
+		);
+		static::assertSame((string)$l, $l->toEmittable());
 	}
 }
