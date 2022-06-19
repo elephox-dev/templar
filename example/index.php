@@ -7,6 +7,7 @@ use Elephox\Templar\Color;
 use Elephox\Templar\DocumentMeta;
 use Elephox\Templar\EdgeInsets;
 use Elephox\Templar\Foundation\Center;
+use Elephox\Templar\Foundation\Colors;
 use Elephox\Templar\Foundation\Column;
 use Elephox\Templar\Foundation\Container;
 use Elephox\Templar\Foundation\FullscreenBody;
@@ -15,9 +16,9 @@ use Elephox\Templar\Foundation\Head;
 use Elephox\Templar\Foundation\LateWidget;
 use Elephox\Templar\Foundation\NavigationBar;
 use Elephox\Templar\Foundation\Padding;
-use Elephox\Templar\Foundation\Row;
 use Elephox\Templar\Foundation\Sizes;
 use Elephox\Templar\Foundation\Text;
+use Elephox\Templar\Foundation\Wrap;
 use Elephox\Templar\HorizontalAlignment;
 use Elephox\Templar\Length;
 use Elephox\Templar\Templar;
@@ -43,13 +44,8 @@ class MyApp extends BuildWidget {
 									for ($i = 0; $i < $count; $i++) {
 										$containers[] = new Center(
 											child: new Container(
-												child: new Center(new Text((string) ($i * 4))),
-												color: Color::fromRGBA(
-													(int) (255 * $i / ($count - 1)),
-													0,
-													0,
-													0xFF
-												),
+												child: new Center(new Text((string)($i * 4))),
+												color: Colors::Gray(),
 												shadows: BoxShadow::fromElevation(4 * $i)
 													->withAmbient(),
 												margin: EdgeInsets::all(8),
@@ -61,7 +57,7 @@ class MyApp extends BuildWidget {
 
 									return new Column(
 										children: [
-											new Row(
+											new Wrap(
 												children: $containers,
 												horizontalItemAlignment: HorizontalAlignment::Center,
 												verticalAlignment: VerticalAlignment::Center,

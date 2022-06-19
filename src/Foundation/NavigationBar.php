@@ -39,6 +39,7 @@ class NavigationBar extends BuildWidget {
 			shadows: BoxShadow::fromElevation(8)->withAmbient(),
 			padding: EdgeInsets::symmetric(horizontal: Length::inPx(10)),
 			position: PositionContext::Fixed,
+			width: Length::inPercent(100),
 			height: Sizes::NavbarHeight(),
 		);
 	}

@@ -50,25 +50,29 @@ class EdgeInsets implements Hashable {
 		null|int|float|EmittableLength $right,
 		null|int|float|EmittableLength $bottom,
 	) {
-		$this->left = $left === null
-			? null
-			: ($left instanceof EmittableLength
-				? $left
-				: Length::wrap(
-					$left
-				));
-		$this->top =
-			$top === null ? null : ($top instanceof EmittableLength ? $top : Length::wrap($top));
-		$this->right = $right === null
-			? null : ($right instanceof EmittableLength
-				? $right : Length::wrap(
-					$right
-				));
-		$this->bottom = $bottom === null
-			? null : ($bottom instanceof EmittableLength
-				? $bottom : Length::wrap(
-					$bottom
-				));
+		if ($left === null || $left instanceof EmittableLength) {
+			$this->left = $left;
+		} else {
+			$this->left = Length::wrap($left);
+		}
+
+		if ($top === null || $top instanceof EmittableLength) {
+			$this->top = $top;
+		} else {
+			$this->top = Length::wrap($top);
+		}
+
+		if ($right === null || $right instanceof EmittableLength) {
+			$this->right = $right;
+		} else {
+			$this->right = Length::wrap($right);
+		}
+
+		if ($bottom === null || $bottom instanceof EmittableLength) {
+			$this->bottom = $bottom;
+		} else {
+			$this->bottom = Length::wrap($bottom);
+		}
 	}
 
 	public function getHashCode(): int {

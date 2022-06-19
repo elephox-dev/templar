@@ -10,19 +10,19 @@ class Color implements Stringable, Hashable {
 	public static function fromRGBA(int $red, int $green, int $blue, int $alpha): Color {
 		assert(
 			$red >= 0 && $red <= 0xFF,
-			'Red must be between 0 and 0xFF',
+			'Red must be between 0 and 255, got ' . $red,
 		);
 		assert(
 			$green >= 0 && $green <= 0xFF,
-			'Green must be between 0 and 0xFF',
+			'Green must be between 0 and 255, got ' . $green,
 		);
 		assert(
 			$blue >= 0 && $blue <= 0xFF,
-			'Blue must be between 0 and 0xFF',
+			'Blue must be between 0 and 255, got ' . $blue,
 		);
 		assert(
 			$alpha >= 0 && $alpha <= 0xFF,
-			'Alpha must be between 0 and 0xFF',
+			'Alpha must be between 0 and 255, got ' . $alpha,
 		);
 
 		$value = $red << 24 | $green << 16 | $blue << 8 | $alpha;

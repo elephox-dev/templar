@@ -8,19 +8,27 @@ use Stringable;
 class CompoundLength implements EmittableLength {
 	protected array $lengths = [];
 
-	/**
-	 * @param iterable<mixed, Stringable|int|float|string|EmittableLength> $lengths
-	 */
 	public function __construct(
 		iterable $lengths,
 		protected readonly MathOperator $operator,
 	) {
 		foreach ($lengths as $length) {
+			if ($length === null) {
+				continue;
+			}
+
+			assert(
+				$length instanceof Stringable || is_string($length) || is_int($length) ||
+				is_float($length),
+				'Length must be a Stringable, string, int, or float, but got ' .
+				get_debug_type($length)
+			);
+
 			$this->concat($length);
 		}
 	}
 
-	public function concat(EmittableLength $length): void {
+	public function concat(Stringable|int|float|string $length): void {
 		if ($length instanceof self) {
 			if ($length->operator === $this->operator) {
 				foreach ($length->lengths as $innerLength) {

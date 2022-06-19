@@ -123,4 +123,16 @@ class CompoundLengthTest extends TestCase {
 			$d->getHashCode()
 		);
 	}
+
+	public function testNullValuesAreIgnored(): void {
+		$compound = new CompoundLength(
+			[Length::inPx(1), null, Length::inPx(2)],
+			MathOperator::Plus
+		);
+
+		static::assertSame(
+			'1px + 2px',
+			(string)$compound
+		);
+	}
 }

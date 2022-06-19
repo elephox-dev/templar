@@ -20,6 +20,7 @@ class Column extends BuildWidget {
 		protected readonly ?HorizontalAlignment $horizontalItemAlignment = null,
 		protected readonly ?VerticalAlignment $verticalAlignment = null,
 		protected readonly bool $reverse = false,
+		protected readonly bool $shrinkWrap = false,
 	) {}
 
 	protected function build(): Widget {
@@ -29,7 +30,7 @@ class Column extends BuildWidget {
 			verticalAlignment: $this->verticalAlignment,
 			direction: $this->reverse ? FlexDirection::ColumnReverse : FlexDirection::Column,
 			wrap: FlexWrap::NoWrap,
-			width: Length::inPercent(100),
+			width: $this->shrinkWrap ? null : Length::inPercent(100),
 			height: Length::inPercent(100),
 		);
 	}
