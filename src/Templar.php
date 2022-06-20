@@ -50,7 +50,7 @@ class Templar {
 	}
 
 	public function renderStyle(Widget $widget): string {
-		$context = $this->getDefaultRenderContext();
+		$context = self::getDefaultRenderContext();
 
 		$style = "* {box-sizing: border-box;}";
 		$style .= $widget->renderStyle($context);
@@ -59,7 +59,7 @@ class Templar {
 			$context->renderedClasses = [];
 			$darkTheme = $widget->renderStyle($context->withColorScheme($context->darkColorScheme));
 
-			$style .= "@media (prefers-color-scheme: dark) {{$darkTheme}}";
+			$style .= "@media (prefers-color-scheme: dark) {" . $darkTheme . "}";
 		}
 
 		return $style;

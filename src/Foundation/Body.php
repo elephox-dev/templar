@@ -34,7 +34,7 @@ class Body extends HtmlRenderWidget {
 
 		$backgroundColor = $this->color ?? $context->colorScheme->background;
 		if ($backgroundColor !== null) {
-			$style .= "background-color: $backgroundColor;";
+			$style .= "background-color: $backgroundColor; transition: background-color 0.3s ease;";
 		}
 
 		$style .= $this->renderTextStyle($this->textStyle ?? new TextStyle(), $context);
