@@ -8,7 +8,7 @@ use Throwable;
 abstract class BuildWidget extends Widget {
 	public function render(RenderContext $context): string {
 		try {
-			return $this->build()->render($context);
+			return $this->build($context)->render($context);
 		} catch (Throwable $e) {
 			return (new ThrowableWidget($e))->render($context);
 		}
@@ -16,7 +16,7 @@ abstract class BuildWidget extends Widget {
 
 	public function renderStyle(RenderContext $context): string {
 		try {
-			return $this->build()->renderStyle($context);
+			return $this->build($context)->renderStyle($context);
 		} catch (Throwable $e) {
 			return (new ThrowableWidget($e))->renderStyle($context);
 		}

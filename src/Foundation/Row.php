@@ -8,6 +8,7 @@ use Elephox\Templar\FlexDirection;
 use Elephox\Templar\FlexWrap;
 use Elephox\Templar\HorizontalAlignment;
 use Elephox\Templar\Length;
+use Elephox\Templar\RenderContext;
 use Elephox\Templar\VerticalAlignment;
 use Elephox\Templar\Widget;
 
@@ -23,7 +24,7 @@ class Row extends BuildWidget {
 		protected readonly bool $shrinkWrap = false,
 	) {}
 
-	protected function build(): Widget {
+	protected function build(RenderContext $context): Widget {
 		return new Flex(
 			children: $this->children,
 			horizontalItemAlignment: $this->horizontalItemAlignment,

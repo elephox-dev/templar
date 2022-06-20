@@ -21,6 +21,7 @@ use Elephox\Templar\Foundation\Text;
 use Elephox\Templar\Foundation\Wrap;
 use Elephox\Templar\HorizontalAlignment;
 use Elephox\Templar\Length;
+use Elephox\Templar\RenderContext;
 use Elephox\Templar\Templar;
 use Elephox\Templar\TextStyle;
 use Elephox\Templar\VerticalAlignment;
@@ -29,7 +30,7 @@ use Elephox\Templar\Widget;
 require_once __DIR__ . '/../vendor/autoload.php';
 
 class MyApp extends BuildWidget {
-	protected function build(): Widget {
+	protected function build(RenderContext $context): Widget {
 		return new FullscreenDocument(
 			head: new Head(),
 			body: new FullscreenBody(

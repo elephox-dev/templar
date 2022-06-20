@@ -8,6 +8,7 @@ use Elephox\Templar\BuildWidget;
 use Elephox\Templar\EdgeInsets;
 use Elephox\Templar\Length;
 use Elephox\Templar\PositionContext;
+use Elephox\Templar\RenderContext;
 use Elephox\Templar\TextStyle;
 use Elephox\Templar\VerticalAlignment;
 use Elephox\Templar\Widget;
@@ -17,7 +18,7 @@ class NavigationBar extends BuildWidget {
 		protected readonly ?string $title = null,
 	) {}
 
-	protected function build(): Widget {
+	protected function build(RenderContext $context): Widget {
 		$elements = [];
 
 		if ($this->title !== null) {
@@ -26,6 +27,7 @@ class NavigationBar extends BuildWidget {
 				style: new TextStyle(
 					size: Length::inRem(1.1),
 					weight: 'bold',
+					color: $context->colorScheme->onPrimary
 				),
 			);
 		}
@@ -35,7 +37,7 @@ class NavigationBar extends BuildWidget {
 				children: $elements,
 				verticalAlignment: VerticalAlignment::Center,
 			),
-			color: Colors::SkyBlue(),
+			color: $context->colorScheme->primary,
 			shadows: BoxShadow::fromElevation(8)->withAmbient(),
 			padding: EdgeInsets::symmetric(horizontal: Length::inPx(10)),
 			position: PositionContext::Fixed,

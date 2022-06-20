@@ -5,6 +5,7 @@ namespace Elephox\Templar\Foundation;
 
 use Closure;
 use Elephox\Templar\BuildWidget;
+use Elephox\Templar\RenderContext;
 use Elephox\Templar\Widget;
 
 class LateWidget extends BuildWidget {
@@ -15,7 +16,7 @@ class LateWidget extends BuildWidget {
 		protected readonly Closure $buildCallback,
 	) {}
 
-	protected function build(): Widget {
+	protected function build(RenderContext $context): Widget {
 		return ($this->buildCallback)();
 	}
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Elephox\Templar\Foundation;
 
 use Elephox\Templar\BuildWidget;
+use Elephox\Templar\RenderContext;
 use Elephox\Templar\Widget;
 
 class Expanded extends BuildWidget {
@@ -11,7 +12,7 @@ class Expanded extends BuildWidget {
 		protected readonly Widget $child,
 	) {}
 
-	protected function build(): Widget {
+	protected function build(RenderContext $context): Widget {
 		return new FlexChild(
 			$this->child,
 			grow: 1,

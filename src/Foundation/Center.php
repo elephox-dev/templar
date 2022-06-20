@@ -6,6 +6,7 @@ namespace Elephox\Templar\Foundation;
 use Elephox\Templar\BuildWidget;
 use Elephox\Templar\HorizontalAlignment;
 use Elephox\Templar\Length;
+use Elephox\Templar\RenderContext;
 use Elephox\Templar\VerticalAlignment;
 use Elephox\Templar\Widget;
 
@@ -14,7 +15,7 @@ class Center extends BuildWidget {
 		protected readonly Widget $child,
 	) {}
 
-	protected function build(): Widget {
+	protected function build(RenderContext $context): Widget {
 		if ($this->renderParent instanceof Flex) {
 			return new FlexChild(
 				child: $this->child,

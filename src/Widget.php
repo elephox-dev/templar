@@ -5,7 +5,7 @@ namespace Elephox\Templar;
 abstract class Widget implements Hashable {
 	public ?RenderWidget $renderParent;
 
-	abstract protected function build(): Widget;
+	abstract protected function build(RenderContext $context): Widget;
 
 	abstract public function render(RenderContext $context): string;
 
