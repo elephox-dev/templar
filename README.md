@@ -5,17 +5,31 @@ Templar is a declarative templating engine for PHP. It was inspired by the appro
 ## Basic Usage
 
 ```php
-$templar = new Templar();
-$template->render(new Homepage());
-
-class Homepage extends Widget {
-    public function build(BuildContext $context): Widget
+class Homepage extends BuildWidget {
+    public function build(): Widget
     {
-        return new Center(
-            new Text('Hello, world!')
+        return new FullscreenDocument(
+			      head: new Head(),
+            body: new FullscreenBody(
+                child: new Center(
+                    new Text('Hello, world!'),
+                ),
+            ),
         );
     }
 }
+
+$templar = new Templar();
+if (str_ends_with($_SERVER['REQUEST_URI'], '.css')) {
+	header('Content-Type: text/css');
+
+	echo $templar->renderStyle(new Homepage());
+} else {
+	header('Content-Type: text/html');
+
+	echo $templar->render(new Homepage());
+}
+
 ```
 
 [Flutter]: https://flutter.dev/
