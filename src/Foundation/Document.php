@@ -59,8 +59,8 @@ class Document extends HtmlRenderWidget {
 
 	public function getHashCode(): int {
 		return HashBuilder::buildHash(
-			$this->head->getHashCode(),
-			$this->body->getHashCode()
+			$this->head,
+			$this->body,
 		);
 	}
 }

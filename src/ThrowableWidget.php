@@ -28,7 +28,7 @@ class ThrowableWidget extends RenderWidget {
 		$relevantLinesStr = implode(PHP_EOL, $relevantLines);
 
 		return <<<HTML
-<div style="background: red; color: yellow; width: 100%; height: 100%; overflow: auto; padding: 4px; font-family: sans-serif">
+<div style="background: red; color: yellow; border: yellow dashed 2px; width: 100%; height: 100%; overflow: auto; padding: 4px; font-family: sans-serif">
 	<p>
 		{$this->getMessage()}<br />
 		<em>in {$this->getFile()}:{$this->getLine()}</em>

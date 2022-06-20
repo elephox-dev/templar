@@ -36,6 +36,6 @@ trait HasSingleRenderChild {
 	}
 
 	public function getHashCode(): int {
-		return $this->child?->getHashCode() ?? 0;
+		return HashBuilder::buildHash($this->child);
 	}
 }

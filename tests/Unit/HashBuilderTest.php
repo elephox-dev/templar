@@ -30,6 +30,7 @@ class HashBuilderTest extends TestCase {
 		yield ['ab', 'ab'];
 		yield [[0, 1, 2], [0, 1, 2]];
 		yield [Colors::White(), Colors::White()];
+		yield [PHP_FLOAT_MAX, PHP_FLOAT_MAX];
 	}
 
 	/**
@@ -47,6 +48,7 @@ class HashBuilderTest extends TestCase {
 		yield [1, 0];
 		yield [Colors::White(), Colors::Black()];
 		yield [1.1, 1.0];
+		yield [PHP_FLOAT_MAX, -1];
 	}
 
 	/**
