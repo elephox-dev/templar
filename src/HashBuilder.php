@@ -3,18 +3,25 @@ declare(strict_types=1);
 
 namespace Elephox\Templar;
 
+use BackedEnum;
 use InvalidArgumentException;
+use Stringable;
+use UnitEnum;
 
 class HashBuilder implements Hashable {
 	public const DefaultInitializer = 17;
-	public const DefaultMultiplier = 37;
+	public const DefaultMultiplier = 31;
 
 	public static function from(mixed ...$parts): HashBuilder {
 		return new HashBuilder(parts: $parts);
 	}
 
-	public static function hashString(string $string): int {
-		return crc32($string);
+	public static function buildHash(mixed ...$parts): int {
+		return self::from(parts: $parts)->getHashCode();
+	}
+
+	public static function hashString(Stringable|string $string): int {
+		return crc32((string)$string);
 	}
 
 	public static function hashIterable(iterable $iterable): int {
@@ -25,16 +32,24 @@ class HashBuilder implements Hashable {
 		return $builder->getHashCode();
 	}
 
+	public static function hashEnum(UnitEnum $member): int {
+		if ($member instanceof BackedEnum) {
+			return self::hashValue($member->value);
+		}
+
+		return self::hashString($member->name);
+	}
+
 	public static function hashValue(mixed $value): int {
 		if (is_int($value)) {
 			return $value;
 		}
 
 		if (is_float($value)) {
-			return self::hashString((string)$value);
+			return self::hashString(sprintf('%.14F', $value));
 		}
 
-		if (is_string($value)) {
+		if (is_string($value) || $value instanceof Stringable) {
 			return self::hashString($value);
 		}
 
@@ -54,12 +69,16 @@ class HashBuilder implements Hashable {
 			return $value->getHashCode();
 		}
 
+		if ($value instanceof UnitEnum) {
+			return self::hashEnum($value);
+		}
+
 		throw new InvalidArgumentException(
 			"Value of type '" . get_debug_type($value) . "' cannot be hashed."
 		);
 	}
 
-	private int $hash;
+	private float $hash;
 
 	public function __construct(
 		int $initializer = self::DefaultInitializer,
@@ -77,12 +96,12 @@ class HashBuilder implements Hashable {
 	}
 
 	public function append(mixed $part): self {
-		$this->hash = $this->multiplier * $this->hash + self::hashValue($part);
+		$this->hash = (int)($this->multiplier * $this->hash) + self::hashValue($part);
 
 		return $this;
 	}
 
 	public function getHashCode(): int {
-		return $this->hash;
+		return $this->hash % PHP_INT_MAX;
 	}
 }
