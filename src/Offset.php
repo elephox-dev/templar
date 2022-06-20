@@ -34,7 +34,7 @@ class Offset implements Hashable {
 	}
 
 	public function getHashCode(): int {
-		return Templar::combineHashCodes(
+		return HashBuilder::buildHash(
 			$this->x->getHashCode(),
 			$this->y->getHashCode(),
 		);

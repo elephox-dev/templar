@@ -3,7 +3,10 @@ declare(strict_types=1);
 
 namespace Elephox\Templar;
 
+use BackedEnum;
 use InvalidArgumentException;
+use Stringable;
+use UnitEnum;
 
 class HashBuilder implements Hashable {
 	public const DefaultInitializer = 17;
@@ -13,8 +16,12 @@ class HashBuilder implements Hashable {
 		return new HashBuilder(parts: $parts);
 	}
 
-	public static function hashString(string $string): int {
-		return crc32($string);
+	public static function buildHash(mixed ...$parts): int {
+		return self::from(parts: $parts)->getHashCode();
+	}
+
+	public static function hashString(Stringable|string $string): int {
+		return crc32((string)$string);
 	}
 
 	public static function hashIterable(iterable $iterable): int {
@@ -23,6 +30,18 @@ class HashBuilder implements Hashable {
 			$builder->append($part);
 		}
 		return $builder->getHashCode();
+	}
+
+	public static function hashEnum(UnitEnum $member): int {
+		if ($member instanceof Stringable) {
+			return self::hashString((string)$member);
+		}
+
+		if ($member instanceof BackedEnum) {
+			return self::hashValue($member->value);
+		}
+
+		return self::hashString($member->name);
 	}
 
 	public static function hashValue(mixed $value): int {
@@ -34,7 +53,7 @@ class HashBuilder implements Hashable {
 			return self::hashString((string)$value);
 		}
 
-		if (is_string($value)) {
+		if (is_string($value) || $value instanceof Stringable) {
 			return self::hashString($value);
 		}
 
@@ -52,6 +71,10 @@ class HashBuilder implements Hashable {
 
 		if ($value instanceof Hashable) {
 			return $value->getHashCode();
+		}
+
+		if ($value instanceof UnitEnum) {
+			return self::hashEnum($value);
 		}
 
 		throw new InvalidArgumentException(

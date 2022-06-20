@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace Elephox\Templar\Foundation;
 
 use Elephox\Templar\DocumentMeta;
+use Elephox\Templar\HashBuilder;
 use Elephox\Templar\HtmlRenderWidget;
 use Elephox\Templar\RenderContext;
-use Elephox\Templar\Templar;
 
 class Document extends HtmlRenderWidget {
 	public function __construct(
@@ -58,7 +58,7 @@ class Document extends HtmlRenderWidget {
 	}
 
 	public function getHashCode(): int {
-		return Templar::combineHashCodes(
+		return HashBuilder::buildHash(
 			$this->head->getHashCode(),
 			$this->body->getHashCode()
 		);

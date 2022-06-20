@@ -4,11 +4,11 @@ declare(strict_types=1);
 namespace Elephox\Templar\Foundation;
 
 use Elephox\Templar\EdgeInsets;
+use Elephox\Templar\HashBuilder;
 use Elephox\Templar\HasSingleRenderChild;
 use Elephox\Templar\HtmlRenderWidget;
 use Elephox\Templar\RenderContext;
 use Elephox\Templar\RendersPadding;
-use Elephox\Templar\Templar;
 use Elephox\Templar\Widget;
 
 class Padding extends HtmlRenderWidget {
@@ -29,7 +29,7 @@ class Padding extends HtmlRenderWidget {
 	}
 
 	public function getHashCode(): int {
-		return Templar::combineHashCodes(
+		return HashBuilder::buildHash(
 			$this->child?->getHashCode(),
 			$this->padding->getHashCode(),
 		);

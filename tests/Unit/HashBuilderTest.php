@@ -37,8 +37,8 @@ class HashBuilderTest extends TestCase {
 	 */
 	public function testHashEquals(mixed $a, mixed $b): void {
 		static::assertSame(
-			HashBuilder::from($a)->getHashCode(),
-			HashBuilder::from($b)->getHashCode()
+			HashBuilder::buildHash($a),
+			HashBuilder::buildHash($b)
 		);
 	}
 
@@ -54,8 +54,8 @@ class HashBuilderTest extends TestCase {
 	 */
 	public function testHashNotEquals(mixed $a, mixed $b): void {
 		static::assertNotSame(
-			HashBuilder::from($a)->getHashCode(),
-			HashBuilder::from($b)->getHashCode()
+			HashBuilder::buildHash($a),
+			HashBuilder::buildHash($b)
 		);
 	}
 
@@ -65,6 +65,6 @@ class HashBuilderTest extends TestCase {
 			"Value of type '" . get_debug_type(new stdClass()) . "' cannot be hashed."
 		);
 
-		HashBuilder::from(new stdClass());
+		HashBuilder::buildHash(new stdClass());
 	}
 }

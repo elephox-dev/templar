@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Elephox\Templar;
 
-enum FlexDirection: string {
+enum FlexDirection: string implements Hashable {
 	use HasEnumHashCode;
 
 	case Row = 'row';

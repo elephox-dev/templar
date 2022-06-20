@@ -23,6 +23,6 @@ abstract class BuildWidget extends Widget {
 	}
 
 	public function getHashCode(): int {
-		return hexdec(substr(spl_object_hash($this), 0, 8));
+		return HashBuilder::buildHash(spl_object_hash($this));
 	}
 }

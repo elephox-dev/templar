@@ -59,7 +59,7 @@ class CompoundLength implements EmittableLength {
 	}
 
 	public function getHashCode(): int {
-		return Templar::combineHashCodes(
+		return HashBuilder::buildHash(
 			$this->operator,
 			...$this->lengths,
 		);

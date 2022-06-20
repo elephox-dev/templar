@@ -16,7 +16,7 @@ use PHPUnit\Framework\TestCase;
  * @covers \Elephox\Templar\Foundation\Colors
  * @covers \Elephox\Templar\Angle
  * @covers \Elephox\Templar\Value
- * @covers \Elephox\Templar\Templar::combineHashCodes
+ * @covers \Elephox\Templar\HashBuilder
  * @uses   \Elephox\Templar\EnumStringable
  * @uses   \Elephox\Templar\HasEnumHashCode
  */
