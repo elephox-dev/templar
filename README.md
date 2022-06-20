@@ -6,10 +6,9 @@ Templar is a declarative templating engine for PHP. It was inspired by the appro
 
 ```php
 class Homepage extends BuildWidget {
-    public function build(): Widget
-    {
+    public function build(): Widget {
         return new FullscreenDocument(
-			      head: new Head(),
+            head: new Head(),
             body: new FullscreenBody(
                 child: new Center(
                     new Text('Hello, world!'),
@@ -21,13 +20,13 @@ class Homepage extends BuildWidget {
 
 $templar = new Templar();
 if (str_ends_with($_SERVER['REQUEST_URI'], '.css')) {
-	header('Content-Type: text/css');
+    header('Content-Type: text/css');
 
-	echo $templar->renderStyle(new Homepage());
+    echo $templar->renderStyle(new Homepage());
 } else {
-	header('Content-Type: text/html');
+    header('Content-Type: text/html');
 
-	echo $templar->render(new Homepage());
+    echo $templar->render(new Homepage());
 }
 
 ```
