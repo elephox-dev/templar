@@ -4,19 +4,17 @@ declare(strict_types=1);
 namespace Elephox\Templar\Foundation;
 
 use Elephox\Templar\Color;
-use Elephox\Templar\CompoundLength;
 use Elephox\Templar\EdgeInsets;
 use Elephox\Templar\Gradient;
+use Elephox\Templar\HashBuilder;
 use Elephox\Templar\HasSingleRenderChild;
 use Elephox\Templar\HtmlRenderWidget;
 use Elephox\Templar\Length;
-use Elephox\Templar\MathOperator;
 use Elephox\Templar\PositionContext;
 use Elephox\Templar\RenderContext;
 use Elephox\Templar\RendersBoxShadows;
 use Elephox\Templar\RendersMargin;
 use Elephox\Templar\RendersPadding;
-use Elephox\Templar\Templar;
 use Elephox\Templar\Widget;
 
 class Container extends HtmlRenderWidget {
@@ -59,10 +57,6 @@ class Container extends HtmlRenderWidget {
 	}
 
 	protected function renderStyleContent(RenderContext $context): string {
-		$width = new CompoundLength([$this->width ?? Length::inPercent(100)], MathOperator::Minus);
-		$height =
-			new CompoundLength([$this->height ?? Length::inPercent(100)], MathOperator::Minus);
-
 		$style = '';
 
 		if ($this->color !== null) {
@@ -119,7 +113,7 @@ class Container extends HtmlRenderWidget {
 	}
 
 	public function getHashCode(): int {
-		return Templar::combineHashCodes(
+		return HashBuilder::buildHash(
 			$this->child,
 			$this->padding,
 			$this->margin,

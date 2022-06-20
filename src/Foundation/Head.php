@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Elephox\Templar\Foundation;
 
+use Elephox\Templar\HashBuilder;
 use Elephox\Templar\HtmlRenderWidget;
 use Elephox\Templar\RenderContext;
 
@@ -39,12 +40,6 @@ HTML;
 	}
 
 	public function getHashCode(): int {
-		return hexdec(
-			substr(
-				md5($this->title ?? ''),
-				0,
-				8,
-			)
-		);
+		return HashBuilder::buildHash($this->title);
 	}
 }

@@ -3,12 +3,12 @@ declare(strict_types=1);
 
 namespace Elephox\Templar\Foundation;
 
+use Elephox\Templar\HashBuilder;
 use Elephox\Templar\HasSingleRenderChild;
 use Elephox\Templar\HtmlRenderWidget;
 use Elephox\Templar\Length;
 use Elephox\Templar\PositionContext;
 use Elephox\Templar\RenderContext;
-use Elephox\Templar\Templar;
 use Elephox\Templar\VerticalAlignment;
 use Elephox\Templar\Widget;
 
@@ -64,21 +64,13 @@ class FlexChild extends HtmlRenderWidget {
 	}
 
 	public function getHashCode(): int {
-		return Templar::combineHashCodes(
-			$this->child->getHashCode(),
+		return HashBuilder::buildHash(
+			$this->child,
 			$this->order,
 			$this->grow,
 			$this->shrink,
-			$this->basis !== null ? ($this->basis instanceof Length
-				? $this->basis->getHashCode()
-				: hexdec(
-					substr(
-						md5($this->basis),
-						0,
-						8,
-					)
-				)) : null,
-			$this->align?->getHashCode(),
+			$this->basis,
+			$this->align,
 		);
 	}
 }

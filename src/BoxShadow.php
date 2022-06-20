@@ -68,12 +68,12 @@ class BoxShadow implements Emittable {
 	}
 
 	public function getHashCode(): int {
-		return Templar::combineHashCodes(
+		return HashBuilder::buildHash(
 			$this->offset,
 			$this->blurRadius,
 			$this->spreadRadius,
 			$this->color,
-			$this->inset ? 1 : 0,
+			$this->inset,
 		);
 	}
 }

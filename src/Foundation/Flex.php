@@ -6,12 +6,12 @@ namespace Elephox\Templar\Foundation;
 use Elephox\Templar\ContentAlignment;
 use Elephox\Templar\FlexDirection;
 use Elephox\Templar\FlexWrap;
+use Elephox\Templar\HashBuilder;
 use Elephox\Templar\HorizontalAlignment;
 use Elephox\Templar\HtmlRenderWidget;
 use Elephox\Templar\Length;
 use Elephox\Templar\PositionContext;
 use Elephox\Templar\RenderContext;
-use Elephox\Templar\Templar;
 use Elephox\Templar\VerticalAlignment;
 use Elephox\Templar\Widget;
 
@@ -137,7 +137,7 @@ class Flex extends HtmlRenderWidget {
 	}
 
 	public function getHashCode(): int {
-		return Templar::combineHashCodes(
+		return HashBuilder::buildHash(
 			$this->horizontalItemAlignment?->getHashCode(),
 			$this->verticalAlignment?->getHashCode(),
 			$this->contentAlignment?->getHashCode(),

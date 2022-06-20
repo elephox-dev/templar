@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace Elephox\Templar\Foundation;
 
+use Elephox\Templar\HashBuilder;
 use Elephox\Templar\HtmlRenderWidget;
 use Elephox\Templar\RenderContext;
 use Elephox\Templar\RendersTextStyle;
-use Elephox\Templar\Templar;
 use Elephox\Templar\TextAlign;
 use Elephox\Templar\TextStyle;
 
@@ -41,8 +41,8 @@ class Text extends HtmlRenderWidget {
 	}
 
 	public function getHashCode(): int {
-		return Templar::combineHashCodes(
-			hexdec(substr(md5($this->text), 0, 8)),
+		return HashBuilder::buildHash(
+			$this->text,
 			$this->align,
 		);
 	}

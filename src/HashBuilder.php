@@ -10,7 +10,7 @@ use UnitEnum;
 
 class HashBuilder implements Hashable {
 	public const DefaultInitializer = 17;
-	public const DefaultMultiplier = 31;
+	public const DefaultMultiplier = 37;
 
 	public static function from(mixed ...$parts): HashBuilder {
 		return new HashBuilder(parts: $parts);
@@ -33,6 +33,10 @@ class HashBuilder implements Hashable {
 	}
 
 	public static function hashEnum(UnitEnum $member): int {
+		if ($member instanceof Stringable) {
+			return self::hashString((string)$member);
+		}
+
 		if ($member instanceof BackedEnum) {
 			return self::hashValue($member->value);
 		}
@@ -46,7 +50,7 @@ class HashBuilder implements Hashable {
 		}
 
 		if (is_float($value)) {
-			return self::hashString(sprintf('%.14F', $value));
+			return self::hashString((string)$value);
 		}
 
 		if (is_string($value) || $value instanceof Stringable) {
@@ -78,7 +82,7 @@ class HashBuilder implements Hashable {
 		);
 	}
 
-	private float $hash;
+	private int $hash;
 
 	public function __construct(
 		int $initializer = self::DefaultInitializer,
@@ -102,6 +106,6 @@ class HashBuilder implements Hashable {
 	}
 
 	public function getHashCode(): int {
-		return $this->hash % PHP_INT_MAX;
+		return $this->hash;
 	}
 }

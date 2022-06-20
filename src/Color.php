@@ -238,7 +238,7 @@ class Color implements Stringable, Hashable {
 		$max = max($red, $green, $blue);
 		$min = min($red, $green, $blue);
 
-		$h = $s = $v = $max;
+		$h = $v = $max;
 		$d = $max - $min;
 		$s = $max === 0 ? 0 : $d / $max;
 

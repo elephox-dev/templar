@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Elephox\Templar;
 
-enum VerticalAlignment: string {
+enum VerticalAlignment: string implements Hashable {
 	use HasEnumHashCode;
 
 	case Auto = 'auto';

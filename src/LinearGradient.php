@@ -20,7 +20,7 @@ class LinearGradient extends Gradient {
 	}
 
 	public function getHashCode(): int {
-		return Templar::combineHashCodes(
+		return HashBuilder::buildHash(
 			$this->direction,
 			...$this->stops,
 		);

@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Elephox\Templar;
 
-enum LengthUnit: string implements ValueUnit {
+enum LengthUnit: string implements ValueUnit, Hashable {
 	use HasEnumHashCode;
 	use EnumStringable;
 

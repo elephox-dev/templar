@@ -7,19 +7,6 @@ use Elephox\Templar\Foundation\Colors;
 use ErrorException;
 
 class Templar {
-	public static function combineHashCodes(null|int|Hashable ...$hashCodes): int {
-		$hash = 0;
-		foreach ($hashCodes as $hashCode) {
-			if ($hashCode instanceof Hashable) {
-				$hashCode = $hashCode->getHashCode();
-			}
-
-			$hash = (int)($hash * 31 + ($hashCode ?? 0));
-		}
-
-		return $hash;
-	}
-
 	protected function getDefaultRenderContext(): RenderContext {
 		$colors = new ColorScheme(
 			primary: Colors::SkyBlue(),

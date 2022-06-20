@@ -76,7 +76,7 @@ class EdgeInsets implements Hashable {
 	}
 
 	public function getHashCode(): int {
-		return Templar::combineHashCodes(
+		return HashBuilder::buildHash(
 			$this->left,
 			$this->top,
 			$this->right,

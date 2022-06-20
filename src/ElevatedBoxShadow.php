@@ -31,7 +31,7 @@ class ElevatedBoxShadow extends BoxShadow {
 	public function withAmbient(): array {
 		return [
 			$this,
-			new AmbientBoxShadow(
+			BoxShadow::ambient(
 				$this->elevation,
 				$this->color->withOpacity(1)
 			),
