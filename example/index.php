@@ -3,13 +3,14 @@ declare(strict_types=1);
 
 use Elephox\Templar\BoxShadow;
 use Elephox\Templar\BuildWidget;
-use Elephox\Templar\Color;
 use Elephox\Templar\DocumentMeta;
 use Elephox\Templar\EdgeInsets;
+use Elephox\Templar\Foundation\Body;
 use Elephox\Templar\Foundation\Center;
 use Elephox\Templar\Foundation\Colors;
 use Elephox\Templar\Foundation\Column;
 use Elephox\Templar\Foundation\Container;
+use Elephox\Templar\Foundation\Document;
 use Elephox\Templar\Foundation\FullscreenBody;
 use Elephox\Templar\Foundation\FullscreenDocument;
 use Elephox\Templar\Foundation\Head;

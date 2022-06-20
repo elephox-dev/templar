@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+    <configuration default="false" name="Integration" type="PestRunConfigurationType">
+        <option name="pestRunnerSettings">
+            <PestRunner method="" scope="ConfigurationFile" options="--testsuite Integration"/>
+        </option>
+        <option name="runnerSettings">
+            <PhpTestRunnerSettings method="" scope="ConfigurationFile" options="--testsuite Integration"/>
+        </option>
+        <method v="2"/>
+    </configuration>
+</component>

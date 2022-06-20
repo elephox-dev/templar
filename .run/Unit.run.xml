@@ -1,6 +1,11 @@
 <component name="ProjectRunConfigurationManager">
-    <configuration default="false" name="Unit" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
-        <TestRunner configuration_file="$PROJECT_DIR$/phpunit.xml.dist" scope="XML" options="--testsuite Unit"/>
+    <configuration default="false" name="Unit" type="PestRunConfigurationType">
+        <option name="pestRunnerSettings">
+            <PestRunner method="" scope="ConfigurationFile" options="--testsuite Unit"/>
+        </option>
+        <option name="runnerSettings">
+            <PhpTestRunnerSettings method="" scope="ConfigurationFile" options="--testsuite Unit"/>
+        </option>
         <method v="2"/>
     </configuration>
 </component>

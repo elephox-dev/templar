@@ -73,14 +73,6 @@ class Flex extends HtmlRenderWidget {
 		$childStyles = $this->renderChildStyles($context);
 		$myStyleContent = parent::renderStyle($context);
 
-		if ($myStyleContent === '') {
-			return $childStyles;
-		}
-
-		if ($childStyles === '') {
-			return $myStyleContent;
-		}
-
 		return $myStyleContent . $childStyles;
 	}
 
