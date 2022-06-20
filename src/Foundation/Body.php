@@ -5,19 +5,24 @@ namespace Elephox\Templar\Foundation;
 
 use Elephox\Templar\Color;
 use Elephox\Templar\HasSingleRenderChild;
+use Elephox\Templar\HtmlRenderWidget;
 use Elephox\Templar\RenderContext;
+use Elephox\Templar\RendersTextStyle;
 use Elephox\Templar\TextStyle;
 use Elephox\Templar\Widget;
 
-class Body extends TextStyleApplicator {
+class Body extends HtmlRenderWidget {
 	use HasSingleRenderChild;
+	use RendersTextStyle;
 
 	public function __construct(
-		Widget $child,
-		?TextStyle $textStyle = null,
+		protected readonly ?Widget $child,
+		protected readonly ?TextStyle $textStyle = null,
 		protected null|Color $color = null,
 	) {
-		parent::__construct($child, $textStyle);
+		if ($child !== null) {
+			$child->renderParent = $this;
+		}
 	}
 
 	protected function getTag(): string {
@@ -25,12 +30,14 @@ class Body extends TextStyleApplicator {
 	}
 
 	protected function renderStyleContent(RenderContext $context): string {
-		$style = parent::renderStyleContent($context);
+		$style = '';
 
-		$color = $this->color ?? $context->colorScheme->background;
-		if ($color !== null) {
-			$style .= "background-color: $color;";
+		$backgroundColor = $this->color ?? $context->colorScheme->background;
+		if ($backgroundColor !== null) {
+			$style .= "background-color: $backgroundColor;";
 		}
+
+		$style .= $this->renderTextStyle($this->textStyle ?? new TextStyle(), $context);
 
 		return $style;
 	}

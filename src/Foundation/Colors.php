@@ -68,6 +68,18 @@ abstract class Colors {
 		return self::Red()->mix(self::Magenta(), 0.5);
 	}
 
+	public static function Violet(): Color {
+		return new Color(0xAA00FFFF);
+	}
+
+	public static function NeonGreen(): Color {
+		return new Color(0x39FF14FF);
+	}
+
+	public static function Azure(): Color {
+		return new Color(0x3399FFFF);
+	}
+
 	public static function Shadow(): Color {
 		return self::Grayscale(0.25)->withOpacity(0.75);
 	}
