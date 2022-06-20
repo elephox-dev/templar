@@ -30,14 +30,14 @@ abstract class Colors {
 		return new Color(0xFFFF00FF);
 	}
 
-	public static function Grayscale(float $l): Color {
-		return new Color(
-			((int)(255 * $l)) << 24 | ((int)(255 * $l)) << 16 | ((int)(255 * $l)) << 8 | 0xFF
-		);
+	public static function Grayscale(float $lightness): Color {
+		assert($lightness >= 0.0 && $lightness <= 1.0, 'Scale must be between 0.0 and 1.0');
+
+		return Color::fromHSLA(0.0, 0.0, $lightness * 100.0, 1.0);
 	}
 
 	public static function Black(): Color {
-		return self::Grayscale(0);
+		return self::Grayscale(0.0);
 	}
 
 	public static function DarkGray(): Color {
@@ -78,9 +78,5 @@ abstract class Colors {
 
 	public static function Azure(): Color {
 		return new Color(0x3399FFFF);
-	}
-
-	public static function Shadow(): Color {
-		return self::Grayscale(0.25)->withOpacity(0.75);
 	}
 }

@@ -120,8 +120,17 @@ class Container extends HtmlRenderWidget {
 
 	public function getHashCode(): int {
 		return Templar::combineHashCodes(
-			$this->child?->getHashCode(),
-			$this->color?->getHashCode(),
+			$this->child,
+			$this->padding,
+			$this->margin,
+			$this->position,
+			$this->width,
+			$this->height,
+			$this->minWidth,
+			$this->minHeight,
+			$this->maxWidth,
+			$this->maxHeight,
+			...$this->shadows,
 		);
 	}
 }

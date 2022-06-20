@@ -21,28 +21,25 @@ class Templar {
 	}
 
 	protected function getDefaultRenderContext(): RenderContext {
+		$colors = new ColorScheme(
+			primary: Colors::SkyBlue(),
+			secondary: Colors::NeonGreen(),
+			tertiary: Colors::Violet(),
+			background: Colors::White(),
+			foreground: Colors::Black(),
+			onPrimary: Colors::White(),
+			onSecondary: Colors::White(),
+			onTertiary: Colors::White(),
+			divider: Colors::Grayscale(0.33),
+		);
+
 		return new RenderContext(
-			colorScheme: new ColorScheme(
-				primary: Colors::Azure(),
-				secondary: Colors::NeonGreen(),
-				tertiary: Colors::Violet(),
-				background: Colors::White(),
-				foreground: Colors::Black(),
-				onPrimary: Colors::White(),
-				onSecondary: Colors::White(),
-				onTertiary: Colors::White(),
-				divider: Colors::Grayscale(0.33),
-			),
-			darkColorScheme: new ColorScheme(
-				primary: Colors::Azure(),
-				secondary: Colors::NeonGreen(),
-				tertiary: Colors::Violet(),
+			colorScheme: $colors,
+			darkColorScheme: $colors->with(
+				primary: $colors->primary->darken(0.1)->desaturate(0.3),
 				background: Colors::Grayscale(0.15),
-				foreground: Colors::White(),
-				onPrimary: Colors::White(),
-				onSecondary: Colors::White(),
-				onTertiary: Colors::White(),
-				divider: Colors::Grayscale(0.33),
+				foreground: Colors::Grayscale(0.85),
+				onPrimary: Colors::Grayscale(0.95),
 			),
 		);
 	}

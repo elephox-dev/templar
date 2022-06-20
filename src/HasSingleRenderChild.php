@@ -35,10 +35,6 @@ trait HasSingleRenderChild {
 		return $myStyle . $childStyle;
 	}
 
-	protected function renderStyleContent(RenderContext $context): string {
-		return parent::renderStyleContent($context);
-	}
-
 	public function getHashCode(): int {
 		return $this->child?->getHashCode() ?? 0;
 	}
