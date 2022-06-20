@@ -25,11 +25,11 @@ class ThrowableWidget extends RenderWidget {
 		$relevantLines = $this->getSourceLines();
 		$this->formatLines($relevantLines);
 		$this->addLineNumbers($relevantLines);
-		$relevantLinesStr = implode(PHP_EOL, $relevantLines);
+		$relevantLinesStr = implode("\n", $relevantLines);
 
 		return <<<HTML
 <div style="background: red; color: yellow; border: yellow dashed 2px; width: 100%; height: 100%; overflow: auto; padding: 4px; font-family: sans-serif">
-	<p>
+	<p style="margin: 0 0 1rem 0">
 		{$this->getMessage()}<br />
 		<em>in {$this->getFile()}:{$this->getLine()}</em>
 	</p>

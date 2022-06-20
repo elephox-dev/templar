@@ -23,8 +23,7 @@ HTML;
 
 		if (isset($attributes['class'])) {
 			$attributes['class'] .= ' ' . $this->getStyleClassName();
-		}
-		else {
+		} else {
 			$attributes['class'] = $this->getStyleClassName();
 		}
 
@@ -46,17 +45,22 @@ HTML;
 	}
 
 	public function renderStyle(RenderContext $context): string {
+		$className = $this->getStyleClassName();
 		if (in_array(
-			$this->getStyleClassName(),
+			$className,
 			$context->renderedClasses,
 			true
 		)) {
 			return '';
 		}
 
-		$context->renderedClasses[] = $this->getStyleClassName();
+		$context->renderedClasses[] = $className;
+		$content = $this->renderStyleContent($context);
+		if ($content === '') {
+			return '';
+		}
 
-		return ".{$this->getStyleClassName()} {{$this->renderStyleContent($context)}}";
+		return "." . $className . " {" . $content . "}";
 	}
 
 	abstract protected function renderStyleContent(RenderContext $context): string;
