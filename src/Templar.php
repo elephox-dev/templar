@@ -7,7 +7,7 @@ use Elephox\Templar\Foundation\Colors;
 use ErrorException;
 
 class Templar {
-	protected function getDefaultRenderContext(): RenderContext {
+	public static function getDefaultRenderContext(): RenderContext {
 		$colors = new ColorScheme(
 			primary: Colors::SkyBlue(),
 			secondary: Colors::NeonGreen(),
@@ -32,7 +32,7 @@ class Templar {
 	}
 
 	public function render(Widget $widget): string {
-		$context = $this->getDefaultRenderContext();
+		$context = self::getDefaultRenderContext();
 
 		set_error_handler(
 			static function (

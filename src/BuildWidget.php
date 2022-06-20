@@ -6,23 +6,23 @@ namespace Elephox\Templar;
 use Throwable;
 
 abstract class BuildWidget extends Widget {
-	public function render(RenderContext $context): string {
+	public function safeBuild(RenderContext $context): Widget {
 		try {
-			return $this->build($context)->render($context);
+			return $this->build($context);
 		} catch (Throwable $e) {
-			return (new ThrowableWidget($e))->render($context);
+			return new ThrowableWidget($e);
 		}
+	}
+
+	public function render(RenderContext $context): string {
+		return $this->safeBuild($context)->render($context);
 	}
 
 	public function renderStyle(RenderContext $context): string {
-		try {
-			return $this->build($context)->renderStyle($context);
-		} catch (Throwable $e) {
-			return (new ThrowableWidget($e))->renderStyle($context);
-		}
+		return $this->safeBuild($context)->renderStyle($context);
 	}
 
 	public function getHashCode(): int {
-		return hexdec(substr(spl_object_hash($this), 0, 8));
+		return 0;
 	}
 }
