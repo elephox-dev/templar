@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Elephox\Templar\Tests\Unit;
+namespace Elephox\Templar\Tests\Integration;
 
 use Elephox\Templar\Foundation\Body;
 use Elephox\Templar\Foundation\Document;
