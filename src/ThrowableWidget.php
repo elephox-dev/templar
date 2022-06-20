@@ -17,7 +17,7 @@ class ThrowableWidget extends RenderWidget {
 		$this->firstContextLine = max(0, $this->getLine() - $numContextLines - 1);
 	}
 
-	public function getHashCode(): int {
+	public function getHashCode(): float {
 		return 0;
 	}
 

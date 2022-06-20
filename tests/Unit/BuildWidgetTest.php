@@ -27,7 +27,7 @@ class BuildWidgetWithProperties extends BuildWidget {
 		return new Text($this->property1);
 	}
 
-	public function getHashCode(): int {
+	public function getHashCode(): float {
 		return HashBuilder::buildHash($this->property1);
 	}
 }

@@ -33,7 +33,7 @@ class Offset implements Hashable {
 		);
 	}
 
-	public function getHashCode(): int {
+	public function getHashCode(): float {
 		return HashBuilder::buildHash(
 			$this->x->getHashCode(),
 			$this->y->getHashCode(),

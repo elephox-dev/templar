@@ -28,7 +28,7 @@ class Padding extends HtmlRenderWidget {
 		return $this->renderPadding($this->padding);
 	}
 
-	public function getHashCode(): int {
+	public function getHashCode(): float {
 		return HashBuilder::buildHash(
 			$this->child?->getHashCode(),
 			$this->padding->getHashCode(),

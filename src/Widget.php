@@ -10,11 +10,11 @@ abstract class Widget implements Hashable {
 	abstract public function render(RenderContext $context): string;
 
 	public function getStyleClassName(): string {
-		return str_replace(
-				'\\',
-				'-',
-				strtolower(static::class),
-			) . '-' . $this->getHashCode();
+		return sprintf(
+			'%s-%.0f',
+			strtolower(str_replace('\\', '-', $this::class)),
+			$this->getHashCode()
+		);
 	}
 
 	abstract public function renderStyle(RenderContext $context): string;

@@ -67,7 +67,7 @@ class BoxShadow implements Emittable {
 		return (string) $this;
 	}
 
-	public function getHashCode(): int {
+	public function getHashCode(): float {
 		return HashBuilder::buildHash(
 			$this->offset,
 			$this->blurRadius,

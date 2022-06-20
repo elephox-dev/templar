@@ -57,10 +57,10 @@ class Document extends HtmlRenderWidget {
 		return '';
 	}
 
-	public function getHashCode(): int {
+	public function getHashCode(): float {
 		return HashBuilder::buildHash(
-			$this->head->getHashCode(),
-			$this->body->getHashCode()
+			$this->head,
+			$this->body
 		);
 	}
 }

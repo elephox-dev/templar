@@ -58,7 +58,7 @@ class CompoundLength implements EmittableLength {
 		return "calc($this)";
 	}
 
-	public function getHashCode(): int {
+	public function getHashCode(): float {
 		return HashBuilder::buildHash(
 			$this->operator,
 			...$this->lengths,

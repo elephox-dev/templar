@@ -25,16 +25,10 @@ abstract class Value implements Emittable {
 	}
 
 	public function toEmittable(): string {
-		return (string) $this;
+		return (string)$this;
 	}
 
-	public function getHashCode(): int {
-		return hexdec(
-			substr(
-				md5($this->__toString()),
-				0,
-				8
-			)
-		);
+	public function getHashCode(): float {
+		return HashBuilder::hashValue((string)$this);
 	}
 }

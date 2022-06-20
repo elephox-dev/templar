@@ -128,7 +128,7 @@ class Flex extends HtmlRenderWidget {
 		return $style;
 	}
 
-	public function getHashCode(): int {
+	public function getHashCode(): float {
 		return HashBuilder::buildHash(
 			$this->horizontalItemAlignment?->getHashCode(),
 			$this->verticalAlignment?->getHashCode(),

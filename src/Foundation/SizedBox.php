@@ -23,7 +23,7 @@ class SizedBox extends HtmlRenderWidget {
 		}
 	}
 
-	public function getHashCode(): int {
+	public function getHashCode(): float {
 		return HashBuilder::buildHash(
 			$this->child->getHashCode(),
 			$this->width?->getHashCode(),

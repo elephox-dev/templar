@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
  * @covers \Elephox\Templar\Offset
  * @covers \Elephox\Templar\Length
  * @covers \Elephox\Templar\Value
- * @covers \Elephox\Templar\Templar::combineHashCodes
+ * @covers \Elephox\Templar\HashBuilder
  * @uses   \Elephox\Templar\EnumStringable
  */
 class OffsetTest extends TestCase {

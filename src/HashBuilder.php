@@ -16,15 +16,15 @@ class HashBuilder implements Hashable {
 		return new HashBuilder(parts: $parts);
 	}
 
-	public static function buildHash(mixed ...$parts): int {
+	public static function buildHash(mixed ...$parts): float {
 		return self::from(parts: $parts)->getHashCode();
 	}
 
-	public static function hashString(Stringable|string $string): int {
+	public static function hashString(Stringable|string $string): float {
 		return crc32((string)$string);
 	}
 
-	public static function hashIterable(iterable $iterable): int {
+	public static function hashIterable(iterable $iterable): float {
 		$builder = new HashBuilder();
 		foreach ($iterable as $part) {
 			$builder->append($part);
@@ -32,7 +32,7 @@ class HashBuilder implements Hashable {
 		return $builder->getHashCode();
 	}
 
-	public static function hashEnum(UnitEnum $member): int {
+	public static function hashEnum(UnitEnum $member): float {
 		if ($member instanceof Stringable) {
 			return self::hashString((string)$member);
 		}
@@ -44,13 +44,13 @@ class HashBuilder implements Hashable {
 		return self::hashString($member->name);
 	}
 
-	public static function hashValue(mixed $value): int {
+	public static function hashValue(mixed $value): float {
 		if (is_int($value)) {
-			return $value;
+			return (float)$value;
 		}
 
 		if (is_float($value)) {
-			return self::hashString((string)$value);
+			return $value;
 		}
 
 		if (is_string($value) || $value instanceof Stringable) {
@@ -82,7 +82,7 @@ class HashBuilder implements Hashable {
 		);
 	}
 
-	private int $hash;
+	private float $hash;
 
 	public function __construct(
 		int $initializer = self::DefaultInitializer,
@@ -100,12 +100,12 @@ class HashBuilder implements Hashable {
 	}
 
 	public function append(mixed $part): self {
-		$this->hash = (int)($this->multiplier * $this->hash) + self::hashValue($part);
+		$this->hash = $this->multiplier * $this->hash + self::hashValue($part);
 
 		return $this;
 	}
 
-	public function getHashCode(): int {
+	public function getHashCode(): float {
 		return $this->hash;
 	}
 }

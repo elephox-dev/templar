@@ -22,7 +22,7 @@ abstract class BuildWidget extends Widget {
 		return $this->safeBuild($context)->renderStyle($context);
 	}
 
-	public function getHashCode(): int {
+	public function getHashCode(): float {
 		return 0;
 	}
 }

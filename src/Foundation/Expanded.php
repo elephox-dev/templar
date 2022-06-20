@@ -19,7 +19,7 @@ class Expanded extends BuildWidget {
 		);
 	}
 
-	public function getHashCode(): int {
+	public function getHashCode(): float {
 		return $this->child->getHashCode();
 	}
 }

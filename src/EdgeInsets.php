@@ -75,7 +75,7 @@ class EdgeInsets implements Hashable {
 		}
 	}
 
-	public function getHashCode(): int {
+	public function getHashCode(): float {
 		return HashBuilder::buildHash(
 			$this->left,
 			$this->top,

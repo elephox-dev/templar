@@ -112,7 +112,7 @@ class Container extends HtmlRenderWidget {
 		return $style;
 	}
 
-	public function getHashCode(): int {
+	public function getHashCode(): float {
 		return HashBuilder::buildHash(
 			$this->child,
 			$this->padding,

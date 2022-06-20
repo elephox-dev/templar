@@ -23,7 +23,7 @@ trait HasSingleRenderChild {
 		return $myStyle . $childStyle;
 	}
 
-	public function getHashCode(): int {
-		return $this->child?->getHashCode() ?? 0;
+	public function getHashCode(): float {
+		return $this->child?->getHashCode() ?? 0.0;
 	}
 }

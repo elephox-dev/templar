@@ -40,7 +40,7 @@ class Text extends HtmlRenderWidget {
 		return $this->text;
 	}
 
-	public function getHashCode(): int {
+	public function getHashCode(): float {
 		return HashBuilder::buildHash(
 			$this->text,
 			$this->align,

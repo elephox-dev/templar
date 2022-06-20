@@ -295,7 +295,7 @@ class Color implements Stringable, Hashable {
 		return $this->toHex();
 	}
 
-	public function getHashCode(): int {
+	public function getHashCode(): float {
 		return $this->value;
 	}
 

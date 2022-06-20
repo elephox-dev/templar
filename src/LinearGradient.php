@@ -19,7 +19,7 @@ class LinearGradient extends Gradient {
 		);
 	}
 
-	public function getHashCode(): int {
+	public function getHashCode(): float {
 		return HashBuilder::buildHash(
 			$this->direction,
 			...$this->stops,
