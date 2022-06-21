@@ -63,7 +63,9 @@ HTML;
 		return "." . $className . " {" . $content . "}";
 	}
 
-	abstract protected function renderStyleContent(RenderContext $context): string;
+	protected function renderStyleContent(RenderContext $context): string {
+		return '';
+	}
 
 	protected function getAttributes(RenderContext $context): array {
 		return [];

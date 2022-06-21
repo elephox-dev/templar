@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Elephox\Templar;
 
-abstract class Value implements Emittable {
+abstract class Value implements Emittable, Equatable {
 	abstract public function unit(): ValueUnit;
 
 	abstract public function value(): float;
@@ -30,5 +30,14 @@ abstract class Value implements Emittable {
 
 	public function getHashCode(): float {
 		return HashBuilder::hashValue((string)$this);
+	}
+
+	public function equals(mixed $other): bool {
+		if (!($other instanceof self)) {
+			return false;
+		}
+
+		// TODO: maybe also consider precision?
+		return $this->value() === $other->value() && $this->unit() === $other->unit();
 	}
 }

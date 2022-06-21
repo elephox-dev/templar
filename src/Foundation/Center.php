@@ -4,10 +4,10 @@ declare(strict_types=1);
 namespace Elephox\Templar\Foundation;
 
 use Elephox\Templar\BuildWidget;
-use Elephox\Templar\HorizontalAlignment;
+use Elephox\Templar\MainAxisAlignment;
 use Elephox\Templar\Length;
 use Elephox\Templar\RenderContext;
-use Elephox\Templar\VerticalAlignment;
+use Elephox\Templar\CrossAxisAlignment;
 use Elephox\Templar\Widget;
 
 class Center extends BuildWidget {
@@ -19,7 +19,7 @@ class Center extends BuildWidget {
 		if ($this->renderParent instanceof Flex) {
 			return new FlexChild(
 				child: $this->child,
-				align: VerticalAlignment::Center,
+				align: CrossAxisAlignment::Center,
 			);
 		}
 
@@ -27,8 +27,8 @@ class Center extends BuildWidget {
 			children: [
 				$this->child,
 			],
-			horizontalItemAlignment: HorizontalAlignment::Center,
-			verticalAlignment: VerticalAlignment::Center,
+			mainAxisAlignment: MainAxisAlignment::Center,
+			crossAxisAlignment: CrossAxisAlignment::Center,
 			width: Length::inPercent(100),
 			height: Length::inPercent(100),
 		);

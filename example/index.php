@@ -3,29 +3,28 @@ declare(strict_types=1);
 
 use Elephox\Templar\BoxShadow;
 use Elephox\Templar\BuildWidget;
+use Elephox\Templar\CrossAxisAlignment;
 use Elephox\Templar\DocumentMeta;
 use Elephox\Templar\EdgeInsets;
-use Elephox\Templar\Foundation\Body;
 use Elephox\Templar\Foundation\Center;
 use Elephox\Templar\Foundation\Colors;
 use Elephox\Templar\Foundation\Column;
 use Elephox\Templar\Foundation\Container;
-use Elephox\Templar\Foundation\Document;
 use Elephox\Templar\Foundation\FullscreenBody;
 use Elephox\Templar\Foundation\FullscreenDocument;
 use Elephox\Templar\Foundation\Head;
 use Elephox\Templar\Foundation\LateWidget;
+use Elephox\Templar\Foundation\LinkButton;
 use Elephox\Templar\Foundation\NavigationBar;
 use Elephox\Templar\Foundation\Padding;
 use Elephox\Templar\Foundation\Sizes;
 use Elephox\Templar\Foundation\Text;
 use Elephox\Templar\Foundation\Wrap;
-use Elephox\Templar\HorizontalAlignment;
 use Elephox\Templar\Length;
+use Elephox\Templar\MainAxisAlignment;
 use Elephox\Templar\RenderContext;
 use Elephox\Templar\Templar;
 use Elephox\Templar\TextStyle;
-use Elephox\Templar\VerticalAlignment;
 use Elephox\Templar\Widget;
 
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -61,10 +60,14 @@ class MyApp extends BuildWidget {
 										children: [
 											new Wrap(
 												children: $containers,
-												horizontalItemAlignment: HorizontalAlignment::Center,
-												verticalAlignment: VerticalAlignment::Center,
+												mainAxisAlignment: MainAxisAlignment::Center,
+											),
+											new LinkButton(
+												new Text("Visit elephox.dev"),
+												"/",
 											),
 										],
+										crossAxisAlignment: CrossAxisAlignment::Center,
 									);
 								}
 							),

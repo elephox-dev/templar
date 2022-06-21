@@ -10,7 +10,7 @@ use Elephox\Templar\Length;
 use Elephox\Templar\PositionContext;
 use Elephox\Templar\RenderContext;
 use Elephox\Templar\TextStyle;
-use Elephox\Templar\VerticalAlignment;
+use Elephox\Templar\CrossAxisAlignment;
 use Elephox\Templar\Widget;
 
 class NavigationBar extends BuildWidget {
@@ -35,7 +35,7 @@ class NavigationBar extends BuildWidget {
 		return new Container(
 			child: new Row(
 				children: $elements,
-				verticalAlignment: VerticalAlignment::Center,
+				crossAxisAlignment: CrossAxisAlignment::Center,
 			),
 			color: $context->colorScheme->primary,
 			shadows: BoxShadow::fromElevation(8)->withAmbient(),

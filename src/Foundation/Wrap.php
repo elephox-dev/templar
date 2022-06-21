@@ -7,17 +7,17 @@ use Elephox\Templar\BuildWidget;
 use Elephox\Templar\ContentAlignment;
 use Elephox\Templar\FlexDirection;
 use Elephox\Templar\FlexWrap;
-use Elephox\Templar\HorizontalAlignment;
+use Elephox\Templar\MainAxisAlignment;
 use Elephox\Templar\Length;
 use Elephox\Templar\RenderContext;
-use Elephox\Templar\VerticalAlignment;
+use Elephox\Templar\CrossAxisAlignment;
 use Elephox\Templar\Widget;
 
 class Wrap extends BuildWidget {
 	public function __construct(
 		protected readonly iterable $children,
-		protected readonly ?HorizontalAlignment $horizontalItemAlignment = null,
-		protected readonly ?VerticalAlignment $verticalAlignment = null,
+		protected readonly ?MainAxisAlignment $mainAxisAlignment = null,
+		protected readonly ?CrossAxisAlignment $crossAxisAlignment = null,
 		protected readonly ?ContentAlignment $contentAlignment = null,
 		protected readonly bool $reverse = false,
 		protected readonly bool $shrinkWrap = false,
@@ -26,8 +26,8 @@ class Wrap extends BuildWidget {
 	protected function build(RenderContext $context): Widget {
 		return new Flex(
 			children: $this->children,
-			horizontalItemAlignment: $this->horizontalItemAlignment,
-			verticalAlignment: $this->verticalAlignment,
+			mainAxisAlignment: $this->mainAxisAlignment,
+			crossAxisAlignment: $this->crossAxisAlignment,
 			contentAlignment: $this->contentAlignment,
 			direction: $this->reverse ? FlexDirection::RowReverse : FlexDirection::Row,
 			wrap: FlexWrap::Wrap,

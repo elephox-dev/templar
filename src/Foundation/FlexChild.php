@@ -9,7 +9,7 @@ use Elephox\Templar\HtmlRenderWidget;
 use Elephox\Templar\Length;
 use Elephox\Templar\PositionContext;
 use Elephox\Templar\RenderContext;
-use Elephox\Templar\VerticalAlignment;
+use Elephox\Templar\CrossAxisAlignment;
 use Elephox\Templar\Widget;
 
 class FlexChild extends HtmlRenderWidget {
@@ -21,7 +21,7 @@ class FlexChild extends HtmlRenderWidget {
 		private readonly ?int $grow = null,
 		private readonly ?int $shrink = null,
 		private readonly null|Length|string $basis = null,
-		private readonly ?VerticalAlignment $align = null,
+		private readonly ?CrossAxisAlignment $align = null,
 	) {
 		if ($child !== null) {
 			$child->renderParent = $this;

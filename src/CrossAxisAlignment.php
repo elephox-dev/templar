@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace Elephox\Templar;
 
-enum VerticalAlignment: string implements Hashable {
+enum CrossAxisAlignment: string implements Hashable {
 	use HasEnumHashCode;
 
-	case Auto = 'auto';
 	case Start = 'flex-start';
 	case Center = 'center';
 	case End = 'flex-end';

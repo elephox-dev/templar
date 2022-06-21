@@ -7,12 +7,12 @@ use Elephox\Templar\ContentAlignment;
 use Elephox\Templar\FlexDirection;
 use Elephox\Templar\FlexWrap;
 use Elephox\Templar\HashBuilder;
-use Elephox\Templar\HorizontalAlignment;
+use Elephox\Templar\MainAxisAlignment;
 use Elephox\Templar\HtmlRenderWidget;
 use Elephox\Templar\Length;
 use Elephox\Templar\PositionContext;
 use Elephox\Templar\RenderContext;
-use Elephox\Templar\VerticalAlignment;
+use Elephox\Templar\CrossAxisAlignment;
 use Elephox\Templar\Widget;
 
 class Flex extends HtmlRenderWidget {
@@ -24,8 +24,8 @@ class Flex extends HtmlRenderWidget {
 	 */
 	public function __construct(
 		iterable $children,
-		protected readonly ?HorizontalAlignment $horizontalItemAlignment = null,
-		protected readonly ?VerticalAlignment $verticalAlignment = null,
+		protected readonly ?MainAxisAlignment $mainAxisAlignment = null,
+		protected readonly ?CrossAxisAlignment $crossAxisAlignment = null,
 		protected readonly ?ContentAlignment $contentAlignment = null,
 		protected readonly ?FlexDirection $direction = null,
 		protected readonly ?FlexWrap $wrap = null,
@@ -34,11 +34,6 @@ class Flex extends HtmlRenderWidget {
 		protected readonly ?Length $width = null,
 		protected readonly ?Length $height = null,
 	) {
-		assert(
-			$this->verticalAlignment !== VerticalAlignment::Auto,
-			"Flex widget cannot align items vertically to 'auto'",
-		);
-
 		if ($this->contentAlignment !== null && $this->wrap === FlexWrap::NoWrap) {
 			trigger_error("Content alignment has no effect when flex wrap is 'no-wrap'");
 		}
@@ -103,12 +98,12 @@ class Flex extends HtmlRenderWidget {
 			$style .= "flex-wrap: {$this->wrap->value};";
 		}
 
-		if ($this->horizontalItemAlignment !== null) {
-			$style .= "justify-content: {$this->horizontalItemAlignment->value};";
+		if ($this->mainAxisAlignment !== null) {
+			$style .= "justify-content: {$this->mainAxisAlignment->value};";
 		}
 
-		if ($this->verticalAlignment !== null) {
-			$style .= "align-items: {$this->verticalAlignment->value};";
+		if ($this->crossAxisAlignment !== null) {
+			$style .= "align-items: {$this->crossAxisAlignment->value};";
 		}
 
 		if ($this->contentAlignment !== null) {
@@ -117,8 +112,7 @@ class Flex extends HtmlRenderWidget {
 
 		if ($this->rowGap !== null && $this->columnGap !== null) {
 			$style .= "gap: $this->rowGap $this->columnGap;";
-		}
-		elseif ($this->rowGap !== null) {
+		} elseif ($this->rowGap !== null) {
 			$style .= "row-gap: $this->rowGap;";
 		}
 		elseif ($this->columnGap !== null) {
@@ -130,13 +124,13 @@ class Flex extends HtmlRenderWidget {
 
 	public function getHashCode(): float {
 		return HashBuilder::buildHash(
-			$this->horizontalItemAlignment?->getHashCode(),
-			$this->verticalAlignment?->getHashCode(),
-			$this->contentAlignment?->getHashCode(),
-			$this->direction?->getHashCode(),
-			$this->wrap?->getHashCode(),
-			$this->rowGap?->getHashCode(),
-			$this->columnGap?->getHashCode(),
+			$this->mainAxisAlignment,
+			$this->crossAxisAlignment,
+			$this->contentAlignment,
+			$this->direction,
+			$this->wrap,
+			$this->rowGap,
+			$this->columnGap,
 		);
 	}
 }

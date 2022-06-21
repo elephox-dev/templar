@@ -53,10 +53,6 @@ class Document extends HtmlRenderWidget {
 		return $myStyle . $headStyle . $bodyStyle;
 	}
 
-	protected function renderStyleContent(RenderContext $context): string {
-		return '';
-	}
-
 	public function getHashCode(): float {
 		return HashBuilder::buildHash(
 			$this->head,

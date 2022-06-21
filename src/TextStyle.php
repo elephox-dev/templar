@@ -10,6 +10,7 @@ class TextStyle {
 		public null|string|int $weight = null,
 		public ?TextAlign $align = null,
 		public ?Color $color = null,
+		public ?TextDecoration $decoration = null,
 	) {
 		assert(
 			$this->weight === null || is_string($this->weight) || $this->weight % 100 === 0,
@@ -38,6 +39,43 @@ class TextStyle {
 			$other->weight ?? $this->weight,
 			$other->align ?? $this->align,
 			$other->color ?? $this->color,
+			$other->decoration ?? $this->decoration,
+		);
+	}
+
+	public function withFallback(
+		?string $font = null,
+		?Length $size = null,
+		null|string|int $weight = null,
+		?TextAlign $align = null,
+		?Color $color = null,
+		?TextDecoration $decoration = null,
+	): TextStyle {
+		return new TextStyle(
+			$this->font ?? $font,
+			$this->size ?? $size,
+			$this->weight ?? $weight,
+			$this->align ?? $align,
+			$this->color ?? $color,
+			$this->decoration ?? $decoration,
+		);
+	}
+
+	public function with(
+		?string $font = null,
+		?Length $size = null,
+		null|string|int $weight = null,
+		?TextAlign $align = null,
+		?Color $color = null,
+		?TextDecoration $decoration = null,
+	): TextStyle {
+		return new TextStyle(
+			$font ?? $this->font,
+			$size ?? $this->size,
+			$weight ?? $this->weight,
+			$align ?? $this->align,
+			$color ?? $this->color,
+			$decoration ?? $this->decoration,
 		);
 	}
 }

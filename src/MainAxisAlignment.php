@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Elephox\Templar;
 
-enum HorizontalAlignment: string implements Hashable {
+enum MainAxisAlignment: string implements Hashable {
 	use HasEnumHashCode;
 
 	case Start = 'flex-start';

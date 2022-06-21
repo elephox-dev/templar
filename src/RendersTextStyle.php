@@ -23,6 +23,10 @@ trait RendersTextStyle {
 			$style .= "text-align: {$textStyle->align->value};";
 		}
 
+		if ($textStyle->decoration !== null) {
+			$style .= $textStyle->decoration->toEmittable();
+		}
+
 		$color = $textStyle->color ?? $context->colorScheme->foreground;
 		if ($color !== null) {
 			$style .= "color: $color;";

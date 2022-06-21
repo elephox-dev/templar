@@ -26,10 +26,6 @@ HTML;
 		return 'head';
 	}
 
-	protected function renderStyleContent(RenderContext $context): string {
-		return '';
-	}
-
 	private function renderMetas(RenderContext $context): string {
 		return <<<HTML
 <meta charset="{$context->documentMeta?->charset}">
