@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Elephox\Templar\Foundation;
 
-use Elephox\Templar\DocumentMeta;
 use Elephox\Templar\HashBuilder;
 use Elephox\Templar\HtmlRenderWidget;
 use Elephox\Templar\RenderContext;
@@ -12,17 +11,12 @@ class Document extends HtmlRenderWidget {
 	public function __construct(
 		private readonly Head $head,
 		private readonly Body $body,
-		public ?DocumentMeta $documentMeta = null,
 	) {
 		$this->head->renderParent = $this;
 		$this->body->renderParent = $this;
 	}
 
 	public function render(RenderContext $context): string {
-		if ($this->documentMeta !== null) {
-			$context->documentMeta = $this->documentMeta;
-		}
-
 		return '<!DOCTYPE html>' . parent::render($context);
 	}
 
@@ -32,14 +26,14 @@ class Document extends HtmlRenderWidget {
 
 	protected function getAttributes(RenderContext $context): array {
 		return parent::getAttributes($context) + [
-				'lang' => $context->documentMeta?->language,
+				'lang' => $context->meta->language,
 			];
 	}
 
 	protected function renderChild(RenderContext $context): string {
 		$body = $this->body->render($context);
 
-		// render head after body, so scripts can be injected from body widgets
+		// render head after body, so metas can be injected from body widgets
 		$head = $this->head->render($context);
 
 		return $head . $body;
@@ -47,8 +41,8 @@ class Document extends HtmlRenderWidget {
 
 	public function renderStyle(RenderContext $context): string {
 		$myStyle = parent::renderStyle($context);
-		$headStyle = $this->head->renderStyle($context);
 		$bodyStyle = $this->body->renderStyle($context);
+		$headStyle = $this->head->renderStyle($context);
 
 		return $myStyle . $headStyle . $bodyStyle;
 	}
@@ -56,7 +50,7 @@ class Document extends HtmlRenderWidget {
 	public function getHashCode(): float {
 		return HashBuilder::buildHash(
 			$this->head,
-			$this->body
+			$this->body,
 		);
 	}
 }

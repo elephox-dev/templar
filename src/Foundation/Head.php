@@ -3,20 +3,15 @@ declare(strict_types=1);
 
 namespace Elephox\Templar\Foundation;
 
-use Elephox\Templar\HashBuilder;
 use Elephox\Templar\HtmlRenderWidget;
 use Elephox\Templar\RenderContext;
 
 class Head extends HtmlRenderWidget {
-	public function __construct(
-		private readonly ?string $title = null,
-	) {}
+	public function __construct() {}
 
 	protected function renderChild(RenderContext $context): string {
-		$title = $this->title ?? $context->documentMeta?->title;
-
 		return <<<HTML
-<title>$title</title>
+<title>{$context->meta->title}</title>
 
 {$this->renderMetas($context)}
 HTML;
@@ -26,16 +21,23 @@ HTML;
 		return 'head';
 	}
 
-	private function renderMetas(RenderContext $context): string {
+	protected function renderMetas(RenderContext $context): string {
+		$metaTags = "";
+		foreach ($context->meta->metas as $name => $content) {
+			$metaTags .= <<<HTML
+<meta name="$name" content="$content">
+HTML;
+		}
+
 		return <<<HTML
-<meta charset="{$context->documentMeta?->charset}">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="{$context->meta->charset}">
 
 <link rel="stylesheet" href="./style.css">
+$metaTags
 HTML;
 	}
 
 	public function getHashCode(): float {
-		return HashBuilder::buildHash($this->title);
+		return 0.0;
 	}
 }

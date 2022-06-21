@@ -36,22 +36,22 @@ class CompoundLengthTest extends TestCase {
 		$compound->concat(Length::inPx(2));
 
 		static::assertSame(
-			'1px + 2px',
-			(string) $compound
+			'3px',
+			(string)$compound
 		);
 		static::assertSame(
-			'calc(1px + 2px)',
+			'3px',
 			$compound->toEmittable()
 		);
 
 		$compound->concat(Length::inRem(2));
 
 		static::assertSame(
-			'1px + 2px + 2rem',
-			(string) $compound
+			'3px + 2rem',
+			(string)$compound
 		);
 		static::assertSame(
-			'calc(1px + 2px + 2rem)',
+			'calc(3px + 2rem)',
 			$compound->toEmittable()
 		);
 
@@ -63,11 +63,11 @@ class CompoundLengthTest extends TestCase {
 		);
 
 		static::assertSame(
-			'1px + 2px + 2rem + (3px - 4rem)',
-			(string) $compound
+			'3px + (3px - 4rem) + 2rem',
+			(string)$compound
 		);
 		static::assertSame(
-			'calc(1px + 2px + 2rem + (3px - 4rem))',
+			'calc(3px + (3px - 4rem) + 2rem)',
 			$compound->toEmittable()
 		);
 
@@ -79,11 +79,11 @@ class CompoundLengthTest extends TestCase {
 		);
 
 		static::assertSame(
-			'1px + 2px + 2rem + (3px - 4rem) + 5px + 6rem',
-			(string) $compound
+			'3px + (3px - 4rem) + 2rem + 5px + 6rem',
+			(string)$compound
 		);
 		static::assertSame(
-			'calc(1px + 2px + 2rem + (3px - 4rem) + 5px + 6rem)',
+			'calc(3px + (3px - 4rem) + 2rem + 5px + 6rem)',
 			$compound->toEmittable()
 		);
 	}
@@ -131,7 +131,7 @@ class CompoundLengthTest extends TestCase {
 		);
 
 		static::assertSame(
-			'1px + 2px',
+			'3px',
 			(string)$compound
 		);
 	}

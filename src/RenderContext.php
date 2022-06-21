@@ -5,10 +5,10 @@ namespace Elephox\Templar;
 
 class RenderContext {
 	public function __construct(
+		public DocumentMeta $meta,
 		public ColorScheme $colorScheme,
-		public ?TextStyle $textStyle = null,
 		public ?ColorScheme $darkColorScheme = null,
-		public ?DocumentMeta $documentMeta = null,
+		public ?TextStyle $textStyle = null,
 		public PositionContext $positionContext = PositionContext::Static,
 		public array $renderedClasses = [],
 	) {}
@@ -18,12 +18,30 @@ class RenderContext {
 		?ColorScheme $darkColorScheme = null
 	): RenderContext {
 		return new RenderContext(
+			$this->meta,
 			$colorScheme,
-			$this->textStyle,
 			$darkColorScheme ?? $this->darkColorScheme,
-			$this->documentMeta,
+			$this->textStyle,
 			$this->positionContext,
 			$this->renderedClasses,
+		);
+	}
+
+	public function with(
+		?DocumentMeta $meta = null,
+		?ColorScheme $colorScheme = null,
+		?ColorScheme $darkColorScheme = null,
+		?TextStyle $textStyle = null,
+		?PositionContext $positionContext = null,
+		?array $renderedClasses = [],
+	): RenderContext {
+		return new RenderContext(
+			$meta ?? $this->meta,
+			$colorScheme ?? $this->colorScheme,
+			$darkColorScheme ?? $this->darkColorScheme,
+			$textStyle ?? $this->textStyle,
+			$positionContext ?? $this->positionContext,
+			$renderedClasses ?? $this->renderedClasses,
 		);
 	}
 }

@@ -79,4 +79,8 @@ abstract class Colors {
 	public static function Azure(): Color {
 		return new Color(0x3399FFFF);
 	}
+
+	public static function Emerald(): Color {
+		return new Color(0x04BC56FF);
+	}
 }

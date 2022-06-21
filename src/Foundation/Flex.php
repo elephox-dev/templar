@@ -39,6 +39,12 @@ class Flex extends HtmlRenderWidget {
 		}
 
 		foreach ($children as $child) {
+			if ($child === null) {
+				continue;
+			}
+
+			assert($child instanceof Widget, "Flex children must be widgets");
+
 			$child->renderParent = $this;
 
 			$this->children[] = $child;
@@ -131,6 +137,8 @@ class Flex extends HtmlRenderWidget {
 			$this->wrap,
 			$this->rowGap,
 			$this->columnGap,
+			$this->width,
+			$this->height,
 		);
 	}
 }

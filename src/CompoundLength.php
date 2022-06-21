@@ -42,20 +42,65 @@ class CompoundLength implements EmittableLength {
 		}
 	}
 
+	public function getParts(): array {
+
+		$parts = [];
+		$lastLength = null;
+		foreach ($this->lengths as $length) {
+			if ($length === null) {
+				continue;
+			}
+
+			if ($length instanceof Length) {
+				if ($lastLength !== null) {
+					if ($lastLength->unit() === $length->unit()) {
+						$lastLength = $lastLength->add($length);
+
+						continue;
+					}
+
+					$parts[] = (string)$lastLength;
+
+					$lastLength = $length;
+
+					continue;
+				}
+
+				$lastLength = $length;
+
+				continue;
+			}
+
+			$parts[] = (string)$length;
+		}
+
+		if ($lastLength !== null) {
+			$parts[] = (string)$lastLength;
+		}
+
+		return $parts;
+	}
+
 	public function __toString(): string {
 		return implode(
 			' ' . $this->operator->value . ' ',
-			array_filter($this->lengths)
+			$this->getParts(),
 		);
 	}
 
 	public function toEmittable(): string {
-		$lengths = array_filter($this->lengths);
-		if (count($lengths) === 1) {
-			return (string) $lengths[0];
+		$parts = $this->getParts();
+
+		if (count($parts) > 1) {
+			$str = implode(
+				' ' . $this->operator->value . ' ',
+				$this->getParts(),
+			);
+
+			return "calc($str)";
 		}
 
-		return "calc($this)";
+		return $parts[0];
 	}
 
 	public function getHashCode(): float {

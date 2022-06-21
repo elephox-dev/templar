@@ -37,7 +37,10 @@ class Body extends HtmlRenderWidget {
 			$style .= "background-color: $backgroundColor; transition: background-color 0.3s ease;";
 		}
 
-		$style .= $this->renderTextStyle($this->textStyle ?? new TextStyle(), $context);
+		$style .= $this->renderTextStyle(
+			$this->textStyle ?? $context->textStyle ?? new TextStyle(),
+			$context
+		);
 
 		return $style;
 	}

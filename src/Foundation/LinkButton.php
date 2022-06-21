@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace Elephox\Templar\Foundation;
 
 use Closure;
-use Elephox\Templar\Angle;
 use Elephox\Templar\Border;
 use Elephox\Templar\BorderRadius;
+use Elephox\Templar\BorderSide;
 use Elephox\Templar\BoxShadow;
 use Elephox\Templar\Color;
 use Elephox\Templar\EdgeInsets;
@@ -14,7 +14,6 @@ use Elephox\Templar\Gradient;
 use Elephox\Templar\HasSingleRenderChild;
 use Elephox\Templar\HtmlRenderWidget;
 use Elephox\Templar\Length;
-use Elephox\Templar\LinearGradient;
 use Elephox\Templar\RenderContext;
 use Elephox\Templar\RendersBoxShadows;
 use Elephox\Templar\RendersPadding;
@@ -38,13 +37,16 @@ class LinkButton extends HtmlRenderWidget {
 	public function __construct(
 		protected readonly ?Widget $child,
 		string|callable $link,
-		protected readonly bool $newWindow = false,
+		protected readonly ?bool $newWindow = null,
 		protected readonly null|Gradient|Color $background = null,
 		protected readonly ?TextStyle $textStyle = null,
 		protected readonly ?EdgeInsets $padding = null,
-		protected readonly ?Border $border = null,
 		protected readonly ?BorderRadius $borderRadius = null,
 	) {
+		if ($this->child !== null) {
+			$this->child->renderParent = $this;
+		}
+
 		$this->linkRenderer = $link instanceof Closure
 			? $link
 			: static fn() => $link;
@@ -53,11 +55,13 @@ class LinkButton extends HtmlRenderWidget {
 	use HasSingleRenderChild;
 
 	protected function getAttributes(RenderContext $context): array {
+		$href = ($this->linkRenderer)($context);
 		$attributes = parent::getAttributes($context) + [
-				'href' => ($this->linkRenderer)($context),
+				'href' => $href,
 			];
 
-		if ($this->newWindow) {
+		// TODO: parse href to determine if it is a relative or absolute URL and open absolute on other domains in new windows by default ($newWindow === null)
+		if ($this->newWindow === true) {
 			$attributes['target'] = '_blank';
 		}
 
@@ -89,7 +93,7 @@ class LinkButton extends HtmlRenderWidget {
 	protected function renderDefaultStyleContent(RenderContext $context): string {
 		$style = $this->renderStyleContent($context);
 
-		$style .= "transition: background 0.2s ease-out, box-shadow 0.2s ease-out;";
+		$style .= "transition: background 0.2s ease-out, box-shadow 0.2s ease-out, border 0.2s ease-out;";
 
 		$background = $this->background ?? $context->colorScheme->primary;
 		$style .= "background: $background;";
@@ -114,9 +118,8 @@ class LinkButton extends HtmlRenderWidget {
 			$context,
 		);
 
-		if ($this->border !== null) {
-			$style .= $this->border->toEmittable();
-		}
+		$border = Border::all(BorderSide::solid(2, Colors::Transparent()));
+		$style .= $border->toEmittable();
 
 		$borderRadius = $this->borderRadius ?? BorderRadius::all(4);
 		$style .= $borderRadius->toEmittable();
