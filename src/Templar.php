@@ -45,9 +45,9 @@ class Templar {
 		$light = self::getDefaultColorScheme()->overwriteFrom($lightColorScheme);
 
 		return $light->with(
-			primary: $light->primary->darken(0.1)->desaturate(0.3),
-			secondary: $light->secondary->darken(0.1)->desaturate(0.3),
-			tertiary: $light->tertiary->darken(0.1)->desaturate(0.3),
+			primary: $light->primary->darken(0.1)->desaturate(0.2),
+			secondary: $light->secondary->darken(0.1)->desaturate(0.2),
+			tertiary: $light->tertiary->darken(0.1)->desaturate(0.2),
 			background: Colors::Grayscale(0.15),
 			foreground: Colors::Grayscale(0.85),
 			onPrimary: Colors::Grayscale(0.95),

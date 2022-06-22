@@ -10,26 +10,26 @@ class Color implements Stringable, Hashable {
 	public static function calculateHue(
 		float $max,
 		float $min,
-		float|int $r,
-		float|int $g,
-		float|int $b,
-		float $hStart,
+		float|int $red,
+		float|int $green,
+		float|int $blue,
+		float $hueStart,
 	): float {
-		$h = $hStart;
-		$d = $max - $min;
+		$hue = $hueStart;
+		$diff = $max - $min;
 		switch ($max) {
-			case $r:
-				$h = ($g - $b) / $d + ($g < $b ? 6 : 0);
+			case $red:
+				$hue = ($green - $blue) / $diff + ($green < $blue ? 6 : 0);
 				break;
-			case $g:
-				$h = ($b - $r) / $d + 2;
+			case $green:
+				$hue = ($blue - $red) / $diff + 2;
 				break;
-			case $b:
-				$h = ($r - $g) / $d + 4;
+			case $blue:
+				$hue = ($red - $green) / $diff + 4;
 				break;
 		}
-		$h /= 6;
-		return $h;
+		$hue /= 6;
+		return $hue;
 	}
 
 	public static function fromRGBA(int $red, int $green, int $blue, int $alpha): Color {
@@ -86,7 +86,8 @@ class Color implements Stringable, Hashable {
 		$saturation /= 100.0;
 
 		$m2 = $lightness <= 0.5
-			? $lightness * ($saturation + 1.0) : $lightness + $saturation -
+			? $lightness * ($saturation + 1.0)
+			: $lightness + $saturation -
 			$lightness * $saturation;
 		$m1 = $lightness * 2.0 - $m2;
 
@@ -115,14 +116,14 @@ class Color implements Stringable, Hashable {
 		return self::fromRGBA($red, $green, $blue, $alpha);
 	}
 
-	public function mix(int|Color $other, float $t): Color {
+	public function mix(int|Color $other, float $t = 0.5): Color {
 		return self::lerp($this, $other, $t);
 	}
 
 	public static function lerp(int|Color $a, int|Color $b, float $t): Color {
 		assert(
 			$t >= 0 && $t <= 1,
-			'$t must be between 0 and 1',
+			'$t must be between 0 and 1, got ' . $t,
 		);
 
 		if (is_int($a)) {
@@ -141,7 +142,7 @@ class Color implements Stringable, Hashable {
 		$blue = (int)round((1 - $t) * $aRGBA['blue'] + $t * $bRGBA['blue']);
 		$alpha = (int)round((1 - $t) * $aRGBA['alpha'] + $t * $bRGBA['alpha']);
 
-		return new Color($red << 24 | $green << 16 | $blue << 8 | $alpha);
+		return self::fromRGBA($red, $green, $blue, $alpha);
 	}
 
 	public function __construct(
@@ -192,10 +193,10 @@ class Color implements Stringable, Hashable {
 		'alpha' => "float"
 	])] public function getNormalizedRgb(): array {
 		$rgb = $this->toRgbArray();
-		$rgb['red'] /= 255;
-		$rgb['green'] /= 255;
-		$rgb['blue'] /= 255;
-		$rgb['alpha'] /= 255;
+		$rgb['red'] /= 255.0;
+		$rgb['green'] /= 255.0;
+		$rgb['blue'] /= 255.0;
+		$rgb['alpha'] /= 255.0;
 		return $rgb;
 	}
 
@@ -220,9 +221,9 @@ class Color implements Stringable, Hashable {
 			$h = self::calculateHue($max, $min, $red, $green, $blue, $h);
 		}
 		return [
-			'hue' => $h * 360,
-			'saturation' => $s * 100,
-			'lightness' => $l * 100,
+			'hue' => $h * 360.0,
+			'saturation' => $s * 100.0,
+			'lightness' => $l * 100.0,
 			'alpha' => $alpha,
 		];
 	}
@@ -299,19 +300,32 @@ class Color implements Stringable, Hashable {
 		return $this->value;
 	}
 
-	public function brightness(): float {
-		// https://www.w3.org/TR/AERT/#color-contrast
-		return (
-				($this->value >> 24) & 0xFF * 299 +
-				($this->value >> 16) & 0xFF * 587 +
-				($this->value >> 8) & 0xFF * 114
-			) / 1000;
+	public function brightness(int $precision = 2): float {
+		// https://alienryderflex.com/hsp.html
+		$perceivedBrightness = sqrt(
+			((($this->value >> 24) & 0xFF) ** 2) * 0.299 +
+			((($this->value >> 16) & 0xFF) ** 2) * 0.587 +
+			((($this->value >> 8) & 0xFF) ** 2) * 0.114
+		);
+
+		return round($perceivedBrightness, $precision);
+	}
+
+	public function difference(Color $color, int $precision = 2): float {
+		[$aRed, $aGreen, $aBlue] = array_values($this->toRgbArray());
+		[$bRed, $bGreen, $bBlue] = array_values($color->toRgbArray());
+
+		// https://en.wikipedia.org/wiki/Color_difference#sRGB
+		$distance = sqrt(
+			($aRed - $bRed) ** 2 + ($aGreen - $bGreen) ** 2 + ($aBlue - $bBlue) ** 2
+		);
+
+		return round($distance, $precision);
 	}
 
 	public function luminance(): float {
-		$rs = ($this->value >> 24) & 0xFF / 255;
-		$gs = ($this->value >> 16) & 0xFF / 255;
-		$bs = ($this->value >> 8) & 0xFF / 255;
+		// https://www.w3.org/TR/WCAG20/#relativeluminancedef
+		[$rs, $gs, $bs] = array_values($this->getNormalizedRgb());
 
 		if ($rs <= 0.03928) {
 			$rs /= 12.92;
@@ -332,6 +346,39 @@ class Color implements Stringable, Hashable {
 		}
 
 		return 0.2126 * $rs + 0.7152 * $gs + 0.0722 * $bs;
+	}
+
+	public function contrastRatio(Color $color): float {
+		$aLuminance = $this->luminance();
+		$bLuminance = $color->luminance();
+
+		$l1 = max($aLuminance, $bLuminance);
+		$l2 = min($aLuminance, $bLuminance);
+
+		return floor(($l1 + 0.05) / ($l2 + 0.05) * 100) / 100;
+	}
+
+	public const ContrastRatioAAA = 7;
+	public const ContrastRatioAA = 4.5;
+	public const ContrastRatioAAALarge = 4.5;
+	public const ContrastRatioAALarge = 3;
+	public const ContrastRatioAAUI = 3;
+
+	#[ArrayShape(['aa' => "bool[]", 'aaa' => "bool[]"])]
+	public function wcagTest(Color $color): array {
+		$contrast = $this->contrastRatio($color);
+
+		return [
+			'aa' => [
+				'text' => $contrast >= self::ContrastRatioAA,
+				'large' => $contrast >= self::ContrastRatioAALarge,
+				'ui' => $contrast >= self::ContrastRatioAAUI,
+			],
+			'aaa' => [
+				'text' => $contrast >= self::ContrastRatioAAA,
+				'large' => $contrast >= self::ContrastRatioAAALarge,
+			],
+		];
 	}
 
 	public function desaturate(float $amount): Color {

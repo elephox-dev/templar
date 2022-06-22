@@ -34,7 +34,7 @@ class MyApp extends BuildWidget {
 
 $templar = new Templar(
 	colorScheme: new ColorScheme(
-		primary: Colors::Emerald(),
+		primary: Colors::Red()->mix(Colors::Yellow(), 0.6),
 	),
 );
 if (str_ends_with(
