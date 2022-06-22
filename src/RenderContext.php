@@ -44,4 +44,22 @@ class RenderContext {
 			$renderedClasses ?? $this->renderedClasses,
 		);
 	}
+
+	public function withFallback(
+		?DocumentMeta $meta = null,
+		?ColorScheme $colorScheme = null,
+		?ColorScheme $darkColorScheme = null,
+		?TextStyle $textStyle = null,
+		?PositionContext $positionContext = null,
+		?array $renderedClasses = [],
+	): RenderContext {
+		return new RenderContext(
+			$this->meta ?? $meta,
+			$this->colorScheme ?? $colorScheme,
+			$this->darkColorScheme ?? $darkColorScheme,
+			$this->textStyle ?? $textStyle,
+			$this->positionContext ?? $positionContext,
+			$this->renderedClasses ?? $renderedClasses,
+		);
+	}
 }

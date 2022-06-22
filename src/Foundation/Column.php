@@ -23,6 +23,7 @@ class Column extends BuildWidget {
 		protected readonly ?CrossAxisAlignment $crossAxisAlignment = null,
 		protected readonly bool $reverse = false,
 		protected readonly bool $shrinkWrap = false,
+		protected readonly ?Length $gap = null,
 	) {}
 
 	protected function build(RenderContext $context): Widget {
@@ -32,6 +33,7 @@ class Column extends BuildWidget {
 			crossAxisAlignment: $this->crossAxisAlignment,
 			direction: $this->reverse ? FlexDirection::ColumnReverse : FlexDirection::Column,
 			wrap: FlexWrap::NoWrap,
+			rowGap: $this->gap,
 			width: $this->shrinkWrap ? null : Length::inPercent(100),
 			height: Length::inPercent(100),
 		);

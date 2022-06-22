@@ -19,6 +19,8 @@ class Wrap extends BuildWidget {
 		protected readonly ?MainAxisAlignment $mainAxisAlignment = null,
 		protected readonly ?CrossAxisAlignment $crossAxisAlignment = null,
 		protected readonly ?ContentAlignment $contentAlignment = null,
+		protected readonly ?Length $rowGap = null,
+		protected readonly ?Length $columnGap = null,
 		protected readonly bool $reverse = false,
 		protected readonly bool $shrinkWrap = false,
 	) {}
@@ -31,6 +33,8 @@ class Wrap extends BuildWidget {
 			contentAlignment: $this->contentAlignment,
 			direction: $this->reverse ? FlexDirection::RowReverse : FlexDirection::Row,
 			wrap: FlexWrap::Wrap,
+			rowGap: $this->rowGap,
+			columnGap: $this->columnGap,
 			width: $this->shrinkWrap ? null : Length::inPercent(100),
 			height: Length::inPercent(100),
 		);

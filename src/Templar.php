@@ -27,15 +27,16 @@ class Templar {
 	}
 
 	public static function getDefaultColorScheme(): ColorScheme {
+		$primary = Colors::SkyBlue();
+		$secondary = Colors::Emerald();
+		$tertiary = Colors::Violet();
+
 		return new ColorScheme(
-			primary: Colors::SkyBlue(),
-			secondary: Colors::NeonGreen(),
-			tertiary: Colors::Violet(),
+			primary: $primary,
+			secondary: $secondary,
+			tertiary: $tertiary,
 			background: Colors::White(),
 			foreground: Colors::Black(),
-			onPrimary: Colors::White(),
-			onSecondary: Colors::White(),
-			onTertiary: Colors::White(),
 			divider: Colors::Grayscale(0.33),
 		);
 	}
@@ -43,14 +44,19 @@ class Templar {
 	public static function getDefaultDarkColorScheme(?ColorScheme $lightColorScheme = null
 	): ColorScheme {
 		$light = self::getDefaultColorScheme()->overwriteFrom($lightColorScheme);
+		$primary = $light->primary->darken(0.1)->desaturate(0.2);
+		$secondary = $light->secondary->darken(0.1)->desaturate(0.2);
+		$tertiary = $light->tertiary->darken(0.1)->desaturate(0.2);
 
 		return $light->with(
-			primary: $light->primary->darken(0.1)->desaturate(0.2),
-			secondary: $light->secondary->darken(0.1)->desaturate(0.2),
-			tertiary: $light->tertiary->darken(0.1)->desaturate(0.2),
+			primary: $primary,
+			secondary: $secondary,
+			tertiary: $tertiary,
 			background: Colors::Grayscale(0.15),
 			foreground: Colors::Grayscale(0.85),
-			onPrimary: Colors::Grayscale(0.95),
+			onPrimary: $primary->bestEffortContrast(),
+			onSecondary: $secondary->bestEffortContrast(),
+			onTertiary: $tertiary->bestEffortContrast(),
 		);
 	}
 
@@ -67,6 +73,11 @@ class Templar {
 
 		$this->context = $default->with(
 			meta: $meta,
+			colorScheme: $default->colorScheme->withFallback(
+				onPrimary: $default->colorScheme->primary->bestEffortContrast(),
+				onSecondary: $default->colorScheme->secondary->bestEffortContrast(),
+				onTertiary: $default->colorScheme->tertiary->bestEffortContrast(),
+			),
 			textStyle: $default->textStyle->overwriteFrom($textStyle),
 			positionContext: $positionContext,
 		);
@@ -74,6 +85,8 @@ class Templar {
 
 	public function render(Widget $widget): string {
 		$context = $this->context;
+
+		$context->colorScheme->checkContrasts();
 
 		set_error_handler(
 			static function (

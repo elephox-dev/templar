@@ -4,13 +4,15 @@ declare(strict_types=1);
 namespace Elephox\Templar\Foundation;
 
 use Closure;
+use Elephox\Templar\BackgroundValue;
 use Elephox\Templar\Border;
 use Elephox\Templar\BorderRadius;
 use Elephox\Templar\BorderSide;
 use Elephox\Templar\BoxShadow;
 use Elephox\Templar\Color;
+use Elephox\Templar\ColorRank;
 use Elephox\Templar\EdgeInsets;
-use Elephox\Templar\Gradient;
+use Elephox\Templar\HashBuilder;
 use Elephox\Templar\HasSingleRenderChild;
 use Elephox\Templar\HtmlRenderWidget;
 use Elephox\Templar\Length;
@@ -28,6 +30,7 @@ class LinkButton extends HtmlRenderWidget {
 	use RendersTextStyle;
 	use RendersBoxShadows;
 	use RendersPadding;
+	use HasSingleRenderChild;
 
 	protected readonly Closure $linkRenderer;
 
@@ -38,10 +41,11 @@ class LinkButton extends HtmlRenderWidget {
 		protected readonly ?Widget $child,
 		string|callable $link,
 		protected readonly ?bool $newWindow = null,
-		protected readonly null|Gradient|Color $background = null,
+		protected readonly null|BackgroundValue $background = null,
 		protected readonly ?TextStyle $textStyle = null,
 		protected readonly ?EdgeInsets $padding = null,
 		protected readonly ?BorderRadius $borderRadius = null,
+		protected readonly ColorRank $rank = ColorRank::Primary,
 	) {
 		if ($this->child !== null) {
 			$this->child->renderParent = $this;
@@ -52,7 +56,16 @@ class LinkButton extends HtmlRenderWidget {
 			: static fn() => $link;
 	}
 
-	use HasSingleRenderChild;
+	public function getHashCode(): float {
+		return HashBuilder::buildHash(
+			$this->child,
+			$this->background,
+			$this->textStyle,
+			$this->padding,
+			$this->borderRadius,
+			$this->rank,
+		);
+	}
 
 	protected function getAttributes(RenderContext $context): array {
 		$href = ($this->linkRenderer)($context);
@@ -95,8 +108,8 @@ class LinkButton extends HtmlRenderWidget {
 
 		$style .= "transition: background 0.2s ease-out, box-shadow 0.2s ease-out, border 0.2s ease-out;";
 
-		$background = $this->background ?? $context->colorScheme->primary;
-		$style .= "background: $background;";
+		$background = $this->getBackground($context);
+		$style .= "background: {$background->toEmittable()};";
 
 		$padding = $this->padding ?? EdgeInsets::symmetric(16, 8);
 		$style .= $this->renderPadding($padding);
@@ -111,9 +124,16 @@ class LinkButton extends HtmlRenderWidget {
 		);
 		$style .= $this->renderTextStyle(
 			$textStyle->with(
+				color: $this->background !== null
+					? $context->textStyle->color
+					: match ($this->rank) {
+						ColorRank::Primary => $context->colorScheme->onPrimary,
+						ColorRank::Secondary => $context->colorScheme->onSecondary,
+						ColorRank::Tertiary => $context->colorScheme->onTertiary,
+					},
 				decoration: $textStyle->decoration->withFallback(
 					positions: [TextDecorationPosition::None]
-				)
+				),
 			),
 			$context,
 		);
@@ -130,7 +150,10 @@ class LinkButton extends HtmlRenderWidget {
 	protected function renderHoverStyleContent(RenderContext $context): string {
 		$style = "";
 
-		$background = ($this->background ?? $context->colorScheme->primary)->darken(0.1);
+		$background = $this->getBackground($context);
+		if ($background instanceof Color) {
+			$background = $background->darken(0.1);
+		}
 		$style .= "background: $background;";
 		$style .= $this->renderBoxShadows(BoxShadow::fromElevation(6)->withAmbient());
 
@@ -140,7 +163,10 @@ class LinkButton extends HtmlRenderWidget {
 	protected function renderActiveStyleContent(RenderContext $context): string {
 		$style = "";
 
-		$background = ($this->background ?? $context->colorScheme->primary)->darken(0.3);
+		$background = $this->getBackground($context);
+		if ($background instanceof Color) {
+			$background = $background->darken(0.3);
+		}
 		$style .= "background: $background;";
 		$style .= $this->renderBoxShadows(BoxShadow::fromElevation(2)->withAmbient());
 
@@ -153,5 +179,13 @@ class LinkButton extends HtmlRenderWidget {
 		$style .= "outline: none;";
 
 		return $style;
+	}
+
+	protected function getBackground(RenderContext $context): BackgroundValue {
+		return $this->background ?? match ($this->rank) {
+				ColorRank::Secondary => $context->colorScheme->secondary,
+				ColorRank::Tertiary => $context->colorScheme->tertiary,
+				default => $context->colorScheme->primary,
+			};
 	}
 }

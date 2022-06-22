@@ -48,4 +48,8 @@ class LinearGradient extends Gradient {
 
 		return implode(', ', $stops);
 	}
+
+	public function toEmittable(): string {
+		return (string)$this;
+	}
 }

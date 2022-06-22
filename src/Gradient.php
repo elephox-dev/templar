@@ -3,9 +3,7 @@ declare(strict_types=1);
 
 namespace Elephox\Templar;
 
-use Stringable;
-
-abstract class Gradient implements Stringable, Hashable {
+abstract class Gradient implements BackgroundValue {
 	/**
 	 * @param iterable<float, Color> $stops
 	 */

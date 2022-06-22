@@ -4,9 +4,8 @@ declare(strict_types=1);
 namespace Elephox\Templar;
 
 use JetBrains\PhpStorm\ArrayShape;
-use Stringable;
 
-class Color implements Stringable, Hashable {
+class Color implements BackgroundValue {
 	public static function calculateHue(
 		float $max,
 		float $min,
@@ -359,10 +358,51 @@ class Color implements Stringable, Hashable {
 	}
 
 	public const ContrastRatioAAA = 7;
-	public const ContrastRatioAA = 4.5;
+	public const MinContrastRatioAA = 4.5;
 	public const ContrastRatioAAALarge = 4.5;
 	public const ContrastRatioAALarge = 3;
 	public const ContrastRatioAAUI = 3;
+
+	public function bestEffortContrast(): Color {
+		// FIXME: reverse luminance calculation doesn't work
+		//		$luminance = $this->luminance();
+		//
+		//		$targetLuminance = max(($luminance + 0.05) / self::MinContrastRatioAA - 0.05, ($luminance + 0.05) * self::MinContrastRatioAA - 0.05);
+		//
+		//		$red = $green = $blue = (($targetLuminance ** (1 / 2.4)) * 1.055) - 0.055;
+		//		if ($red > 0.03928) {
+		//			$red = $targetLuminance / 12.92;
+		//		}
+		//
+		//		if ($green > 0.03928) {
+		//			$green = $targetLuminance / 12.92;
+		//		}
+		//
+		//		if ($blue > 0.03928) {
+		//			$blue = $targetLuminance / 12.92;
+		//		}
+		//
+		//		$col = self::fromRGBA(
+		//			(int)round($red * 0xFF),
+		//			(int)round($green * 0xFF),
+		//			(int)round($blue * 0xFF),
+		//			0xFF
+		//		);
+
+		return $this->bestContrast(
+			[
+				new Color(0xFFFFFFFF),
+				//			$col,
+				new Color(0x000000FF),
+			]
+		);
+	}
+
+	public function bestContrast(array $palette): Color {
+		$contrasts = array_map(fn(Color $c) => $this->contrastRatio($c), $palette);
+		$maxIndex = array_search(max($contrasts), $contrasts, true);
+		return $palette[$maxIndex];
+	}
 
 	#[ArrayShape(['aa' => "bool[]", 'aaa' => "bool[]"])]
 	public function wcagTest(Color $color): array {
@@ -370,7 +410,7 @@ class Color implements Stringable, Hashable {
 
 		return [
 			'aa' => [
-				'text' => $contrast >= self::ContrastRatioAA,
+				'text' => $contrast >= self::MinContrastRatioAA,
 				'large' => $contrast >= self::ContrastRatioAALarge,
 				'ui' => $contrast >= self::ContrastRatioAAUI,
 			],
@@ -427,5 +467,9 @@ class Color implements Stringable, Hashable {
 		$hsl['lightness'] *= 1 + $amount;
 
 		return self::fromHSLA($hsl['hue'], $hsl['saturation'], $hsl['lightness'], $hsl['alpha']);
+	}
+
+	public function toEmittable(): string {
+		return $this->toHex();
 	}
 }
