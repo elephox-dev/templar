@@ -9,7 +9,7 @@ use Elephox\Templar\RenderContext;
 class Head extends HtmlRenderWidget {
 	public function __construct() {}
 
-	protected function renderChild(RenderContext $context): string {
+	protected function renderContent(RenderContext $context): string {
 		return <<<HTML
 <title>{$context->meta->title}</title>
 

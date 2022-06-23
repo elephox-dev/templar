@@ -4,8 +4,10 @@ declare(strict_types=1);
 use Elephox\Templar\BuildWidget;
 use Elephox\Templar\ColorRank;
 use Elephox\Templar\FlexDirection;
+use Elephox\Templar\FlexWrap;
 use Elephox\Templar\Foundation\App;
 use Elephox\Templar\Foundation\Form;
+use Elephox\Templar\Foundation\Image;
 use Elephox\Templar\Foundation\LinkButton;
 use Elephox\Templar\Foundation\NavigationBar;
 use Elephox\Templar\Foundation\SubmitButton;
@@ -36,12 +38,18 @@ class MyApp extends BuildWidget {
 						"/",
 						rank: ColorRank::Tertiary,
 					),
+					new Image(
+						'https://via.placeholder.com/350x150',
+						alt: 'Placeholder image',
+					),
 					new SubmitButton(
 						new Text("Submit"),
 					),
 				],
 				direction: FlexDirection::Column,
+				wrap: FlexWrap::Wrap,
 				rowGap: Length::inRem(1),
+				columnGap: Length::inRem(1),
 			),
 			title: "My App",
 			navBar: new NavigationBar("My Awesome App"),

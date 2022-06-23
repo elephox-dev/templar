@@ -7,16 +7,20 @@ abstract class HtmlRenderWidget extends RenderWidget {
 	public function render(RenderContext $context): string {
 		$tag = $this->getTag();
 		$attributes = $this->renderAttributes($context);
-		$child = $this->renderChild($context);
+		$content = $this->renderContent($context);
+
+		if ($content === '') {
+			return "<$tag $attributes/>";
+		}
 
 		return <<<HTML
 <$tag $attributes>
-	$child
+	$content
 </$tag>
 HTML;
 	}
 
-	abstract protected function renderChild(RenderContext $context): string;
+	abstract protected function renderContent(RenderContext $context): string;
 
 	protected function renderAttributes(RenderContext $context): string {
 		$attributes = $this->getAttributes($context);
@@ -30,8 +34,7 @@ HTML;
 		foreach ($attributes as $name => $value) {
 			if ($name === 'style') {
 				trigger_error(
-					'Style attributes should not be inline. Use HtmlRenderWidget::renderStyle instead',
-					E_USER_NOTICE,
+					'Style attributes should not be inline. Use HtmlRenderWidget::renderStyle instead'
 				);
 			}
 

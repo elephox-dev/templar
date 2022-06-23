@@ -12,7 +12,7 @@ trait HasSingleRenderChild {
 		}
 	}
 
-	protected function renderChild(RenderContext $context): string {
+	protected function renderContent(RenderContext $context): string {
 		return $this->child?->render($context) ?? '';
 	}
 

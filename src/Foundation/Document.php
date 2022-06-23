@@ -28,7 +28,7 @@ class Document extends HtmlRenderWidget {
 		return [...parent::getAttributes($context), 'lang' => $context->meta->language];
 	}
 
-	protected function renderChild(RenderContext $context): string {
+	protected function renderContent(RenderContext $context): string {
 		$body = $this->body->render($context);
 
 		// render head after body, so metas can be injected from body widgets

@@ -40,7 +40,7 @@ class Text extends HtmlRenderWidget {
 		return 'span';
 	}
 
-	protected function renderChild(RenderContext $context): string {
+	protected function renderContent(RenderContext $context): string {
 		return $this->text;
 	}
 

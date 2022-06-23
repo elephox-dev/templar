@@ -55,7 +55,7 @@ class Stack extends HtmlRenderWidget {
 		return $childStyles;
 	}
 
-	protected function renderChild(RenderContext $context): string {
+	protected function renderContent(RenderContext $context): string {
 		return $this->renderChildren($context);
 	}
 
