@@ -43,6 +43,9 @@ class AppBar extends BuildWidget {
 			position: PositionContext::Fixed,
 			width: Length::inPercent(100),
 			height: Sizes::NavbarHeight(),
+			top: 0,
+			left: 0,
+			right: 0,
 		);
 	}
 }
