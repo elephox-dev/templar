@@ -81,7 +81,7 @@ class Container extends HtmlRenderWidget implements Positionable {
 				$property = "background-image";
 			}
 
-			$style .= "$property: {$this->background->toEmittable()};transition:background 0.2s ease-out;";
+			$style .= "$property: {$this->background->toEmittable()};";
 		}
 
 		if ($this->padding !== null) {

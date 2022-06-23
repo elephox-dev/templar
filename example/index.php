@@ -30,7 +30,8 @@ class MyApp extends BuildWidget {
 				children: [
 					new LinkButton(
 						new Text("Visit elephox.dev"),
-						"/",
+						"https://elephox.dev",
+						newWindow: true
 					),
 					new Table(
 						rows: [

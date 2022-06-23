@@ -78,7 +78,7 @@ abstract class ButtonBase extends HtmlRenderWidget {
 	protected function renderDefaultStyleContent(RenderContext $context): string {
 		$style = $this->renderStyleContent($context);
 
-		$style .= "transition: background 0.2s ease-out, box-shadow 0.2s ease-out, border 0.2s ease-out;cursor: pointer;";
+		$style .= "cursor: pointer;";
 
 		$background = $this->getBackground($context);
 		$style .= "background: {$background->toEmittable()};";
