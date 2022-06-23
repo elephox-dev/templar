@@ -20,7 +20,7 @@ class Templar {
 			colorScheme: $lightColorScheme,
 			darkColorScheme: $darkColorScheme,
 			textStyle: new TextStyle(
-				font: 'sans-serif',
+				font: '"SF Pro", "Segoe UI", "Fira Sans", sans-serif',
 				size: Length::inRem(1),
 			),
 		);

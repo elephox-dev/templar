@@ -25,9 +25,7 @@ class Document extends HtmlRenderWidget {
 	}
 
 	protected function getAttributes(RenderContext $context): array {
-		return parent::getAttributes($context) + [
-				'lang' => $context->meta->language,
-			];
+		return [...parent::getAttributes($context), 'lang' => $context->meta->language];
 	}
 
 	protected function renderChild(RenderContext $context): string {

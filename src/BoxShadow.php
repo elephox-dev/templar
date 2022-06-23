@@ -60,6 +60,10 @@ class BoxShadow implements Emittable {
 			$shadow .= " $this->color";
 		}
 
+		if ($this->inset) {
+			$shadow .= " inset";
+		}
+
 		return $shadow;
 	}
 

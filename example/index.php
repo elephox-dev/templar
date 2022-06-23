@@ -3,12 +3,12 @@ declare(strict_types=1);
 
 use Elephox\Templar\BuildWidget;
 use Elephox\Templar\ColorRank;
-use Elephox\Templar\ColorScheme;
+use Elephox\Templar\FlexDirection;
 use Elephox\Templar\Foundation\App;
-use Elephox\Templar\Foundation\Colors;
-use Elephox\Templar\Foundation\Column;
+use Elephox\Templar\Foundation\Form;
 use Elephox\Templar\Foundation\LinkButton;
 use Elephox\Templar\Foundation\NavigationBar;
+use Elephox\Templar\Foundation\SubmitButton;
 use Elephox\Templar\Foundation\Text;
 use Elephox\Templar\Length;
 use Elephox\Templar\RenderContext;
@@ -20,7 +20,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 class MyApp extends BuildWidget {
 	protected function build(RenderContext $context): Widget {
 		return new App(
-			body: new Column(
+			body: new Form(
 				children: [
 					new LinkButton(
 						new Text("Visit elephox.dev"),
@@ -36,8 +36,12 @@ class MyApp extends BuildWidget {
 						"/",
 						rank: ColorRank::Tertiary,
 					),
+					new SubmitButton(
+						new Text("Submit"),
+					),
 				],
-				gap: Length::inRem(1),
+				direction: FlexDirection::Column,
+				rowGap: Length::inRem(1),
 			),
 			title: "My App",
 			navBar: new NavigationBar("My Awesome App"),
