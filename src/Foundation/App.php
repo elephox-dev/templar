@@ -14,7 +14,7 @@ class App extends BuildWidget {
 	public function __construct(
 		protected readonly Widget $body,
 		protected readonly ?string $title = null,
-		protected readonly ?NavigationBar $navBar = null,
+		protected readonly ?AppBar $navBar = null,
 		protected readonly ?DocumentMeta $meta = null,
 	) {}
 

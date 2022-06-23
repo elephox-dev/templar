@@ -17,7 +17,7 @@ use Elephox\Templar\Foundation\Container;
 use Elephox\Templar\Foundation\Form;
 use Elephox\Templar\Foundation\Image;
 use Elephox\Templar\Foundation\LinkButton;
-use Elephox\Templar\Foundation\NavigationBar;
+use Elephox\Templar\Foundation\AppBar;
 use Elephox\Templar\Foundation\SubmitButton;
 use Elephox\Templar\Foundation\Text;
 use Elephox\Templar\Length;
@@ -72,7 +72,7 @@ class MyApp extends BuildWidget {
 				columnGap: Length::inRem(1),
 			),
 			title: "My App",
-			navBar: new NavigationBar("My Awesome App"),
+			navBar: new AppBar("My Awesome App"),
 		);
 	}
 }

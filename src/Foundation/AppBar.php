@@ -13,7 +13,7 @@ use Elephox\Templar\TextStyle;
 use Elephox\Templar\CrossAxisAlignment;
 use Elephox\Templar\Widget;
 
-class NavigationBar extends BuildWidget {
+class AppBar extends BuildWidget {
 	public function __construct(
 		protected readonly ?string $title = null,
 	) {}
