@@ -37,7 +37,7 @@ class AppBar extends BuildWidget {
 				children: $elements,
 				crossAxisAlignment: CrossAxisAlignment::Center,
 			),
-			color: $context->colorScheme->primary,
+			background: $context->colorScheme->primary,
 			shadows: BoxShadow::fromElevation(8)->withAmbient(),
 			padding: EdgeInsets::symmetric(horizontal: Length::inPx(10)),
 			position: PositionContext::Fixed,

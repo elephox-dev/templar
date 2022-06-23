@@ -60,7 +60,7 @@ it(
 			new Head(),
 			new Body(
 				new LateWidget(
-					function (Widget $parent, RenderContext $context) use (&$snapshotHash1) {
+					function (RenderContext $context, Widget $parent) use (&$snapshotHash1) {
 						$snapshotHash1 = $parent->renderParent->renderParent->getHashCode();
 
 						return new Text("test");

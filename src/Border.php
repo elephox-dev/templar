@@ -39,6 +39,10 @@ class Border implements Emittable {
 		);
 	}
 
+	public static function none(): Border {
+		return self::all(BorderSide::none());
+	}
+
 	public function __construct(
 		protected readonly ?BorderSide $top,
 		protected readonly ?BorderSide $right,
@@ -47,6 +51,11 @@ class Border implements Emittable {
 	) {}
 
 	public function __toString(): string {
+		if ($this->top->equals($this->right) && $this->right->equals($this->bottom) &&
+			$this->bottom->equals($this->left)) {
+			return "border: $this->top;";
+		}
+
 		$border = "";
 
 		if ($this->top !== null) {

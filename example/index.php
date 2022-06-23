@@ -11,17 +11,23 @@ use Elephox\Templar\EdgeInsets;
 use Elephox\Templar\FlexDirection;
 use Elephox\Templar\FlexWrap;
 use Elephox\Templar\Foundation\App;
+use Elephox\Templar\Foundation\AppBar;
 use Elephox\Templar\Foundation\Center;
 use Elephox\Templar\Foundation\Colors;
 use Elephox\Templar\Foundation\Container;
 use Elephox\Templar\Foundation\Form;
 use Elephox\Templar\Foundation\Image;
+use Elephox\Templar\Foundation\LateTableCell;
+use Elephox\Templar\Foundation\LateTableRow;
 use Elephox\Templar\Foundation\LinkButton;
-use Elephox\Templar\Foundation\AppBar;
 use Elephox\Templar\Foundation\SubmitButton;
+use Elephox\Templar\Foundation\Table;
+use Elephox\Templar\Foundation\TableCell;
+use Elephox\Templar\Foundation\TableRow;
 use Elephox\Templar\Foundation\Text;
 use Elephox\Templar\Length;
 use Elephox\Templar\RenderContext;
+use Elephox\Templar\TableScope;
 use Elephox\Templar\Templar;
 use Elephox\Templar\Widget;
 
@@ -50,7 +56,7 @@ class MyApp extends BuildWidget {
 						child: new Center(
 							child: new Text("This is a container!"),
 						),
-						color: new BackgroundImage(
+						background: new BackgroundImage(
 							src: "https://picsum.photos/200/300",
 							fit: BoxFit::Cover,
 						),
@@ -61,6 +67,39 @@ class MyApp extends BuildWidget {
 						'https://picsum.photos/350/150',
 						alt: 'Placeholder image',
 						border: Border::all(BorderSide::ridge(3, Colors::LightGray())),
+					),
+					new Table(
+						rows: [
+							new TableRow(
+								[
+									new TableCell(
+										new Text("Current language:"),
+										isHeader: true,
+										scope: TableScope::Row,
+									),
+									new LateTableCell(
+										function (RenderContext $context) {
+											return new Text($context->meta->language);
+										}
+									),
+								],
+							),
+							new LateTableRow(
+								function () {
+									yield new TableCell(
+										new Text("Generated cells:"),
+										isHeader: true,
+										scope: TableScope::Row,
+									);
+
+									for ($i = 0; $i < 3; $i++) {
+										yield new TableCell(
+											new Text("Cell $i"),
+										);
+									}
+								}
+							),
+						],
 					),
 					new SubmitButton(
 						new Text("Submit"),

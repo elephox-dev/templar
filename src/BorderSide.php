@@ -5,7 +5,7 @@ namespace Elephox\Templar;
 
 use Stringable;
 
-class BorderSide implements Hashable, Stringable {
+class BorderSide implements Hashable, Stringable, Equatable {
 	public static function solid(
 		null|int|float|Length $width,
 		null|int|Color $color = null
@@ -136,5 +136,15 @@ class BorderSide implements Hashable, Stringable {
 			$this->width,
 			$this->color,
 		);
+	}
+
+	public function equals(mixed $other): bool {
+		if (!$other instanceof self) {
+			return false;
+		}
+
+		return $this->style === $other->style
+			&& $this->width === $other->width
+			&& $this->color === $other->color;
 	}
 }

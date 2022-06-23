@@ -39,7 +39,7 @@ class Container extends HtmlRenderWidget implements Positionable {
 
 	public function __construct(
 		protected readonly ?Widget $child = null,
-		protected readonly null|BackgroundValue $color = null,
+		protected readonly null|BackgroundValue $background = null,
 		protected readonly array $shadows = [],
 		protected readonly null|EdgeInsets $padding = null,
 		protected readonly null|EdgeInsets $margin = null,
@@ -74,14 +74,14 @@ class Container extends HtmlRenderWidget implements Positionable {
 	protected function renderStyleContent(RenderContext $context): string {
 		$style = '';
 
-		if ($this->color !== null) {
-			if ($this->color instanceof Color) {
+		if ($this->background !== null) {
+			if ($this->background instanceof Color) {
 				$property = "background-color";
 			} else {
 				$property = "background-image";
 			}
 
-			$style .= "$property: {$this->color->toEmittable()};transition:background 0.2s ease-out;";
+			$style .= "$property: {$this->background->toEmittable()};transition:background 0.2s ease-out;";
 		}
 
 		if ($this->padding !== null) {
