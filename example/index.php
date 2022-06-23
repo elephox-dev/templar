@@ -1,22 +1,15 @@
 <?php
 declare(strict_types=1);
 
-use Elephox\Templar\BackgroundImage;
-use Elephox\Templar\Border;
-use Elephox\Templar\BorderSide;
-use Elephox\Templar\BoxFit;
 use Elephox\Templar\BuildWidget;
-use Elephox\Templar\ColorRank;
-use Elephox\Templar\EdgeInsets;
 use Elephox\Templar\FlexDirection;
 use Elephox\Templar\FlexWrap;
 use Elephox\Templar\Foundation\App;
 use Elephox\Templar\Foundation\AppBar;
-use Elephox\Templar\Foundation\Center;
 use Elephox\Templar\Foundation\Colors;
 use Elephox\Templar\Foundation\Container;
 use Elephox\Templar\Foundation\Form;
-use Elephox\Templar\Foundation\Image;
+use Elephox\Templar\Foundation\Grid;
 use Elephox\Templar\Foundation\LateTableCell;
 use Elephox\Templar\Foundation\LateTableRow;
 use Elephox\Templar\Foundation\LinkButton;
@@ -42,32 +35,41 @@ class MyApp extends BuildWidget {
 						new Text("Visit elephox.dev"),
 						"/",
 					),
-					new LinkButton(
-						new Text("Visit elephox.dev"),
-						"/",
-						rank: ColorRank::Secondary,
+					new Grid(
+						children: [
+							'sidebar' => new Container(
+								new Text("Sidebar"),
+								background: Colors::Emerald(),
+							),
+							'header' => new Container(
+								new Text("Header"),
+								background: Colors::Azure(),
+							),
+							'main' => new Container(
+								new Text("Main"),
+							),
+							'footer' => new Container(
+								new Text("Footer"),
+								background: Colors::Azure()->darken(0.3),
+							),
+						],
 					),
-					new LinkButton(
-						new Text("Visit elephox.dev"),
-						"/",
-						rank: ColorRank::Tertiary,
-					),
-					new Container(
-						child: new Center(
-							child: new Text("This is a container!"),
-						),
-						background: new BackgroundImage(
-							src: "https://picsum.photos/200/300",
-							fit: BoxFit::Cover,
-						),
-						padding: EdgeInsets::all(Length::inRem(2)),
-						margin: EdgeInsets::symmetric(horizontal: Length::inRem(1)),
-					),
-					new Image(
-						'https://picsum.photos/350/150',
-						alt: 'Placeholder image',
-						border: Border::all(BorderSide::ridge(3, Colors::LightGray())),
-					),
+					//					new Container(
+					//						child: new Center(
+					//							child: new Text("This is a container!"),
+					//						),
+					//						background: new BackgroundImage(
+					//							src: "https://picsum.photos/200/300",
+					//							fit: BoxFit::Cover,
+					//						),
+					//						padding: EdgeInsets::all(Length::inRem(2)),
+					//						margin: EdgeInsets::symmetric(horizontal: Length::inRem(1)),
+					//					),
+					//					new Image(
+					//						'https://picsum.photos/350/150',
+					//						alt: 'Placeholder image',
+					//						border: Border::all(BorderSide::ridge(3, Colors::LightGray())),
+					//					),
 					new Table(
 						rows: [
 							new TableRow(
@@ -80,7 +82,8 @@ class MyApp extends BuildWidget {
 									new LateTableCell(
 										function (RenderContext $context) {
 											return new Text($context->meta->language);
-										}
+										},
+										colspan: 3,
 									),
 								],
 							),

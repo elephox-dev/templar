@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Elephox\Templar\Foundation;
 
-use Elephox\Templar\Border;
 use Elephox\Templar\HashBuilder;
 use Elephox\Templar\HasSingleRenderChild;
 use Elephox\Templar\HtmlRenderWidget;
@@ -18,6 +17,8 @@ class TableCell extends HtmlRenderWidget {
 		protected readonly ?Widget $child,
 		protected readonly bool $isHeader = false,
 		protected readonly ?TableScope $scope = null,
+		protected readonly ?int $colspan = null,
+		protected readonly ?int $rowspan = null,
 	) {
 		if ($child !== null) {
 			$child->renderParent = $this;
@@ -33,6 +34,14 @@ class TableCell extends HtmlRenderWidget {
 
 		if ($this->scope !== null) {
 			$attributes['scope'] = $this->scope->value;
+		}
+
+		if ($this->colspan !== null) {
+			$attributes['colspan'] = $this->colspan;
+		}
+
+		if ($this->rowspan !== null) {
+			$attributes['rowspan'] = $this->rowspan;
 		}
 
 		return $attributes;

@@ -13,6 +13,8 @@ class LateTableCell extends LateWidget {
 		Closure $buildCallback,
 		protected readonly bool $isHeader = false,
 		protected readonly ?TableScope $scope = null,
+		protected readonly ?int $colspan = null,
+		protected readonly ?int $rowspan = null,
 	) {
 		parent::__construct($buildCallback);
 	}
@@ -24,6 +26,8 @@ class LateTableCell extends LateWidget {
 			child: $result,
 			isHeader: $this->isHeader,
 			scope: $this->scope,
+			colspan: $this->colspan,
+			rowspan: $this->rowspan,
 		);
 
 		$cell->renderParent = $this->renderParent;
