@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Elephox\Templar\Foundation;
 
+use Elephox\Templar\Border;
 use Elephox\Templar\HashBuilder;
 use Elephox\Templar\HasSingleRenderChild;
 use Elephox\Templar\HtmlRenderWidget;
@@ -19,6 +20,7 @@ class TableCell extends HtmlRenderWidget {
 		protected readonly ?TableScope $scope = null,
 		protected readonly ?int $colspan = null,
 		protected readonly ?int $rowspan = null,
+		protected readonly ?Border $border = null,
 	) {
 		if ($child !== null) {
 			$child->renderParent = $this;
@@ -58,7 +60,7 @@ class TableCell extends HtmlRenderWidget {
 			/** @var Table $table */
 			$table = $row->renderParent;
 
-			$border = $table->getBorder($context);
+			$border = $this->border ?? $table->getBorder($context);
 			if ($border !== null) {
 				$style .= $border->toEmittable();
 			}
@@ -72,6 +74,7 @@ class TableCell extends HtmlRenderWidget {
 			$this->child,
 			$this->isHeader,
 			$this->scope,
+			$this->border,
 		);
 	}
 }

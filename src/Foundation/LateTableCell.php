@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Elephox\Templar\Foundation;
 
 use Closure;
+use Elephox\Templar\Border;
 use Elephox\Templar\RenderContext;
 use Elephox\Templar\TableScope;
 use Elephox\Templar\Widget;
@@ -15,6 +16,7 @@ class LateTableCell extends LateWidget {
 		protected readonly ?TableScope $scope = null,
 		protected readonly ?int $colspan = null,
 		protected readonly ?int $rowspan = null,
+		protected readonly ?Border $border = null,
 	) {
 		parent::__construct($buildCallback);
 	}
@@ -28,6 +30,7 @@ class LateTableCell extends LateWidget {
 			scope: $this->scope,
 			colspan: $this->colspan,
 			rowspan: $this->rowspan,
+			border: $this->border,
 		);
 
 		$cell->renderParent = $this->renderParent;

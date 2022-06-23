@@ -13,6 +13,7 @@ class TableRow extends HtmlRenderWidget {
 
 	public function __construct(
 		iterable $cells,
+		protected readonly ?Border $border = null,
 	) {
 		$this->cells = [];
 		foreach ($cells as $cell) {
@@ -33,6 +34,7 @@ class TableRow extends HtmlRenderWidget {
 	public function getHashCode(): float {
 		return HashBuilder::buildHash(
 			$this->cells,
+			$this->border,
 		);
 	}
 
@@ -41,7 +43,7 @@ class TableRow extends HtmlRenderWidget {
 
 		if ($this->renderParent instanceof Table) {
 			/** @var Border $border */
-			$border = $this->renderParent->getBorder($context);
+			$border = $this->border ?? $this->renderParent->getBorder($context);
 			if ($border !== null) {
 				$style .= $border->toEmittable();
 			}
