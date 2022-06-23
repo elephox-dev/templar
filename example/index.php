@@ -1,17 +1,19 @@
 <?php
 declare(strict_types=1);
 
+use Elephox\Templar\Border;
+use Elephox\Templar\BorderSide;
 use Elephox\Templar\BuildWidget;
 use Elephox\Templar\ColorRank;
 use Elephox\Templar\FlexDirection;
 use Elephox\Templar\FlexWrap;
 use Elephox\Templar\Foundation\App;
 use Elephox\Templar\Foundation\AppBar;
+use Elephox\Templar\Foundation\Button;
 use Elephox\Templar\Foundation\Form;
 use Elephox\Templar\Foundation\LateTableCell;
 use Elephox\Templar\Foundation\LateTableRow;
 use Elephox\Templar\Foundation\LinkButton;
-use Elephox\Templar\Foundation\Button;
 use Elephox\Templar\Foundation\Table;
 use Elephox\Templar\Foundation\TableCell;
 use Elephox\Templar\Foundation\TableRow;
@@ -49,7 +51,7 @@ class MyApp extends BuildWidget {
 					new Table(
 						rows: [
 							new TableRow(
-								[
+								cells: [
 									new TableCell(
 										new Text("Current language:"),
 										isHeader: true,
@@ -64,7 +66,7 @@ class MyApp extends BuildWidget {
 								],
 							),
 							new LateTableRow(
-								function () {
+								buildCallback: function () {
 									yield new TableCell(
 										new Text("Generated cells:"),
 										isHeader: true,
@@ -76,9 +78,12 @@ class MyApp extends BuildWidget {
 											new Text("Cell $i"),
 										);
 									}
-								}
+								},
 							),
 						],
+						cellBorder: Border::symmetric(
+							vertical: BorderSide::solid(1),
+						),
 					),
 					new Button(
 						new Text("Submit"),

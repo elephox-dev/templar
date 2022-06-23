@@ -51,8 +51,9 @@ class Border implements Emittable {
 	) {}
 
 	public function __toString(): string {
-		if ($this->top->equals($this->right) && $this->right->equals($this->bottom) &&
-			$this->bottom->equals($this->left)) {
+		if (($this->top?->equals($this->right) ?? false) &&
+			($this->right?->equals($this->bottom) ?? false) &&
+			($this->bottom?->equals($this->left) ?? false)) {
 			return "border: $this->top;";
 		}
 

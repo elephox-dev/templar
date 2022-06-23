@@ -14,7 +14,8 @@ class Table extends HtmlRenderWidget {
 
 	public function __construct(
 		iterable $rows,
-		public readonly ?Border $border = null,
+		public readonly ?Border $cellBorder = null,
+		public readonly ?Border $outerBorder = null,
 	) {
 		$this->rows = [];
 		foreach ($rows as $row) {
@@ -35,20 +36,20 @@ class Table extends HtmlRenderWidget {
 	public function getHashCode(): float {
 		return HashBuilder::buildHash(
 			$this->rows,
-			$this->border,
+			$this->cellBorder,
+			$this->outerBorder,
 		);
 	}
 
-	public function getBorder(RenderContext $context): ?Border {
-		return $this->border ?? Border::all(BorderSide::solid(1, $context->colorScheme->divider));
+	public function getCellBorder(): ?Border {
+		return $this->cellBorder;
 	}
 
 	protected function renderStyleContent(RenderContext $context): string {
 		$style = 'border-collapse: collapse;';
 
-		$border = $this->getBorder($context);
-		if ($border !== null) {
-			$style .= $border->toEmittable();
+		if ($this->outerBorder !== null) {
+			$style .= $this->outerBorder->toEmittable();
 		}
 
 		return $style;

@@ -11,7 +11,8 @@ use Elephox\Templar\Widget;
 class LateTableRow extends LateWidget {
 	public function __construct(
 		Closure $buildCallback,
-		protected readonly ?Border $border = null,
+		protected readonly ?Border $cellBorder = null,
+		protected readonly ?Border $outerBorder = null,
 	) {
 		parent::__construct($buildCallback);
 	}
@@ -29,7 +30,8 @@ class LateTableRow extends LateWidget {
 
 		$row = new TableRow(
 			cells: $result,
-			border: $this->border,
+			cellBorder: $this->cellBorder,
+			outerBorder: $this->outerBorder,
 		);
 
 		$row->renderParent = $this->renderParent;

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Elephox\Templar\Foundation;
 
 use Elephox\Templar\Border;
+use Elephox\Templar\BorderSide;
 use Elephox\Templar\HashBuilder;
 use Elephox\Templar\HtmlRenderWidget;
 use Elephox\Templar\RenderContext;
@@ -13,7 +14,8 @@ class TableRow extends HtmlRenderWidget {
 
 	public function __construct(
 		iterable $cells,
-		protected readonly ?Border $border = null,
+		protected readonly ?Border $cellBorder = null,
+		protected readonly ?Border $outerBorder = null,
 	) {
 		$this->cells = [];
 		foreach ($cells as $cell) {
@@ -31,22 +33,23 @@ class TableRow extends HtmlRenderWidget {
 		return 'tr';
 	}
 
+	public function getCellBorder(): ?Border {
+		return $this->cellBorder;
+	}
+
 	public function getHashCode(): float {
 		return HashBuilder::buildHash(
 			$this->cells,
-			$this->border,
+			$this->cellBorder,
+			$this->outerBorder,
 		);
 	}
 
 	protected function renderStyleContent(RenderContext $context): string {
 		$style = parent::renderStyleContent($context);
 
-		if ($this->renderParent instanceof Table) {
-			/** @var Border $border */
-			$border = $this->border ?? $this->renderParent->getBorder($context);
-			if ($border !== null) {
-				$style .= $border->toEmittable();
-			}
+		if ($this->outerBorder !== null) {
+			$style .= $this->outerBorder->toEmittable();
 		}
 
 		return $style;

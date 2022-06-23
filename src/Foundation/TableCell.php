@@ -52,18 +52,23 @@ class TableCell extends HtmlRenderWidget {
 	protected function renderStyleContent(RenderContext $context): string {
 		$style = parent::renderStyleContent($context);
 
-		if ($this->renderParent instanceof TableRow &&
-			$this->renderParent->renderParent instanceof Table) {
+		$border = $this->border;
+		if ($this->renderParent instanceof TableRow) {
 			/** @var TableRow $row */
 			$row = $this->renderParent;
 
-			/** @var Table $table */
-			$table = $row->renderParent;
+			$border ??= $row->getCellBorder();
 
-			$border = $this->border ?? $table->getBorder($context);
-			if ($border !== null) {
-				$style .= $border->toEmittable();
+			if ($row->renderParent instanceof Table) {
+				/** @var Table $table */
+				$table = $row->renderParent;
+
+				$border ??= $table->getCellBorder();
 			}
+		}
+
+		if ($border !== null) {
+			$style .= $border->toEmittable();
 		}
 
 		return $style;
