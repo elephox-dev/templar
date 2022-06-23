@@ -29,7 +29,7 @@ class Templar {
 	public static function getDefaultColorScheme(): ColorScheme {
 		$primary = Colors::SkyBlue();
 		$secondary = Colors::Emerald();
-		$tertiary = Colors::Violet();
+		$tertiary = Colors::Grayscale(0.6);
 
 		return new ColorScheme(
 			primary: $primary,
@@ -41,7 +41,8 @@ class Templar {
 		);
 	}
 
-	public static function getDefaultDarkColorScheme(?ColorScheme $lightColorScheme = null
+	public static function getDefaultDarkColorScheme(
+		?ColorScheme $lightColorScheme = null,
 	): ColorScheme {
 		$light = self::getDefaultColorScheme()->overwriteFrom($lightColorScheme);
 		$primary = $light->primary->darken(0.1)->desaturate(0.2);
@@ -54,9 +55,6 @@ class Templar {
 			tertiary: $tertiary,
 			background: Colors::Grayscale(0.15),
 			foreground: Colors::Grayscale(0.85),
-			onPrimary: $primary->bestEffortContrast(),
-			onSecondary: $secondary->bestEffortContrast(),
-			onTertiary: $tertiary->bestEffortContrast(),
 		);
 	}
 
@@ -68,6 +66,7 @@ class Templar {
 		?ColorScheme $darkColorScheme = null,
 		?TextStyle $textStyle = null,
 		?PositionContext $positionContext = null,
+		bool $checkColorContrast = true,
 	) {
 		$default = self::getDefaultRenderContext($colorScheme, $darkColorScheme);
 
@@ -78,15 +77,57 @@ class Templar {
 				onSecondary: $default->colorScheme->secondary->bestEffortContrast(),
 				onTertiary: $default->colorScheme->tertiary->bestEffortContrast(),
 			),
+			darkColorScheme: $default->darkColorScheme->withFallback(
+				onPrimary: $default->darkColorScheme->primary->bestEffortContrast(),
+				onSecondary: $default->darkColorScheme->secondary->bestEffortContrast(),
+				onTertiary: $default->darkColorScheme->tertiary->bestEffortContrast(),
+			),
 			textStyle: $default->textStyle->overwriteFrom($textStyle),
 			positionContext: $positionContext,
 		);
+
+		if ($checkColorContrast) {
+			set_error_handler(
+				function (int $errno, string $errstr) {
+					$err =
+						fopen(
+							'php://stderr',
+							'wb'
+						);
+					fwrite(
+						$err,
+						"Please check your color scheme contrasts!\r\nGot this error while checking light theme:\r\n$errstr\r\n"
+					);
+					fclose($err);
+				}
+			);
+
+			$this->context->colorScheme->checkContrasts();
+
+			restore_error_handler();
+			set_error_handler(
+				function (int $errno, string $errstr) {
+					$err =
+						fopen(
+							'php://stderr',
+							'wb'
+						);
+					fwrite(
+						$err,
+						"Please check your color scheme contrasts!\r\nGot this error while checking dark theme:\r\n$errstr\r\n"
+					);
+					fclose($err);
+				}
+			);
+
+			$this->context->darkColorScheme->checkContrasts();
+
+			restore_error_handler();
+		}
 	}
 
 	public function render(Widget $widget): string {
 		$context = $this->context;
-
-		$context->colorScheme->checkContrasts();
 
 		set_error_handler(
 			static function (

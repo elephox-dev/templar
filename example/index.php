@@ -46,9 +46,11 @@ class MyApp extends BuildWidget {
 }
 
 $templar = new Templar(
-	colorScheme: new ColorScheme(
-		primary: Colors::Red()->mix(Colors::Yellow(), 0.55),
-	),
+//	colorScheme: new ColorScheme(
+//		primary: Colors::Red()->mix(Colors::Yellow(), 0.55)->lighten(0.1)->desaturate(0.2),
+//		secondary: Colors::Green()->desaturate(0.2)->lighten(0.2),
+//		tertiary: Colors::Azure()->lighten(0.1),
+//	),
 );
 if (str_ends_with(
 	$_SERVER['REQUEST_URI'],
