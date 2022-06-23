@@ -36,8 +36,8 @@ class Templar {
 			secondary: $secondary,
 			tertiary: $tertiary,
 			background: Colors::White(),
-			foreground: Colors::Black(),
-			divider: Colors::Grayscale(0.33),
+			foreground: Colors::Grayscale(0.15),
+			divider: Colors::Grayscale(0.75),
 		);
 	}
 
@@ -45,16 +45,17 @@ class Templar {
 		?ColorScheme $lightColorScheme = null,
 	): ColorScheme {
 		$light = self::getDefaultColorScheme()->overwriteFrom($lightColorScheme);
-		$primary = $light->primary->darken(0.1)->desaturate(0.2);
-		$secondary = $light->secondary->darken(0.1)->desaturate(0.2);
-		$tertiary = $light->tertiary->darken(0.1)->desaturate(0.2);
+		$primary = $light->primary->darken(0.3)->desaturate(0.2);
+		$secondary = $light->secondary->darken(0.3)->desaturate(0.2);
+		$tertiary = $light->tertiary->darken(0.3)->desaturate(0.2);
 
 		return $light->with(
 			primary: $primary,
 			secondary: $secondary,
 			tertiary: $tertiary,
-			background: Colors::Grayscale(0.15),
-			foreground: Colors::Grayscale(0.85),
+			background: Colors::Grayscale(0.1),
+			foreground: Colors::Grayscale(0.9),
+			divider: Colors::Grayscale(0.33),
 		);
 	}
 
@@ -88,12 +89,11 @@ class Templar {
 
 		if ($checkColorContrast) {
 			set_error_handler(
-				function (int $errno, string $errstr) {
-					$err =
-						fopen(
-							'php://stderr',
-							'wb'
-						);
+				static function (int $errno, string $errstr) {
+					$err = fopen(
+						'php://stderr',
+						'wb'
+					);
 					fwrite(
 						$err,
 						"Please check your color scheme contrasts!\r\nGot this error while checking light theme:\r\n$errstr\r\n"
@@ -106,12 +106,11 @@ class Templar {
 
 			restore_error_handler();
 			set_error_handler(
-				function (int $errno, string $errstr) {
-					$err =
-						fopen(
-							'php://stderr',
-							'wb'
-						);
+				static function (int $errno, string $errstr) {
+					$err = fopen(
+						'php://stderr',
+						'wb'
+					);
 					fwrite(
 						$err,
 						"Please check your color scheme contrasts!\r\nGot this error while checking dark theme:\r\n$errstr\r\n"

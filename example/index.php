@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 use Elephox\Templar\BuildWidget;
+use Elephox\Templar\ColorRank;
 use Elephox\Templar\FlexDirection;
 use Elephox\Templar\FlexWrap;
 use Elephox\Templar\Foundation\App;
@@ -10,7 +11,7 @@ use Elephox\Templar\Foundation\Form;
 use Elephox\Templar\Foundation\LateTableCell;
 use Elephox\Templar\Foundation\LateTableRow;
 use Elephox\Templar\Foundation\LinkButton;
-use Elephox\Templar\Foundation\SubmitButton;
+use Elephox\Templar\Foundation\Button;
 use Elephox\Templar\Foundation\Table;
 use Elephox\Templar\Foundation\TableCell;
 use Elephox\Templar\Foundation\TableRow;
@@ -31,7 +32,19 @@ class MyApp extends BuildWidget {
 					new LinkButton(
 						new Text("Visit elephox.dev"),
 						"https://elephox.dev",
-						newWindow: true
+						newWindow: true,
+					),
+					new LinkButton(
+						new Text("Visit elephox.dev"),
+						"https://elephox.dev",
+						newWindow: true,
+						rank: ColorRank::Secondary,
+					),
+					new LinkButton(
+						new Text("Visit elephox.dev"),
+						"https://elephox.dev",
+						newWindow: true,
+						rank: ColorRank::Tertiary,
 					),
 					new Table(
 						rows: [
@@ -67,7 +80,7 @@ class MyApp extends BuildWidget {
 							),
 						],
 					),
-					new SubmitButton(
+					new Button(
 						new Text("Submit"),
 					),
 				],

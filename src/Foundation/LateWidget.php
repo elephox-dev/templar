@@ -14,6 +14,19 @@ class LateWidget extends BuildWidget {
 	) {}
 
 	protected function build(RenderContext $context): Widget {
-		return ($this->buildCallback)($context, $this);
+		$result =
+			($this->buildCallback)(
+				$context,
+				$this
+			);
+
+		assert(
+			$result instanceof Widget,
+			'LateWidget build callback must return a Widget'
+		);
+
+		$result->renderParent = $this->renderParent;
+
+		return $result;
 	}
 }

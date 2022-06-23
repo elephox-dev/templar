@@ -5,13 +5,14 @@ namespace Elephox\Templar\Foundation;
 
 use Elephox\Templar\BackgroundValue;
 use Elephox\Templar\BorderRadius;
+use Elephox\Templar\ButtonType;
 use Elephox\Templar\ColorRank;
 use Elephox\Templar\EdgeInsets;
 use Elephox\Templar\RenderContext;
 use Elephox\Templar\TextStyle;
 use Elephox\Templar\Widget;
 
-class SubmitButton extends ButtonBase {
+class Button extends ButtonBase {
 	public function __construct(
 		?Widget $child,
 		null|BackgroundValue $background = null,
@@ -19,6 +20,7 @@ class SubmitButton extends ButtonBase {
 		?EdgeInsets $padding = null,
 		?BorderRadius $borderRadius = null,
 		ColorRank $rank = ColorRank::Primary,
+		protected readonly ButtonType $type = ButtonType::Button,
 	) {
 		parent::__construct(
 			$child,
@@ -35,6 +37,6 @@ class SubmitButton extends ButtonBase {
 	}
 
 	protected function getAttributes(RenderContext $context): array {
-		return [...parent::getAttributes($context), 'type' => 'submit'];
+		return [...parent::getAttributes($context), 'type' => $this->type->value];
 	}
 }
