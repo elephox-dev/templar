@@ -6,7 +6,7 @@ namespace Elephox\Templar;
 class Length extends Value implements EmittableLength {
 	public static function wrap(
 		null|int|float|Length $length,
-		LengthUnit $unit = LengthUnit::Px
+		LengthUnit $unit = LengthUnit::Px,
 	): Length {
 		if ($length === null) {
 			return new Length(0, $unit);

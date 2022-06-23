@@ -42,16 +42,20 @@ class Image extends HtmlRenderWidget {
 	protected function renderStyleContent(RenderContext $context): string {
 		$style = parent::renderStyleContent($context);
 
+		//$style .= "background-image: url($this->src);background-repeat: no-repeat;";
+		$style .= match ($this->fit) {
+			BoxFit::Fill => 'object-fit: fill;',
+			BoxFit::Contain => 'object-fit: contain;',
+			BoxFit::Cover => 'object-fit: cover;',
+			BoxFit::ScaleDown => 'object-fit: scale-down;',
+		};
+
 		if ($this->border !== null) {
 			$style .= $this->border->toEmittable();
 		}
 
 		if ($this->borderRadius !== null) {
 			$style .= $this->borderRadius->toEmittable();
-		}
-
-		if ($this->responsive) {
-			$style .= 'max-width: 100%;height: auto;';
 		}
 
 		return $style;

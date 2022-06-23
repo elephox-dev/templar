@@ -9,7 +9,8 @@ abstract class HtmlRenderWidget extends RenderWidget {
 		$attributes = $this->renderAttributes($context);
 		$content = $this->renderContent($context);
 
-		if ($content === '') {
+		// TODO: check which tags can/must be closed
+		if ($tag !== 'div' && $content === '') {
 			return "<$tag $attributes/>";
 		}
 

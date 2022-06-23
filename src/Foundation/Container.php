@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Elephox\Templar\Foundation;
 
+use Elephox\Templar\BackgroundValue;
 use Elephox\Templar\Color;
 use Elephox\Templar\EdgeInsets;
 use Elephox\Templar\EmittableLength;
@@ -38,7 +39,7 @@ class Container extends HtmlRenderWidget implements Positionable {
 
 	public function __construct(
 		protected readonly ?Widget $child = null,
-		protected readonly null|Gradient|Color $color = null,
+		protected readonly null|BackgroundValue $color = null,
 		protected readonly array $shadows = [],
 		protected readonly null|EdgeInsets $padding = null,
 		protected readonly null|EdgeInsets $margin = null,
@@ -74,13 +75,13 @@ class Container extends HtmlRenderWidget implements Positionable {
 		$style = '';
 
 		if ($this->color !== null) {
-			if ($this->color instanceof Gradient) {
-				$property = "background-image";
-			} else {
+			if ($this->color instanceof Color) {
 				$property = "background-color";
+			} else {
+				$property = "background-image";
 			}
 
-			$style .= "$property: $this->color;transition:background 0.2s ease-out;";
+			$style .= "$property: {$this->color->toEmittable()};transition:background 0.2s ease-out;";
 		}
 
 		if ($this->padding !== null) {

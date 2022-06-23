@@ -1,11 +1,19 @@
 <?php
 declare(strict_types=1);
 
+use Elephox\Templar\BackgroundImage;
+use Elephox\Templar\Border;
+use Elephox\Templar\BorderSide;
+use Elephox\Templar\BoxFit;
 use Elephox\Templar\BuildWidget;
 use Elephox\Templar\ColorRank;
+use Elephox\Templar\EdgeInsets;
 use Elephox\Templar\FlexDirection;
 use Elephox\Templar\FlexWrap;
 use Elephox\Templar\Foundation\App;
+use Elephox\Templar\Foundation\Center;
+use Elephox\Templar\Foundation\Colors;
+use Elephox\Templar\Foundation\Container;
 use Elephox\Templar\Foundation\Form;
 use Elephox\Templar\Foundation\Image;
 use Elephox\Templar\Foundation\LinkButton;
@@ -38,9 +46,21 @@ class MyApp extends BuildWidget {
 						"/",
 						rank: ColorRank::Tertiary,
 					),
+					new Container(
+						child: new Center(
+							child: new Text("This is a container!"),
+						),
+						color: new BackgroundImage(
+							src: "https://picsum.photos/200/300",
+							fit: BoxFit::Cover,
+						),
+						padding: EdgeInsets::all(Length::inRem(2)),
+						margin: EdgeInsets::symmetric(horizontal: Length::inRem(1)),
+					),
 					new Image(
-						'https://via.placeholder.com/350x150',
+						'https://picsum.photos/350/150',
 						alt: 'Placeholder image',
+						border: Border::all(BorderSide::ridge(3, Colors::LightGray())),
 					),
 					new SubmitButton(
 						new Text("Submit"),

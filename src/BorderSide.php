@@ -6,11 +6,91 @@ namespace Elephox\Templar;
 use Stringable;
 
 class BorderSide implements Hashable, Stringable {
-	public static function solid(null|int|float|Length $width, ?Color $color = null): BorderSide {
+	public static function solid(
+		null|int|float|Length $width,
+		null|int|Color $color = null
+	): BorderSide {
 		return new BorderSide(
 			BorderStyle::Solid,
-			Length::wrap($width),
-			$color,
+			$width !== null ? Length::wrap($width) : null,
+			$color !== null ? Color::wrap($color) : null,
+		);
+	}
+
+	public static function dashed(
+		null|int|float|Length $width,
+		null|int|Color $color = null
+	): BorderSide {
+		return new BorderSide(
+			BorderStyle::Dashed,
+			$width !== null ? Length::wrap($width) : null,
+			$color !== null ? Color::wrap($color) : null,
+		);
+	}
+
+	public static function dotted(
+		null|int|float|Length $width,
+		null|int|Color $color = null
+	): BorderSide {
+		return new BorderSide(
+			BorderStyle::Dotted,
+			$width !== null ? Length::wrap($width) : null,
+			$color !== null ? Color::wrap($color) : null,
+		);
+	}
+
+	public static function double(
+		null|int|float|Length $width,
+		null|int|Color $color = null
+	): BorderSide {
+		return new BorderSide(
+			BorderStyle::Double,
+			$width !== null ? Length::wrap($width) : null,
+			$color !== null ? Color::wrap($color) : null,
+		);
+	}
+
+	public static function groove(
+		null|int|float|Length $width,
+		null|int|Color $color = null
+	): BorderSide {
+		return new BorderSide(
+			BorderStyle::Groove,
+			$width !== null ? Length::wrap($width) : null,
+			$color !== null ? Color::wrap($color) : null,
+		);
+	}
+
+	public static function inset(
+		null|int|float|Length $width,
+		null|int|Color $color = null
+	): BorderSide {
+		return new BorderSide(
+			BorderStyle::Inset,
+			$width !== null ? Length::wrap($width) : null,
+			$color !== null ? Color::wrap($color) : null,
+		);
+	}
+
+	public static function outset(
+		null|int|float|Length $width,
+		null|int|Color $color = null
+	): BorderSide {
+		return new BorderSide(
+			BorderStyle::Outset,
+			$width !== null ? Length::wrap($width) : null,
+			$color !== null ? Color::wrap($color) : null,
+		);
+	}
+
+	public static function ridge(
+		null|int|float|Length $width,
+		null|int|Color $color = null
+	): BorderSide {
+		return new BorderSide(
+			BorderStyle::Ridge,
+			$width !== null ? Length::wrap($width) : null,
+			$color !== null ? Color::wrap($color) : null,
 		);
 	}
 

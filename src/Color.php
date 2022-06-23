@@ -6,6 +6,18 @@ namespace Elephox\Templar;
 use JetBrains\PhpStorm\ArrayShape;
 
 class Color implements BackgroundValue {
+	public static function wrap(null|int|Color $color = null): ?Color {
+		if ($color === null) {
+			return new Color(0x00000000);
+		}
+
+		if ($color instanceof self) {
+			return $color;
+		}
+
+		return new Color($color);
+	}
+
 	public static function calculateHue(
 		float $max,
 		float $min,

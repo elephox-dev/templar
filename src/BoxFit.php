@@ -9,4 +9,5 @@ enum BoxFit implements Hashable {
 	case Contain;
 	case Cover;
 	case Fill;
+	case ScaleDown;
 }
