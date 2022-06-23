@@ -6,8 +6,10 @@ namespace Elephox\Templar;
 class Length extends Value implements EmittableLength {
 	public static function wrap(
 		null|int|float|Length $length,
-		LengthUnit $unit = LengthUnit::Px,
+		?LengthUnit $unit = null,
 	): Length {
+		$unit ??= AbsoluteLengthUnit::Px;
+
 		if ($length === null) {
 			return new Length(0, $unit);
 		}
@@ -19,31 +21,31 @@ class Length extends Value implements EmittableLength {
 		return new Length($length, $unit);
 	}
 
-	public static function zero(LengthUnit $unit = LengthUnit::Px): Length {
+	public static function zero(?LengthUnit $unit = null): Length {
 		return new Length(
 			0,
-			$unit,
+			$unit ?? AbsoluteLengthUnit::Px,
 		);
 	}
 
 	public static function inPx(float $value): Length {
 		return new Length(
 			$value,
-			LengthUnit::Px,
+			AbsoluteLengthUnit::Px,
 		);
 	}
 
 	public static function inRem(float $value): Length {
 		return new Length(
 			$value,
-			LengthUnit::Rem,
+			RelativeLengthUnit::Rem,
 		);
 	}
 
 	public static function inPercent(float $value): Length {
 		return new Length(
 			$value,
-			LengthUnit::Percent,
+			RelativeLengthUnit::Percent,
 		);
 	}
 

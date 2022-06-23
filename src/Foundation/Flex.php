@@ -86,7 +86,7 @@ class Flex extends HtmlRenderWidget {
 	}
 
 	protected function renderStyleContent(RenderContext $context): string {
-		$style = "display: flex;";
+		$style = parent::renderStyleContent($context) . "display: flex;";
 
 		if ($this->width !== null) {
 			$style .= "width: $this->width;";

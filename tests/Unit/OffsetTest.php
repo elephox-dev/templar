@@ -3,9 +3,11 @@ declare(strict_types=1);
 
 namespace Elephox\Templar\Tests\Unit;
 
+use Elephox\Templar\AbsoluteLengthUnit;
 use Elephox\Templar\Length;
 use Elephox\Templar\LengthUnit;
 use Elephox\Templar\Offset;
+use Elephox\Templar\RelativeLengthUnit;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -17,10 +19,10 @@ use PHPUnit\Framework\TestCase;
  */
 class OffsetTest extends TestCase {
 	public function bothValuesProvider(): iterable {
-		yield [null, 0, LengthUnit::Px, 0, LengthUnit::Px];
-		yield [1, 1, LengthUnit::Px, 1, LengthUnit::Px];
-		yield [1.5, 1.5, LengthUnit::Px, 1.5, LengthUnit::Px];
-		yield [Length::inRem(1), 1, LengthUnit::Rem, 1, LengthUnit::Rem];
+		yield [null, 0, AbsoluteLengthUnit::Px, 0, AbsoluteLengthUnit::Px];
+		yield [1, 1, AbsoluteLengthUnit::Px, 1, AbsoluteLengthUnit::Px];
+		yield [1.5, 1.5, AbsoluteLengthUnit::Px, 1.5, AbsoluteLengthUnit::Px];
+		yield [Length::inRem(1), 1, RelativeLengthUnit::Rem, 1, RelativeLengthUnit::Rem];
 	}
 
 	/**

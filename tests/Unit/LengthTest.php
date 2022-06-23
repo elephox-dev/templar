@@ -4,8 +4,10 @@ declare(strict_types=1);
 namespace Elephox\Templar\Tests\Unit;
 
 use AssertionError;
+use Elephox\Templar\AbsoluteLengthUnit;
 use Elephox\Templar\Length;
 use Elephox\Templar\LengthUnit;
+use Elephox\Templar\RelativeLengthUnit;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -21,7 +23,7 @@ class LengthTest extends TestCase {
 			null,
 			new Length(
 				0,
-				LengthUnit::Px,
+				AbsoluteLengthUnit::Px,
 				2
 			),
 		];
@@ -30,25 +32,25 @@ class LengthTest extends TestCase {
 			null,
 			new Length(
 				1,
-				LengthUnit::Px,
+				AbsoluteLengthUnit::Px,
 				2
 			),
 		];
 		yield [
 			null,
-			LengthUnit::Em,
+			RelativeLengthUnit::Em,
 			new Length(
 				0,
-				LengthUnit::Em,
+				RelativeLengthUnit::Em,
 				2
 			),
 		];
 		yield [
 			1.2,
-			LengthUnit::Em,
+			RelativeLengthUnit::Em,
 			new Length(
 				1.2,
-				LengthUnit::Em,
+				RelativeLengthUnit::Em,
 				2
 			),
 		];
@@ -98,7 +100,7 @@ class LengthTest extends TestCase {
 			$zero->value()
 		);
 		static::assertSame(
-			LengthUnit::Px,
+			AbsoluteLengthUnit::Px,
 			$zero->unit()
 		);
 		static::assertSame(
@@ -106,14 +108,14 @@ class LengthTest extends TestCase {
 			$zero->precision()
 		);
 
-		$zero = Length::zero(LengthUnit::Em);
+		$zero = Length::zero(RelativeLengthUnit::Em);
 
 		static::assertSame(
 			0.0,
 			$zero->value()
 		);
 		static::assertSame(
-			LengthUnit::Em,
+			RelativeLengthUnit::Em,
 			$zero->unit()
 		);
 		static::assertSame(
@@ -132,7 +134,7 @@ class LengthTest extends TestCase {
 			$inPx->value()
 		);
 		static::assertSame(
-			LengthUnit::Px,
+			AbsoluteLengthUnit::Px,
 			$inPx->unit()
 		);
 		static::assertSame(
@@ -145,7 +147,7 @@ class LengthTest extends TestCase {
 			$inRem->value()
 		);
 		static::assertSame(
-			LengthUnit::Rem,
+			RelativeLengthUnit::Rem,
 			$inRem->unit()
 		);
 		static::assertSame(
@@ -158,7 +160,7 @@ class LengthTest extends TestCase {
 			$inPercent->value()
 		);
 		static::assertSame(
-			LengthUnit::Percent,
+			RelativeLengthUnit::Percent,
 			$inPercent->unit()
 		);
 		static::assertSame(
@@ -177,7 +179,7 @@ class LengthTest extends TestCase {
 			$c->value()
 		);
 		static::assertSame(
-			LengthUnit::Px,
+			AbsoluteLengthUnit::Px,
 			$c->unit()
 		);
 		static::assertSame(
@@ -205,7 +207,7 @@ class LengthTest extends TestCase {
 			$o1->x->value()
 		);
 		static::assertSame(
-			LengthUnit::Px,
+			AbsoluteLengthUnit::Px,
 			$o1->x->unit()
 		);
 		static::assertSame(
@@ -217,7 +219,7 @@ class LengthTest extends TestCase {
 			$o1->y->value()
 		);
 		static::assertSame(
-			LengthUnit::Px,
+			AbsoluteLengthUnit::Px,
 			$o1->y->unit()
 		);
 		static::assertSame(
@@ -232,7 +234,7 @@ class LengthTest extends TestCase {
 			$o2->x->value()
 		);
 		static::assertSame(
-			LengthUnit::Px,
+			AbsoluteLengthUnit::Px,
 			$o2->x->unit()
 		);
 		static::assertSame(
@@ -244,7 +246,7 @@ class LengthTest extends TestCase {
 			$o2->y->value()
 		);
 		static::assertSame(
-			LengthUnit::Px,
+			AbsoluteLengthUnit::Px,
 			$o2->y->unit()
 		);
 		static::assertSame(
