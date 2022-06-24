@@ -54,6 +54,13 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-mbstring" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/service-contracts" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/string" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/jetbrains/phpstorm-attributes" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/elephox/collection" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/elephox/mimey" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/elephox/oor" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/elephox/support" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/elephox/files" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/elephox/stream" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

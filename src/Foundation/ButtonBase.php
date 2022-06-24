@@ -35,7 +35,7 @@ abstract class ButtonBase extends HtmlRenderWidget {
 
 	public function __construct(
 		protected readonly ?Widget $child,
-		protected readonly null|BackgroundValue $background,
+		protected readonly ?BackgroundValue $background,
 		protected readonly ?TextStyle $textStyle,
 		protected readonly ?EdgeInsets $padding,
 		protected readonly ?BorderRadius $borderRadius,
@@ -58,13 +58,15 @@ abstract class ButtonBase extends HtmlRenderWidget {
 	}
 
 	public function renderStyle(RenderContext $context): string {
+		$childStyle = $this->child?->renderStyle($context) ?? '';
+
 		$className = $this->getStyleClassName();
 		if (in_array(
 			$className,
 			$context->renderedClasses,
 			true
 		)) {
-			return '';
+			return $childStyle;
 		}
 
 		$context->renderedClasses[] = $className;
@@ -72,7 +74,8 @@ abstract class ButtonBase extends HtmlRenderWidget {
 		$style .= ".$className:hover {" . $this->renderHoverStyleContent($context) . "}";
 		$style .= ".$className:focus {" . $this->renderFocusStyleContent($context) . "}";
 		$style .= ".$className:active {" . $this->renderActiveStyleContent($context) . "}";
-		return $style;
+
+		return $style . $childStyle;
 	}
 
 	protected function renderDefaultStyleContent(RenderContext $context): string {

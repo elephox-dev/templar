@@ -51,6 +51,13 @@
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-mbstring" />
       <path value="$PROJECT_DIR$/vendor/symfony/service-contracts" />
       <path value="$PROJECT_DIR$/vendor/symfony/string" />
+      <path value="$PROJECT_DIR$/vendor/jetbrains/phpstorm-attributes" />
+      <path value="$PROJECT_DIR$/vendor/elephox/collection" />
+      <path value="$PROJECT_DIR$/vendor/elephox/mimey" />
+      <path value="$PROJECT_DIR$/vendor/elephox/oor" />
+      <path value="$PROJECT_DIR$/vendor/elephox/support" />
+      <path value="$PROJECT_DIR$/vendor/elephox/files" />
+      <path value="$PROJECT_DIR$/vendor/elephox/stream" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />

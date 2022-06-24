@@ -1,15 +1,16 @@
 <?php
 declare(strict_types=1);
 
+use Elephox\Templar\BootstrapIcon;
 use Elephox\Templar\Border;
 use Elephox\Templar\BorderRadius;
 use Elephox\Templar\BorderSide;
 use Elephox\Templar\BuildWidget;
 use Elephox\Templar\ColorRank;
-use Elephox\Templar\DocumentMeta;
 use Elephox\Templar\EdgeInsets;
 use Elephox\Templar\FlexDirection;
 use Elephox\Templar\FlexWrap;
+use Elephox\Templar\FontAwesomeSolid;
 use Elephox\Templar\Foundation\AppBar;
 use Elephox\Templar\Foundation\AppLayout;
 use Elephox\Templar\Foundation\Button;
@@ -17,10 +18,12 @@ use Elephox\Templar\Foundation\Colors;
 use Elephox\Templar\Foundation\Container;
 use Elephox\Templar\Foundation\Form;
 use Elephox\Templar\Foundation\Head;
+use Elephox\Templar\Foundation\Icon;
 use Elephox\Templar\Foundation\LateTableCell;
 use Elephox\Templar\Foundation\LateTableRow;
 use Elephox\Templar\Foundation\Link;
 use Elephox\Templar\Foundation\LinkButton;
+use Elephox\Templar\Foundation\Row;
 use Elephox\Templar\Foundation\Table;
 use Elephox\Templar\Foundation\TableCell;
 use Elephox\Templar\Foundation\TableRow;
@@ -28,6 +31,7 @@ use Elephox\Templar\Foundation\Text;
 use Elephox\Templar\Foundation\TextSpan;
 use Elephox\Templar\Foundation\Title;
 use Elephox\Templar\Length;
+use Elephox\Templar\Octicon;
 use Elephox\Templar\RenderContext;
 use Elephox\Templar\TableScope;
 use Elephox\Templar\Templar;
@@ -77,7 +81,7 @@ class MyApp extends BuildWidget {
 								],
 							),
 							new LateTableRow(
-								buildCallback: function () {
+								function () {
 									yield new TableCell(
 										new Text("Generated cells:"),
 										isHeader: true,
@@ -90,6 +94,35 @@ class MyApp extends BuildWidget {
 										);
 									}
 								},
+							),
+							new TableRow(
+								cells: [
+									new TableCell(
+										new Text("Icons:"),
+										isHeader: true,
+										scope: TableScope::Row,
+									),
+									new TableCell(
+										new Row(
+											[
+												new Icon(
+													BootstrapIcon::bootstrapFill(),
+													width: Length::inPx(24)
+												),
+												new Icon(
+													FontAwesomeSolid::fontAwesome(),
+													width: Length::inPx(24)
+												),
+												new Icon(
+													Octicon::markGithub16(),
+													width: Length::inPx(24)
+												),
+											],
+											gap: Length::inPx(8),
+										),
+										colspan: 3,
+									),
+								],
 							),
 						],
 						cellBorder: Border::symmetric(
@@ -112,13 +145,13 @@ class MyApp extends BuildWidget {
 								),
 							],
 						),
-						padding: EdgeInsets::all(5),
 						border: Border::all(
 							BorderSide::dashed(
 								1,
 								Colors::Red()
 							),
 						),
+						padding: EdgeInsets::all(5),
 						borderRadius: BorderRadius::all(5),
 					),
 				],

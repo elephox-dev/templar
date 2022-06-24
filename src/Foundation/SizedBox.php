@@ -14,7 +14,7 @@ class SizedBox extends HtmlRenderWidget {
 	use HasSingleRenderChild;
 
 	public function __construct(
-		protected readonly ?Widget $child,
+		protected readonly ?Widget $child = null,
 		protected readonly ?Length $width = null,
 		protected readonly ?Length $height = null,
 	) {
@@ -25,9 +25,9 @@ class SizedBox extends HtmlRenderWidget {
 
 	public function getHashCode(): float {
 		return HashBuilder::buildHash(
-			$this->child->getHashCode(),
-			$this->width?->getHashCode(),
-			$this->height?->getHashCode(),
+			$this->child,
+			$this->width,
+			$this->height,
 		);
 	}
 

@@ -19,11 +19,8 @@ class Flex extends HtmlRenderWidget {
 	/** @var list<Widget> */
 	protected array $children = [];
 
-	/**
-	 * @param iterable<mixed, Widget> $children
-	 */
 	public function __construct(
-		iterable $children,
+		Widget|iterable $children,
 		protected readonly ?MainAxisAlignment $mainAxisAlignment = null,
 		protected readonly ?CrossAxisAlignment $crossAxisAlignment = null,
 		protected readonly ?ContentAlignment $contentAlignment = null,
@@ -36,6 +33,10 @@ class Flex extends HtmlRenderWidget {
 	) {
 		if ($this->contentAlignment !== null && $this->wrap === FlexWrap::NoWrap) {
 			trigger_error("Content alignment has no effect when flex wrap is 'no-wrap'");
+		}
+
+		if (!is_iterable($children)) {
+			$children = [$children];
 		}
 
 		foreach ($children as $child) {

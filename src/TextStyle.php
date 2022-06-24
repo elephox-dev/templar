@@ -30,6 +30,19 @@ class TextStyle implements Hashable {
 		);
 	}
 
+	public function getHashCode(): float {
+		return HashBuilder::buildHash(
+			$this->font,
+			$this->size,
+			$this->lineHeight,
+			$this->weight,
+			$this->align,
+			$this->color,
+			$this->background,
+			$this->decoration,
+		);
+	}
+
 	public function overwriteFrom(?TextStyle $other): TextStyle {
 		if ($other === null) {
 			return $this;
@@ -88,19 +101,6 @@ class TextStyle implements Hashable {
 			$color ?? $this->color,
 			$background ?? $this->background,
 			$decoration ?? $this->decoration,
-		);
-	}
-
-	public function getHashCode(): float {
-		return HashBuilder::buildHash(
-			$this->font,
-			$this->size,
-			$this->lineHeight,
-			$this->weight,
-			$this->align,
-			$this->color,
-			$this->background,
-			$this->decoration,
 		);
 	}
 }

@@ -5,10 +5,14 @@ namespace Elephox\Templar\Foundation;
 
 use Elephox\Templar\HashBuilder;
 use Elephox\Templar\HtmlRenderWidget;
+use Elephox\Templar\OverflowWrap;
 use Elephox\Templar\RenderContext;
 use Elephox\Templar\RendersTextStyle;
 use Elephox\Templar\TextAlign;
+use Elephox\Templar\WhiteSpace;
+use Elephox\Templar\WordBreak;
 use Elephox\Templar\TextStyle;
+use Elephox\Templar\WordWrap;
 
 class Text extends HtmlRenderWidget {
 	use RendersTextStyle;
@@ -17,6 +21,10 @@ class Text extends HtmlRenderWidget {
 		private readonly string $text,
 		private readonly ?TextAlign $align = null,
 		private readonly ?TextStyle $style = null,
+		private readonly ?WordBreak $break = null,
+		private readonly ?WordWrap $wrap = null,
+		private readonly ?OverflowWrap $overflow = null,
+		private readonly ?WhiteSpace $whiteSpace = null,
 	) {}
 
 	protected function renderStyleContent(RenderContext $context): string {
@@ -31,6 +39,22 @@ class Text extends HtmlRenderWidget {
 				$this->style,
 				$context
 			);
+		}
+
+		if ($this->break !== null) {
+			$style .= "word-break: {$this->break->value};";
+		}
+
+		if ($this->wrap !== null) {
+			$style .= "word-wrap: {$this->wrap->value};";
+		}
+
+		if ($this->overflow !== null) {
+			$style .= "overflow-wrap: {$this->overflow->value};";
+		}
+
+		if ($this->whiteSpace !== null) {
+			$style .= "white-space: {$this->whiteSpace->value};";
 		}
 
 		return $style;
@@ -48,6 +72,10 @@ class Text extends HtmlRenderWidget {
 		return HashBuilder::buildHash(
 			$this->text,
 			$this->align,
+			$this->break,
+			$this->wrap,
+			$this->overflow,
+			$this->whiteSpace,
 		);
 	}
 }

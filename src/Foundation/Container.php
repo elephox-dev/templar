@@ -42,11 +42,11 @@ class Container extends HtmlRenderWidget implements Positionable {
 
 	public function __construct(
 		protected readonly ?Widget $child = null,
-		protected readonly null|BackgroundValue $background = null,
+		protected readonly ?BackgroundValue $background = null,
 		protected readonly array $shadows = [],
-		protected readonly null|EdgeInsets $padding = null,
-		protected readonly null|EdgeInsets $margin = null,
 		protected readonly ?Border $border = null,
+		protected readonly ?EdgeInsets $padding = null,
+		protected readonly ?EdgeInsets $margin = null,
 		protected readonly ?BorderRadius $borderRadius = null,
 		protected ?PositionContext $position = null,
 		null|int|float|EmittableLength $width = null,
@@ -182,8 +182,7 @@ class Container extends HtmlRenderWidget implements Positionable {
 			$this->minHeight,
 			$this->maxWidth,
 			$this->maxHeight,
-			...
-			$this->shadows,
+			...$this->shadows,
 		);
 	}
 

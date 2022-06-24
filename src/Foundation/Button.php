@@ -15,7 +15,7 @@ use Elephox\Templar\Widget;
 class Button extends ButtonBase {
 	public function __construct(
 		?Widget $child,
-		null|BackgroundValue $background = null,
+		?BackgroundValue $background = null,
 		?TextStyle $textStyle = null,
 		?EdgeInsets $padding = null,
 		?BorderRadius $borderRadius = null,
