@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Elephox\Templar;
 
-class TextStyle {
+class TextStyle implements Hashable {
 	public function __construct(
 		public ?string $font = null,
 		public ?Length $size = null,
@@ -76,6 +76,17 @@ class TextStyle {
 			$align ?? $this->align,
 			$color ?? $this->color,
 			$decoration ?? $this->decoration,
+		);
+	}
+
+	public function getHashCode(): float {
+		return HashBuilder::buildHash(
+			$this->font,
+			$this->size,
+			$this->weight,
+			$this->align,
+			$this->color,
+			$this->decoration,
 		);
 	}
 }

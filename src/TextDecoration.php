@@ -8,11 +8,26 @@ class TextDecoration implements Emittable {
 		return new TextDecoration([TextDecorationPosition::None]);
 	}
 
+	public static function underline(
+		?Color $color = null,
+		?TextDecorationStyle $style = null,
+		null|Length|int|float $thickness = null
+	): TextDecoration {
+		return new TextDecoration(
+			[TextDecorationPosition::Underline],
+			$color,
+			$style,
+			$thickness
+		);
+	}
+
+	protected readonly ?Length $thickness;
+
 	public function __construct(
 		protected readonly ?array $positions = null,
 		protected readonly ?Color $color = null,
 		protected readonly ?TextDecorationStyle $style = null,
-		protected readonly ?Length $thickness = null,
+		null|Length|int|float $thickness = null,
 	) {
 		if ($this->positions !== null) {
 			$containsNone = false;
@@ -20,7 +35,8 @@ class TextDecoration implements Emittable {
 				assert(
 					$position instanceof TextDecorationPosition,
 					"TextDecorationPosition must be an instance of TextDecorationPosition, but '" .
-					get_debug_type($position) . "' was given"
+					get_debug_type($position) .
+					"' was given"
 				);
 
 				$containsNone = $containsNone || $position === TextDecorationPosition::None;
@@ -31,6 +47,8 @@ class TextDecoration implements Emittable {
 				"Cannot combine 'none' with other text decoration positions"
 			);
 		}
+
+		$this->thickness = $thickness !== null ? Length::wrap($thickness) : null;
 	}
 
 	public function __toString(): string {

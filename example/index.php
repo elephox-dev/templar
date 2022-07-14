@@ -22,10 +22,14 @@ use Elephox\Templar\Foundation\Table;
 use Elephox\Templar\Foundation\TableCell;
 use Elephox\Templar\Foundation\TableRow;
 use Elephox\Templar\Foundation\Text;
+use Elephox\Templar\Foundation\TextSpan;
 use Elephox\Templar\Length;
 use Elephox\Templar\RenderContext;
 use Elephox\Templar\TableScope;
 use Elephox\Templar\Templar;
+use Elephox\Templar\TextDecoration;
+use Elephox\Templar\TextDecorationPosition;
+use Elephox\Templar\TextStyle;
 use Elephox\Templar\Widget;
 
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -93,7 +97,18 @@ class MyApp extends BuildWidget {
 						new Text("Submit"),
 					),
 					new Container(
-						child: new Text("I'm important"),
+						child: new TextSpan(
+							"I'm ",
+							children: [
+								new TextSpan(
+									"important",
+									style: new TextStyle(
+										weight: 'bold',
+										decoration: TextDecoration::underline(Colors::Red())
+									),
+								),
+							]
+						),
 						padding: EdgeInsets::all(5),
 						border: Border::all(
 							BorderSide::dashed(

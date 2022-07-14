@@ -14,11 +14,7 @@ abstract class HtmlRenderWidget extends RenderWidget {
 			return "<$tag $attributes/>";
 		}
 
-		return <<<HTML
-<$tag $attributes>
-	$content
-</$tag>
-HTML;
+		return "<$tag $attributes>$content</$tag>";
 	}
 
 	abstract protected function renderContent(RenderContext $context): string;
