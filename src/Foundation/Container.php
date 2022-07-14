@@ -118,7 +118,7 @@ class Container extends HtmlRenderWidget implements Positionable {
 		}
 
 		if ($border !== null) {
-			$style .= $this->border->toEmittable();
+			$style .= $border->toEmittable();
 		}
 
 		if ($this->position !== null) {
