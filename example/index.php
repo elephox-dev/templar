@@ -7,7 +7,7 @@ use Elephox\Templar\BuildWidget;
 use Elephox\Templar\ColorRank;
 use Elephox\Templar\FlexDirection;
 use Elephox\Templar\FlexWrap;
-use Elephox\Templar\Foundation\App;
+use Elephox\Templar\Foundation\AppLayout;
 use Elephox\Templar\Foundation\AppBar;
 use Elephox\Templar\Foundation\Button;
 use Elephox\Templar\Foundation\Form;
@@ -28,7 +28,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 class MyApp extends BuildWidget {
 	protected function build(RenderContext $context): Widget {
-		return new App(
+		return new AppLayout(
 			body: new Form(
 				children: [
 					new LinkButton(

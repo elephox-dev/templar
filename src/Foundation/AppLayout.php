@@ -10,12 +10,11 @@ use Elephox\Templar\Length;
 use Elephox\Templar\RenderContext;
 use Elephox\Templar\Widget;
 
-class App extends BuildWidget {
+class AppLayout extends BuildWidget {
 	public function __construct(
 		protected readonly Widget $body,
 		protected readonly ?string $title = null,
 		protected readonly ?AppBar $navBar = null,
-		protected readonly ?DocumentMeta $meta = null,
 	) {}
 
 	protected function build(RenderContext $context): Widget {
