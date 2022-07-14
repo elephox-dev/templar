@@ -2,14 +2,18 @@
 declare(strict_types=1);
 
 use Elephox\Templar\Border;
+use Elephox\Templar\BorderRadius;
 use Elephox\Templar\BorderSide;
 use Elephox\Templar\BuildWidget;
 use Elephox\Templar\ColorRank;
+use Elephox\Templar\EdgeInsets;
 use Elephox\Templar\FlexDirection;
 use Elephox\Templar\FlexWrap;
 use Elephox\Templar\Foundation\AppLayout;
 use Elephox\Templar\Foundation\AppBar;
 use Elephox\Templar\Foundation\Button;
+use Elephox\Templar\Foundation\Colors;
+use Elephox\Templar\Foundation\Container;
 use Elephox\Templar\Foundation\Form;
 use Elephox\Templar\Foundation\LateTableCell;
 use Elephox\Templar\Foundation\LateTableRow;
@@ -87,6 +91,17 @@ class MyApp extends BuildWidget {
 					),
 					new Button(
 						new Text("Submit"),
+					),
+					new Container(
+						child: new Text("I'm important"),
+						padding: EdgeInsets::all(5),
+						border: Border::all(
+							BorderSide::dashed(
+								1,
+								Colors::Red()
+							)
+						),
+						borderRadius: BorderRadius::all(5),
 					),
 				],
 				direction: FlexDirection::Column,

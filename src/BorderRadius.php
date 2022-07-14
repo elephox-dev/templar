@@ -44,7 +44,7 @@ class BorderRadius implements Emittable {
 	}
 
 	public function toEmittable(): string {
-		return "border-radius: $this";
+		return "border-radius: $this;";
 	}
 
 	public function getHashCode(): float {

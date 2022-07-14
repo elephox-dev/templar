@@ -4,6 +4,9 @@ declare(strict_types=1);
 namespace Elephox\Templar\Foundation;
 
 use Elephox\Templar\BackgroundValue;
+use Elephox\Templar\Border;
+use Elephox\Templar\BorderRadius;
+use Elephox\Templar\BorderSide;
 use Elephox\Templar\Color;
 use Elephox\Templar\EdgeInsets;
 use Elephox\Templar\EmittableLength;
@@ -43,6 +46,8 @@ class Container extends HtmlRenderWidget implements Positionable {
 		protected readonly array $shadows = [],
 		protected readonly null|EdgeInsets $padding = null,
 		protected readonly null|EdgeInsets $margin = null,
+		protected readonly ?Border $border = null,
+		protected readonly ?BorderRadius $borderRadius = null,
 		protected ?PositionContext $position = null,
 		null|int|float|EmittableLength $width = null,
 		null|int|float|EmittableLength $height = null,
@@ -94,6 +99,26 @@ class Container extends HtmlRenderWidget implements Positionable {
 
 		if (!empty($this->shadows)) {
 			$style .= $this->renderBoxShadows($this->shadows);
+		}
+
+		$border = $this->border;
+
+		if ($this->borderRadius !== null) {
+			if ($border === null) {
+				$border =
+					Border::all(
+						BorderSide::solid(
+							0,
+							Colors::Transparent()
+						)
+					);
+			}
+
+			$style .= $this->borderRadius->toEmittable();
+		}
+
+		if ($border !== null) {
+			$style .= $this->border->toEmittable();
 		}
 
 		if ($this->position !== null) {
@@ -149,13 +174,16 @@ class Container extends HtmlRenderWidget implements Positionable {
 			$this->padding,
 			$this->margin,
 			$this->position,
+			$this->border,
+			$this->borderRadius,
 			$this->width,
 			$this->height,
 			$this->minWidth,
 			$this->minHeight,
 			$this->maxWidth,
 			$this->maxHeight,
-			...$this->shadows,
+			...
+			$this->shadows,
 		);
 	}
 
