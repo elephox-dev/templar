@@ -7,7 +7,9 @@ use Elephox\Templar\HtmlRenderWidget;
 use Elephox\Templar\RenderContext;
 
 class Head extends HtmlRenderWidget {
-	public function __construct() {}
+	public function __construct(
+		protected readonly string $styleHref = "./style.css",
+	) {}
 
 	protected function renderContent(RenderContext $context): string {
 		return <<<HTML
@@ -32,7 +34,7 @@ HTML;
 		return <<<HTML
 <meta charset="{$context->meta->charset}">
 
-<link rel="stylesheet" href="./style.css">
+<link rel="stylesheet" href="{$this->styleHref}">
 $metaTags
 HTML;
 	}
