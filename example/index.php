@@ -6,11 +6,12 @@ use Elephox\Templar\BorderRadius;
 use Elephox\Templar\BorderSide;
 use Elephox\Templar\BuildWidget;
 use Elephox\Templar\ColorRank;
+use Elephox\Templar\DocumentMeta;
 use Elephox\Templar\EdgeInsets;
 use Elephox\Templar\FlexDirection;
 use Elephox\Templar\FlexWrap;
-use Elephox\Templar\Foundation\AppLayout;
 use Elephox\Templar\Foundation\AppBar;
+use Elephox\Templar\Foundation\AppLayout;
 use Elephox\Templar\Foundation\Button;
 use Elephox\Templar\Foundation\Colors;
 use Elephox\Templar\Foundation\Container;
@@ -28,7 +29,6 @@ use Elephox\Templar\RenderContext;
 use Elephox\Templar\TableScope;
 use Elephox\Templar\Templar;
 use Elephox\Templar\TextDecoration;
-use Elephox\Templar\TextDecorationPosition;
 use Elephox\Templar\TextStyle;
 use Elephox\Templar\Widget;
 
@@ -104,17 +104,17 @@ class MyApp extends BuildWidget {
 									"important",
 									style: new TextStyle(
 										weight: 'bold',
-										decoration: TextDecoration::underline(Colors::Red())
+										decoration: TextDecoration::underline(Colors::Red()),
 									),
 								),
-							]
+							],
 						),
 						padding: EdgeInsets::all(5),
 						border: Border::all(
 							BorderSide::dashed(
 								1,
 								Colors::Red()
-							)
+							),
 						),
 						borderRadius: BorderRadius::all(5),
 					),
@@ -131,6 +131,11 @@ class MyApp extends BuildWidget {
 }
 
 $templar = new Templar(
+	meta: new DocumentMeta(
+		links: [
+			'style.css' => 'stylesheet',
+		],
+	),
 //	colorScheme: new ColorScheme(
 //		primary: Colors::Red()->mix(Colors::Yellow(), 0.55)->lighten(0.1)->desaturate(0.2),
 //		secondary: Colors::Green()->desaturate(0.2)->lighten(0.2),

@@ -11,6 +11,10 @@ class DocumentMeta implements Hashable {
 		public array $metas = [
 			'viewport' => 'width=device-width, initial-scale=1',
 		],
+		public ?string $base = null,
+		public array $links = [],
+		public array $styles = [],
+		public array $scripts = [],
 	) {}
 
 	public function getHashCode(): float {
@@ -19,6 +23,10 @@ class DocumentMeta implements Hashable {
 			$this->language,
 			$this->charset,
 			$this->metas,
+			$this->base,
+			$this->links,
+			$this->styles,
+			$this->scripts,
 		);
 	}
 }
