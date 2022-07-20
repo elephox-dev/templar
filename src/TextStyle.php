@@ -7,9 +7,11 @@ class TextStyle implements Hashable {
 	public function __construct(
 		public ?string $font = null,
 		public ?Length $size = null,
+		public ?Length $lineHeight = null,
 		public null|string|int $weight = null,
 		public ?TextAlign $align = null,
 		public ?Color $color = null,
+		public ?Color $background = null,
 		public ?TextDecoration $decoration = null,
 	) {
 		assert(
@@ -36,9 +38,11 @@ class TextStyle implements Hashable {
 		return new TextStyle(
 			$other->font ?? $this->font,
 			$other->size ?? $this->size,
+			$other->lineHeight ?? $this->lineHeight,
 			$other->weight ?? $this->weight,
 			$other->align ?? $this->align,
 			$other->color ?? $this->color,
+			$other->background ?? $this->background,
 			$other->decoration ?? $this->decoration,
 		);
 	}
@@ -46,17 +50,21 @@ class TextStyle implements Hashable {
 	public function withFallback(
 		?string $font = null,
 		?Length $size = null,
+		?Length $lineHeight = null,
 		null|string|int $weight = null,
 		?TextAlign $align = null,
 		?Color $color = null,
+		?Color $background = null,
 		?TextDecoration $decoration = null,
 	): TextStyle {
 		return new TextStyle(
 			$this->font ?? $font,
 			$this->size ?? $size,
+			$this->lineHeight ?? $lineHeight,
 			$this->weight ?? $weight,
 			$this->align ?? $align,
 			$this->color ?? $color,
+			$this->background ?? $background,
 			$this->decoration ?? $decoration,
 		);
 	}
@@ -64,17 +72,21 @@ class TextStyle implements Hashable {
 	public function with(
 		?string $font = null,
 		?Length $size = null,
+		?Length $lineHeight = null,
 		null|string|int $weight = null,
 		?TextAlign $align = null,
 		?Color $color = null,
+		?Color $background = null,
 		?TextDecoration $decoration = null,
 	): TextStyle {
 		return new TextStyle(
 			$font ?? $this->font,
 			$size ?? $this->size,
+			$lineHeight ?? $this->lineHeight,
 			$weight ?? $this->weight,
 			$align ?? $this->align,
 			$color ?? $this->color,
+			$background ?? $this->background,
 			$decoration ?? $this->decoration,
 		);
 	}
@@ -83,9 +95,11 @@ class TextStyle implements Hashable {
 		return HashBuilder::buildHash(
 			$this->font,
 			$this->size,
+			$this->lineHeight,
 			$this->weight,
 			$this->align,
 			$this->color,
+			$this->background,
 			$this->decoration,
 		);
 	}

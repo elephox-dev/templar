@@ -19,6 +19,10 @@ trait RendersTextStyle {
 			$style .= "font-size: $textStyle->size;";
 		}
 
+		if ($textStyle->lineHeight !== null) {
+			$style .= "line-height: $textStyle->lineHeight;";
+		}
+
 		if ($textStyle->align !== null) {
 			$style .= "text-align: {$textStyle->align->value};";
 		}
@@ -30,6 +34,10 @@ trait RendersTextStyle {
 		$color = $textStyle->color ?? $context->colorScheme->foreground;
 		if ($color !== null) {
 			$style .= "color: $color;";
+		}
+
+		if ($textStyle->background !== null) {
+			$style .= "background-color: {$textStyle->background->toEmittable()};";
 		}
 
 		return $style;
