@@ -59,7 +59,7 @@ class Templar {
 		);
 	}
 
-	protected readonly RenderContext $context;
+	public readonly RenderContext $context;
 
 	public function __construct(
 		?DocumentMeta $meta = null,
