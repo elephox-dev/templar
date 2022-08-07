@@ -26,6 +26,7 @@ use Elephox\Templar\Foundation\TableCell;
 use Elephox\Templar\Foundation\TableRow;
 use Elephox\Templar\Foundation\Text;
 use Elephox\Templar\Foundation\TextSpan;
+use Elephox\Templar\Foundation\Title;
 use Elephox\Templar\Length;
 use Elephox\Templar\RenderContext;
 use Elephox\Templar\TableScope;
@@ -130,6 +131,7 @@ class MyApp extends BuildWidget {
 			navBar: new AppBar("My Awesome App"),
 			head: new Head(
 				children: [
+					new Title('I override the other title'),
 					new Link('style.css'),
 				],
 			),

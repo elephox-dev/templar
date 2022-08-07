@@ -40,7 +40,6 @@ class Head extends HtmlRenderWidget {
 
 	protected function renderContent(RenderContext $context): string {
 		return <<<HTML
-<title>{$context->meta->title}</title>
 {$this->renderBase($context)}
 {$this->renderMetas($context)}
 {$this->renderLinks($context)}
@@ -107,8 +106,23 @@ HTML;
 	protected function renderChildren(RenderContext $context): string {
 		$html = '';
 
+		$titleRendered = false;
 		foreach ($this->children as $child) {
+			if ($child instanceof Title) {
+				if ($titleRendered) {
+					throw new \InvalidArgumentException(
+						"Head can only contain one Title"
+					);
+				}
+
+				$titleRendered = true;
+			}
+
 			$html .= $child->render($context);
+		}
+
+		if (!$titleRendered) {
+			$html .= "<title>{$context->meta->title}</title>";
 		}
 
 		return $html;
