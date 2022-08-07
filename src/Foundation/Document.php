@@ -17,7 +17,27 @@ class Document extends HtmlRenderWidget {
 	}
 
 	public function render(RenderContext $context): string {
-		return '<!DOCTYPE html>' . parent::render($context);
+		$tag = $this->getTag();
+		$attributes =
+			$this->renderAttributes(
+				$context,
+				false
+			);
+		$content = $this->renderContent($context);
+
+		return '<!DOCTYPE html>' . $this->renderHtml(
+				$tag,
+				$attributes,
+				$content
+			);
+	}
+
+	public function getStyleClassName(): string {
+		return $this->getTag();
+	}
+
+	public function renderCss(string $className, string $content): string {
+		return "$className { $content }";
 	}
 
 	protected function getTag(): string {

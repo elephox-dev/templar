@@ -9,6 +9,14 @@ abstract class HtmlRenderWidget extends RenderWidget {
 		$attributes = $this->renderAttributes($context);
 		$content = $this->renderContent($context);
 
+		return $this->renderHtml(
+			$tag,
+			$attributes,
+			$content
+		);
+	}
+
+	protected function renderHtml(string $tag, string $attributes, string $content): string {
 		// TODO: check which tags can/must be closed
 		if ($tag !== 'div' && $content === '') {
 			return "<$tag $attributes/>";
@@ -19,15 +27,21 @@ abstract class HtmlRenderWidget extends RenderWidget {
 
 	abstract protected function renderContent(RenderContext $context): string;
 
-	protected function renderAttributes(RenderContext $context): string {
+	protected function renderAttributes(
+		RenderContext $context,
+		bool $includeStyleClassname = true
+	): string {
 		$attributes = $this->getAttributes($context);
 
-		if (isset($attributes['class'])) {
-			$attributes['class'] .= ' ' . $this->getStyleClassName();
-		} else {
-			$attributes['class'] = $this->getStyleClassName();
+		if ($includeStyleClassname) {
+			if (isset($attributes['class'])) {
+				$attributes['class'] .= ' ' . $this->getStyleClassName();
+			} else {
+				$attributes['class'] = $this->getStyleClassName();
+			}
 		}
 
+		$rendered = [];
 		foreach ($attributes as $name => $value) {
 			if ($name === 'style') {
 				trigger_error(
@@ -60,6 +74,13 @@ abstract class HtmlRenderWidget extends RenderWidget {
 			return '';
 		}
 
+		return $this->renderCss(
+			$className,
+			$content
+		);
+	}
+
+	public function renderCss(string $className, string $content): string {
 		return "." . $className . " {" . $content . "}";
 	}
 

@@ -25,6 +25,30 @@ class Body extends HtmlRenderWidget {
 		}
 	}
 
+	public function render(RenderContext $context): string {
+		$tag = $this->getTag();
+		$attributes =
+			$this->renderAttributes(
+				$context,
+				false
+			);
+		$content = $this->renderContent($context);
+
+		return $this->renderHtml(
+			$tag,
+			$attributes,
+			$content
+		);
+	}
+
+	public function getStyleClassName(): string {
+		return $this->getTag();
+	}
+
+	public function renderCss(string $className, string $content): string {
+		return "$className { $content }";
+	}
+
 	protected function getTag(): string {
 		return 'body';
 	}

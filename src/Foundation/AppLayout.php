@@ -15,10 +15,13 @@ class AppLayout extends BuildWidget {
 		protected readonly Widget $body,
 		protected readonly ?string $title = null,
 		protected readonly ?AppBar $navBar = null,
+		protected readonly ?Head $head = null,
 	) {}
 
 	protected function build(RenderContext $context): Widget {
 		$context->meta->title ??= $this->title;
+
+		$head = $this->head ?? new Head();
 
 		$padding = EdgeInsets::all(Length::inRem(1));
 
@@ -42,7 +45,7 @@ class AppLayout extends BuildWidget {
 		}
 
 		return new FullscreenDocument(
-			head: new Head(),
+			head: $head,
 			body: new FullscreenBody(
 				child: $bodyContent,
 			),

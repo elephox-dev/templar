@@ -16,8 +16,10 @@ use Elephox\Templar\Foundation\Button;
 use Elephox\Templar\Foundation\Colors;
 use Elephox\Templar\Foundation\Container;
 use Elephox\Templar\Foundation\Form;
+use Elephox\Templar\Foundation\Head;
 use Elephox\Templar\Foundation\LateTableCell;
 use Elephox\Templar\Foundation\LateTableRow;
+use Elephox\Templar\Foundation\Link;
 use Elephox\Templar\Foundation\LinkButton;
 use Elephox\Templar\Foundation\Table;
 use Elephox\Templar\Foundation\TableCell;
@@ -126,16 +128,16 @@ class MyApp extends BuildWidget {
 			),
 			title: "My App",
 			navBar: new AppBar("My Awesome App"),
+			head: new Head(
+				children: [
+					new Link('style.css'),
+				],
+			),
 		);
 	}
 }
 
 $templar = new Templar(
-	meta: new DocumentMeta(
-		links: [
-			'style.css' => 'stylesheet',
-		],
-	),
 //	colorScheme: new ColorScheme(
 //		primary: Colors::Red()->mix(Colors::Yellow(), 0.55)->lighten(0.1)->desaturate(0.2),
 //		secondary: Colors::Green()->desaturate(0.2)->lighten(0.2),
