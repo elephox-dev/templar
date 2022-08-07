@@ -24,6 +24,7 @@ class ExternalScript extends HeadWidget {
 
 	protected function getAttributes(RenderContext $context): array {
 		$attrs = [
+			'src' => $this->src,
 			'type' => $this->type,
 		];
 
