@@ -18,7 +18,12 @@ abstract class HtmlRenderWidget extends RenderWidget {
 
 	protected function renderHtml(string $tag, string $attributes, string $content): string {
 		// TODO: check which tags can/must be closed
-		if ($tag !== 'div' && $content === '') {
+		if ($content === '' &&
+			!in_array(
+				$tag,
+				['div', 'script'],
+				true
+			)) {
 			return "<$tag $attributes/>";
 		}
 
