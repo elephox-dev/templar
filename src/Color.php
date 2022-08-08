@@ -444,7 +444,7 @@ class Color implements BackgroundValue {
 		$hsl['saturation'] *= 1 - $amount;
 		$hsl['saturation'] =
 			min(
-				1.0,
+				100.0,
 				max(
 					0.0,
 					$hsl['saturation']
@@ -464,7 +464,7 @@ class Color implements BackgroundValue {
 		$hsl['saturation'] *= 1 + $amount;
 		$hsl['saturation'] =
 			min(
-				1.0,
+				100.0,
 				max(
 					0.0,
 					$hsl['saturation']
@@ -484,7 +484,7 @@ class Color implements BackgroundValue {
 		$hsl['lightness'] *= 1 - $amount;
 		$hsl['lightness'] =
 			min(
-				1.0,
+				100.0,
 				max(
 					0.0,
 					$hsl['lightness']
@@ -504,7 +504,7 @@ class Color implements BackgroundValue {
 		$hsl['lightness'] *= 1 + $amount;
 		$hsl['lightness'] =
 			min(
-				1.0,
+				100.0,
 				max(
 					0.0,
 					$hsl['lightness']
