@@ -38,7 +38,7 @@ class Separator extends HtmlRenderWidget {
 		$style = parent::renderStyleContent($context);
 
 		$border = $this->horizontal ? "border-top" : "border-left";
-		$style .= $border . '-style: solid';
+		$style .= $border . '-style: solid;';
 
 		$color = $this->color ?? $context->colorScheme->divider;
 		if ($color !== null) {
