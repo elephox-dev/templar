@@ -18,6 +18,7 @@ class Head extends HtmlRenderWidget {
 				"Head children must be HeadWidgets, '" . get_debug_type($child) . "' given",
 			);
 
+			$child->renderParent = $this;
 			$this->children[] = $child;
 		}
 	}
