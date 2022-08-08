@@ -44,9 +44,8 @@ class Separator extends HtmlRenderWidget {
 			$style .= $border . '-color: ' . $color->toEmittable() . ';';
 		}
 
-		if ($this->thickness !== null) {
-			$style .= $border . '-width: ' . $this->thickness->toEmittable() . ';';
-		}
+		$thickness = $this->thickness?->toEmittable() ?? 'thin';
+		$style .= $border . '-width: ' . $thickness . ';';
 
 		$length = $this->length ?? Length::inPercent(100);
 		if ($this->horizontal) {
