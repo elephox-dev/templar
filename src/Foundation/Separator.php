@@ -41,7 +41,7 @@ class Separator extends HtmlRenderWidget {
 		}
 
 		if ($this->size !== null) {
-			$style .= ($this->horizontal ? 'border-top' : 'border-left') .
+			$style .= ($this->horizontal ? 'border-top-width' : 'border-left-width') .
 				': ' .
 				$this->size->toEmittable() .
 				';';
