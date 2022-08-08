@@ -34,7 +34,7 @@ class Row extends BuildWidget {
 			wrap: FlexWrap::NoWrap,
 			columnGap: $this->gap,
 			width: $this->shrinkWrap ? null : Length::inPercent(100),
-			height: Length::inPercent(100),
+			height: $this->shrinkWrap ? null : Length::inPercent(100),
 		);
 	}
 }
