@@ -377,6 +377,7 @@ class Color implements BackgroundValue {
 
 	public function bestEffortContrast(): Color {
 		// FIXME: reverse luminance calculation doesn't work
+
 		//		$luminance = $this->luminance();
 		//
 		//		$targetLuminance = max(($luminance + 0.05) / self::MinContrastRatioAA - 0.05, ($luminance + 0.05) * self::MinContrastRatioAA - 0.05);
@@ -441,6 +442,14 @@ class Color implements BackgroundValue {
 
 		$hsl = $this->toHslArray();
 		$hsl['saturation'] *= 1 - $amount;
+		$hsl['saturation'] =
+			min(
+				1.0,
+				max(
+					0.0,
+					$hsl['saturation']
+				)
+			);
 
 		return self::fromHSLA($hsl['hue'], $hsl['saturation'], $hsl['lightness'], $hsl['alpha']);
 	}
@@ -453,6 +462,14 @@ class Color implements BackgroundValue {
 
 		$hsl = $this->toHslArray();
 		$hsl['saturation'] *= 1 + $amount;
+		$hsl['saturation'] =
+			min(
+				1.0,
+				max(
+					0.0,
+					$hsl['saturation']
+				)
+			);
 
 		return self::fromHSLA($hsl['hue'], $hsl['saturation'], $hsl['lightness'], $hsl['alpha']);
 	}
@@ -465,6 +482,14 @@ class Color implements BackgroundValue {
 
 		$hsl = $this->toHslArray();
 		$hsl['lightness'] *= 1 - $amount;
+		$hsl['lightness'] =
+			min(
+				1.0,
+				max(
+					0.0,
+					$hsl['lightness']
+				)
+			);
 
 		return self::fromHSLA($hsl['hue'], $hsl['saturation'], $hsl['lightness'], $hsl['alpha']);
 	}
@@ -477,6 +502,14 @@ class Color implements BackgroundValue {
 
 		$hsl = $this->toHslArray();
 		$hsl['lightness'] *= 1 + $amount;
+		$hsl['lightness'] =
+			min(
+				1.0,
+				max(
+					0.0,
+					$hsl['lightness']
+				)
+			);
 
 		return self::fromHSLA($hsl['hue'], $hsl['saturation'], $hsl['lightness'], $hsl['alpha']);
 	}
