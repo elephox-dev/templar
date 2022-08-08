@@ -15,7 +15,7 @@ class Head extends HtmlRenderWidget {
 		foreach ($children as $child) {
 			assert(
 				$child instanceof HeadWidget,
-				"Head children must be HeadWidgets"
+				"Head children must be HeadWidgets, '" . get_debug_type($child) . "' given",
 			);
 
 			$this->children[] = $child;
