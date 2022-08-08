@@ -11,8 +11,8 @@ use Elephox\Templar\RenderContext;
 
 class Separator extends HtmlRenderWidget {
 	public function __construct(
-		protected readonly ?Color $color,
-		protected readonly ?Length $size,
+		protected readonly ?Color $color = null,
+		protected readonly ?Length $size = null,
 		protected readonly bool $horizontal = true,
 	) {}
 
