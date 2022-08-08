@@ -12,14 +12,16 @@ use Elephox\Templar\RenderContext;
 class Separator extends HtmlRenderWidget {
 	public function __construct(
 		protected readonly ?Color $color = null,
-		protected readonly ?Length $size = null,
+		protected readonly ?Length $thickness = null,
+		protected readonly ?Length $length = null,
 		protected readonly bool $horizontal = true,
 	) {}
 
 	public function getHashCode(): float {
 		return HashBuilder::buildHash(
 			$this->color,
-			$this->size,
+			$this->thickness,
+			$this->length,
 			$this->horizontal,
 		);
 	}
@@ -33,24 +35,24 @@ class Separator extends HtmlRenderWidget {
 	}
 
 	protected function renderStyleContent(RenderContext $context): string {
-		$style = 'border-style: solid;';
+		$style = parent::renderStyleContent($context);
+
+		$border = $this->horizontal ? "border-top" : "border-left";
 
 		$color = $this->color ?? $context->colorScheme->divider;
 		if ($color !== null) {
-			$style .= 'border-color: ' . $color->toEmittable() . ';';
+			$style .= $border . '-color: ' . $color->toEmittable() . ';';
 		}
 
-		if ($this->size !== null) {
-			$style .= ($this->horizontal ? 'border-top-width' : 'border-left-width') .
-				': ' .
-				$this->size->toEmittable() .
-				';';
+		if ($this->thickness !== null) {
+			$style .= $border . '-width: ' . $this->thickness->toEmittable() . ';';
 		}
 
+		$length = $this->length ?? Length::inPercent(100);
 		if ($this->horizontal) {
-			$style .= 'height: 0; width: 100%';
+			$style .= 'height: 0; width: ' . $length->toEmittable() . ';';
 		} else {
-			$style .= 'height: 100%; width: 0;';
+			$style .= 'height: ' . $length->toEmittable() . '; width: 0;';
 		}
 
 		return $style;
