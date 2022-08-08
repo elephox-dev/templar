@@ -36,6 +36,7 @@ class Separator extends HtmlRenderWidget {
 
 	protected function renderStyleContent(RenderContext $context): string {
 		$style = parent::renderStyleContent($context);
+		$style .= 'border: none;';
 
 		$border = $this->horizontal ? "border-top" : "border-left";
 		$style .= $border . '-style: solid;';
