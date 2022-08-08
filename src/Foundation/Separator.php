@@ -33,22 +33,24 @@ class Separator extends HtmlRenderWidget {
 	}
 
 	protected function renderStyleContent(RenderContext $context): string {
-		$style = '';
+		$style = 'border-style: solid;';
 
 		$color = $this->color ?? $context->colorScheme->divider;
 		if ($color !== null) {
-			$style .= 'background: ' . $color->toEmittable() . ';';
+			$style .= 'border-color: ' . $color->toEmittable() . ';';
 		}
 
 		if ($this->size !== null) {
-			$style .= ($this->horizontal ? 'width' : 'height') .
+			$style .= ($this->horizontal ? 'border-top' : 'border-left') .
 				': ' .
 				$this->size->toEmittable() .
 				';';
 		}
 
-		if (!$this->horizontal) {
-			$style .= 'height: 100%;';
+		if ($this->horizontal) {
+			$style .= 'height: 0; width: 100%';
+		} else {
+			$style .= 'height: 100%; width: 0;';
 		}
 
 		return $style;
