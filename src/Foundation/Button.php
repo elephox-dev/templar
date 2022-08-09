@@ -21,6 +21,7 @@ class Button extends ButtonBase {
 		?BorderRadius $borderRadius = null,
 		ColorRank $rank = ColorRank::Primary,
 		protected readonly ButtonType $type = ButtonType::Button,
+		protected readonly bool $disabled = false,
 	) {
 		parent::__construct(
 			$child,
@@ -37,6 +38,13 @@ class Button extends ButtonBase {
 	}
 
 	protected function getAttributes(RenderContext $context): array {
-		return [...parent::getAttributes($context), 'type' => $this->type->value];
+		$attributes = parent::getAttributes($context);
+		$attributes['type'] = $this->type->value;
+
+		if ($this->disabled) {
+			$attributes['disabled'] = 'disabled';
+		}
+
+		return $attributes;
 	}
 }
