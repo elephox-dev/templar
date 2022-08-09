@@ -56,7 +56,7 @@ class Flex extends HtmlRenderWidget {
 		return $this->renderChildren($context);
 	}
 
-	private function renderChildren(RenderContext $context): string {
+	protected function renderChildren(RenderContext $context): string {
 		$children = '';
 
 		$previousPositionContext = $context->positionContext;
