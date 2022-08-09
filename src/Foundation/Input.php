@@ -16,6 +16,7 @@ abstract class Input extends HtmlRenderWidget {
 		protected readonly bool $formnovalidate = false,
 		protected readonly ?string $list = null,
 		protected readonly ?string $name = null,
+		protected readonly ?string $id = null,
 		protected readonly ?string $pattern = null,
 		protected readonly ?string $placeholder = null,
 		protected readonly bool $readonly = false,
@@ -34,7 +35,7 @@ abstract class Input extends HtmlRenderWidget {
 		$attributes['type'] = $this->type->value;
 
 		if ($this->autocomplete !== null) {
-			$attributes['autocomplete'] = $this->autocomplete ? 'on' : 'off';
+			$attributes['autocomplete'] = $this->autocomplete;
 		}
 
 		if ($this->autofocus) {
