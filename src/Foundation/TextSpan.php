@@ -29,6 +29,7 @@ class TextSpan extends HtmlRenderWidget {
 			}
 
 			$this->children[] = $child;
+			$child->renderParent = $this;
 		}
 	}
 
