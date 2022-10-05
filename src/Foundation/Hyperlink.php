@@ -15,7 +15,7 @@ class Hyperlink extends TextSpan {
 	protected Closure $href;
 
 	public function __construct(
-		string $text,
+		string|TextSpan $text,
 		string|callable $href,
 		?TextStyle $style = null,
 		iterable $children = [],
