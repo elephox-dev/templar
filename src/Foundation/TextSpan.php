@@ -16,13 +16,17 @@ class TextSpan extends HtmlRenderWidget {
 	protected array $children;
 
 	public function __construct(
-		protected readonly string $text,
+		protected readonly string|self $text,
 		protected readonly ?TextStyle $style = null,
 		iterable $children = [],
 	) {
+		if ($this->text instanceof self) {
+			$this->text->renderParent = $this;
+		}
+
 		$this->children = [];
 		foreach ($children as $child) {
-			if (!$child instanceof static) {
+			if (!$child instanceof self) {
 				throw new InvalidArgumentException(
 					'TextSpan children must be TextSpan instances'
 				);
@@ -40,7 +44,9 @@ class TextSpan extends HtmlRenderWidget {
 	}
 
 	protected function renderContent(RenderContext $context): string {
-		return $this->text . $this->renderChildren($context);
+		$content = $this->text instanceof self ? $this->text->render($context) : $this->text;
+
+		return $content . $this->renderChildren($context);
 	}
 
 	private function renderChildren(RenderContext $context): string {
@@ -60,6 +66,10 @@ class TextSpan extends HtmlRenderWidget {
 	public function renderStyle(RenderContext $context): string {
 		$childStyles = $this->renderChildStyles($context);
 		$myStyleContent = parent::renderStyle($context);
+
+		if ($this->text instanceof self) {
+			$myStyleContent .= $this->text->renderStyle($context);
+		}
 
 		return $myStyleContent . $childStyles;
 	}
