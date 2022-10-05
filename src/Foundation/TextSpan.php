@@ -22,7 +22,7 @@ class TextSpan extends HtmlRenderWidget {
 	) {
 		$this->children = [];
 		foreach ($children as $child) {
-			if (!$child instanceof self) {
+			if (!$child instanceof static) {
 				throw new InvalidArgumentException(
 					'TextSpan children must be TextSpan instances'
 				);
