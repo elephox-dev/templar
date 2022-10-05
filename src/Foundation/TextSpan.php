@@ -84,4 +84,14 @@ class TextSpan extends HtmlRenderWidget {
 
 		return $style;
 	}
+
+	public function render(RenderContext $context): string {
+		// If this text span has the same style as its parent, only render the content.
+		if ($this->renderParent instanceof static &&
+			$this->renderParent->style?->getHashCode() === $this->style?->getHashCode()) {
+			return $this->renderContent($context);
+		}
+
+		return parent::render($context);
+	}
 }
