@@ -18,7 +18,11 @@ $svgSources = [
 		'branch' => 'main',
 		'className' => 'BootstrapIcon',
 		'transformer' => static function (string $s): string {
-			return str_replace(['width="16" ', 'height="16" '], ['', ''], $s);
+			return str_replace(
+				['width="16" ', 'height="16" '],
+				[''],
+				$s
+			);
 		},
 	],
 	[
@@ -39,8 +43,21 @@ $svgSources = [
 					'height="48" ',
 					'width="96" ',
 					'height="96" ',
+					'viewBox="',
 				],
-				['', ''],
+				[
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'fill="currentColor" viewBox="',
+				],
 				$s
 			);
 		},
@@ -50,22 +67,46 @@ $svgSources = [
 		'icon-folder' => 'svgs/brands',
 		'branch' => '6.x',
 		'className' => 'FontAwesomeBrand',
+		'transformer' => static function (string $s): string {
+			return str_replace(
+				['xmlns="http://www.w3.org/2000/svg" '],
+				['xmlns="http://www.w3.org/2000/svg" fill="currentColor" '],
+				$s
+			);
+		},
 	],
 	[
 		'repo' => 'https://github.com/FortAwesome/Font-Awesome',
 		'icon-folder' => 'svgs/regular',
 		'branch' => '6.x',
 		'className' => 'FontAwesomeRegular',
+		'transformer' => static function (string $s): string {
+			return str_replace(
+				['xmlns="http://www.w3.org/2000/svg" '],
+				['xmlns="http://www.w3.org/2000/svg" fill="currentColor" '],
+				$s
+			);
+		},
 	],
 	[
 		'repo' => 'https://github.com/FortAwesome/Font-Awesome',
 		'icon-folder' => 'svgs/solid',
 		'branch' => '6.x',
 		'className' => 'FontAwesomeSolid',
+		'transformer' => static function (string $s): string {
+			return str_replace(
+				['xmlns="http://www.w3.org/2000/svg" '],
+				['xmlns="http://www.w3.org/2000/svg" fill="currentColor" '],
+				$s
+			);
+		},
 	],
 ];
 
-$tmpFolder = Path::join($root, 'tmp');
+$tmpFolder = Path::join(
+	$root,
+	'tmp'
+);
 if (!is_dir($tmpFolder)) {
 	mkdir($tmpFolder);
 }
@@ -74,7 +115,10 @@ chdir($tmpFolder);
 function normalizeName(string $filename): string {
 	$camelCase = Casing::toCamel($filename);
 
-	if (Regex::matches('/^\d/', $camelCase)) {
+	if (Regex::matches(
+		'/^\d/',
+		$camelCase
+	)) {
 		return "_$camelCase";
 	}
 
@@ -103,44 +147,74 @@ foreach ($svgSources as $options) {
 	$name = md5($repo);
 	$branch = $options['branch'];
 	$className = $options['className'];
-	$workingDir = Path::join($tmpFolder, $name);
-	$sourceFolder = Path::join($workingDir, $options['icon-folder']);
-	$destFile = Path::join($root, 'src', $className . '.php');
+	$workingDir = Path::join(
+		$tmpFolder,
+		$name
+	);
+	$sourceFolder = Path::join(
+		$workingDir,
+		$options['icon-folder']
+	);
+	$destFile = Path::join(
+		$root,
+		'src',
+		$className . '.php'
+	);
 
 	if (is_dir($workingDir)) {
 		echo "Pulling $repo on branch $branch" . PHP_EOL;
 		shell_exec("git fetch");
-		shell_exec("git switch $branch");
+		shell_exec("git switch -C $branch");
 	} else {
 		echo "Cloning $repo on branch $branch" . PHP_EOL;
 		shell_exec("git clone $repo $name -b $branch");
 	}
 
-	$icons = (new ElephoxDirectory($sourceFolder))
-		->getFiles()
-		->select(
-			fn(File $file) => [
-				$file->getNameWithoutExtension(),
-				normalizeName($file->getNameWithoutExtension()),
-				$file->getContents()
-			]
-		);
+	$icons = (new ElephoxDirectory($sourceFolder))->getFiles()->select(
+		fn (File $file) => [
+			$file->getNameWithoutExtension(),
+			normalizeName($file->getNameWithoutExtension()),
+			$file->getContents(),
+		]
+	);
 
 	if (isset($options['filter'])) {
-		$icons = $icons->where(fn(array $pair) => $options['filter']($pair[0], $pair[1], $pair[2]));
+		$icons = $icons->where(
+			fn (array $pair) => $options['filter'](
+				$pair[0],
+				$pair[1],
+				$pair[2]
+			)
+		);
 	}
 
 	if (isset($options['transformer'])) {
 		$icons = $icons->select(
-			fn(array $pair) => [$pair[0], $pair[1], $options['transformer']($pair[2])]
+			fn (array $pair) => [$pair[0], $pair[1], $options['transformer']($pair[2])]
 		);
 	}
 
 	$stub = $options['iconStub'] ?? $iconStub;
-	$icons =
-		$icons->select(fn(array $pair) => sprintf($stub, $pair[0], $pair[1], $pair[2]))->toArray();
-	$class = sprintf($options['classStub'] ?? $classStub, $className, implode("\n", $icons));
+	$icons = $icons->select(
+		fn (array $pair) => sprintf(
+			$stub,
+			$pair[0],
+			$pair[1],
+			$pair[2]
+		)
+	)->toArray();
+	$class = sprintf(
+		$options['classStub'] ?? $classStub,
+		$className,
+		implode(
+			"\n",
+			$icons
+		)
+	);
 
 	echo "Writing icons to $destFile" . PHP_EOL;
-	file_put_contents($destFile, $class);
+	file_put_contents(
+		$destFile,
+		$class
+	);
 }
