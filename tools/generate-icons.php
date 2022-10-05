@@ -103,15 +103,6 @@ $svgSources = [
 	],
 ];
 
-$tmpFolder = Path::join(
-	$root,
-	'tmp'
-);
-if (!is_dir($tmpFolder)) {
-	mkdir($tmpFolder);
-}
-chdir($tmpFolder);
-
 function normalizeName(string $filename): string {
 	$camelCase = Casing::toCamel($filename);
 
@@ -142,6 +133,16 @@ abstract class %s {
 %s
 }
 EOF;
+
+$tmpFolder = Path::join(
+	$root,
+	'tmp'
+);
+if (!is_dir($tmpFolder)) {
+	mkdir($tmpFolder);
+}
+chdir($tmpFolder);
+
 foreach ($svgSources as $options) {
 	$repo = $options['repo'];
 	$name = md5($repo);
@@ -162,9 +163,11 @@ foreach ($svgSources as $options) {
 	);
 
 	if (is_dir($workingDir)) {
+		chdir($workingDir);
 		echo "Pulling $repo on branch $branch" . PHP_EOL;
 		shell_exec("git fetch");
 		shell_exec("git switch -C $branch");
+		chdir($tmpFolder);
 	} else {
 		echo "Cloning $repo on branch $branch" . PHP_EOL;
 		shell_exec("git clone $repo $name -b $branch");
