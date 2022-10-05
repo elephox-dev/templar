@@ -18,6 +18,7 @@ use Elephox\Templar\Foundation\Colors;
 use Elephox\Templar\Foundation\Container;
 use Elephox\Templar\Foundation\Form;
 use Elephox\Templar\Foundation\Head;
+use Elephox\Templar\Foundation\Hyperlink;
 use Elephox\Templar\Foundation\Icon;
 use Elephox\Templar\Foundation\LateTableCell;
 use Elephox\Templar\Foundation\LateTableRow;
@@ -142,6 +143,12 @@ class MyApp extends BuildWidget {
 										weight: 'bold',
 										decoration: TextDecoration::underline(Colors::Red()),
 									),
+								),
+								new TextSpan(" and "),
+								new Hyperlink(
+									"I'm a link",
+									"#",
+									visitedStyle: new TextStyle(color: Colors::Azure())
 								),
 							],
 						),
