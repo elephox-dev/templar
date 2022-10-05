@@ -146,9 +146,25 @@ class MyApp extends BuildWidget {
 								),
 								new TextSpan(" and "),
 								new Hyperlink(
-									"I'm a link",
-									"#",
-									visitedStyle: new TextStyle(color: Colors::Azure())
+									new TextSpan(
+										"I'm ",
+										children: [
+											new TextSpan(
+												"a link",
+												new TextStyle(
+													color: Colors::Azure(),
+													decoration: TextDecoration::underline(
+														Colors::Azure(),
+													),
+												),
+											),
+										],
+									),
+									"/",
+									style: new TextStyle(color: Colors::Yellow()),
+									visitedStyle: new TextStyle(
+										color: Colors::Yellow()->darken(0.3)
+									),
 								),
 							],
 						),
