@@ -47,7 +47,10 @@ it(
 
 		$hash2 = $document->getHashCode();
 
-		$this->assertSame($hash1, $hash2);
+		$this->assertSame(
+			$hash1,
+			$hash2
+		);
 	}
 );
 
@@ -81,17 +84,25 @@ it(
 
 		$hash2 = $document->getHashCode();
 
-		$this->assertSame($hash1, $hash2);
-		$this->assertSame($snapshotHash1, $hash1);
+		$this->assertSame(
+			$hash1,
+			$hash2
+		);
+		$this->assertSame(
+			$snapshotHash1,
+			$hash1
+		);
 	}
 );
 
 it(
 	'has the correct hash code in the stylesheet',
 	function () {
-		$body = new Body(
-			new Text('Hello world!'),
-		);
+		$body =
+			new Text(
+				'Hello world!',
+				style: new TextStyle(font: "monospace")
+			);
 
 		$hash = $body->getHashCode();
 
@@ -100,9 +111,19 @@ it(
 		$style = $t->renderStyle($body);
 
 		$this->assertStringContainsString(
-			"class=\"elephox-templar-foundation-body-$hash\"",
-			$structure
+			sprintf(
+				'class="elephox-templar-foundation-text-%.0f"',
+				$hash
+			),
+			$structure,
 		);
-		$this->assertStringContainsString(".elephox-templar-foundation-body-$hash {", $style);
+
+		$this->assertStringContainsString(
+			sprintf(
+				'.elephox-templar-foundation-text-%.0f {',
+				$hash
+			),
+			$style
+		);
 	}
 );

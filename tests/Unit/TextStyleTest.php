@@ -13,11 +13,11 @@ it(
 	'allows setting valid values',
 	function () {
 		$style = new TextStyle(
-			'Arial',
-			Length::inPx(12),
-			'bold',
-			TextAlign::Center,
-			new Color(0xff0000ff),
+			font: 'Arial',
+			size: Length::inPx(12),
+			weight: 'bold',
+			align: TextAlign::Center,
+			color: new Color(0xff0000ff),
 		);
 
 		expect($style->font)->toBe('Arial')
@@ -93,11 +93,11 @@ it(
 	'allows overwriting values',
 	function () {
 		$textStyle = new TextStyle(
-			'Arial',
-			Length::inPx(12),
-			'bold',
-			TextAlign::Center,
-			new Color(0xff0000ff),
+			font: 'Arial',
+			size: Length::inPx(12),
+			weight: 'bold',
+			align: TextAlign::Center,
+			color: new Color(0xff0000ff),
 		);
 
 		$overwrittenStyle = $textStyle->overwriteFrom(
@@ -122,11 +122,11 @@ it(
 	'returns the same instance if overwriting with null',
 	function () {
 		$textStyle = new TextStyle(
-			'Arial',
-			Length::inPx(12),
-			'bold',
-			TextAlign::Center,
-			new Color(0xff0000ff),
+			font: 'Arial',
+			size: Length::inPx(12),
+			weight: 'bold',
+			align: TextAlign::Center,
+			color: new Color(0xff0000ff),
 		);
 
 		$overwrittenStyle = $textStyle->overwriteFrom(null);
