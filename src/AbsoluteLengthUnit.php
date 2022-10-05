@@ -14,4 +14,3 @@ enum AbsoluteLengthUnit: string implements LengthUnit {
 	case Pt = 'pt';
 	case Pc = 'pc';
 }
-
