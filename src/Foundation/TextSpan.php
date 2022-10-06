@@ -27,9 +27,7 @@ class TextSpan extends HtmlRenderWidget {
 		$this->children = [];
 		foreach ($children as $child) {
 			if (!$child instanceof self) {
-				throw new InvalidArgumentException(
-					'TextSpan children must be TextSpan instances'
-				);
+				throw new InvalidArgumentException('TextSpan children must be TextSpan instances');
 			}
 
 			$this->children[] = $child;
@@ -38,9 +36,7 @@ class TextSpan extends HtmlRenderWidget {
 	}
 
 	public function getHashCode(): float {
-		return HashBuilder::buildHash(
-			$this->style,
-		);
+		return HashBuilder::buildHash($this->style);
 	}
 
 	protected function renderContent(RenderContext $context): string {
@@ -95,10 +91,14 @@ class TextSpan extends HtmlRenderWidget {
 		return $style;
 	}
 
+	protected function shouldFlattenRender(): bool {
+		return $this->renderParent instanceof static &&
+			$this->renderParent->style?->getHashCode() === $this->style?->getHashCode();
+	}
+
 	public function render(RenderContext $context): string {
 		// If this text span has the same style as its parent, only render the content.
-		if ($this->renderParent instanceof static &&
-			$this->renderParent->style?->getHashCode() === $this->style?->getHashCode()) {
+		if ($this->shouldFlattenRender()) {
 			return $this->renderContent($context);
 		}
 

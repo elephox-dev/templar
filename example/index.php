@@ -14,6 +14,7 @@ use Elephox\Templar\FontAwesomeSolid;
 use Elephox\Templar\Foundation\AppBar;
 use Elephox\Templar\Foundation\AppLayout;
 use Elephox\Templar\Foundation\Button;
+use Elephox\Templar\Foundation\CodeSpan;
 use Elephox\Templar\Foundation\Colors;
 use Elephox\Templar\Foundation\Container;
 use Elephox\Templar\Foundation\Form;
@@ -165,6 +166,19 @@ class MyApp extends BuildWidget {
 									visitedStyle: new TextStyle(
 										color: Colors::Yellow()->darken(0.3)
 									),
+								),
+								new TextSpan(" and "),
+								new CodeSpan(
+									"I am ",
+									children: [
+										new TextSpan(
+											"code",
+											new TextStyle(
+												color: Colors::HotPink(),
+											),
+										),
+										new CodeSpan("."),
+									],
 								),
 							],
 						),
