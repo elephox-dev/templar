@@ -40,6 +40,10 @@ trait RendersTextStyle {
 			$style .= "background-color: {$textStyle->background->toEmittable()};";
 		}
 
+		if ($textStyle->fontStyle !== null) {
+			$style .= "font-style: {$textStyle->fontStyle->value};";
+		}
+
 		return $style;
 	}
 }

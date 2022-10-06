@@ -4,6 +4,14 @@ declare(strict_types=1);
 namespace Elephox\Templar;
 
 class TextStyle implements Hashable {
+	public static function bold(): self {
+		return new TextStyle(weight: "bold");
+	}
+
+	public static function italic(): self {
+		return new TextStyle(fontStyle: FontStyle::Italic);
+	}
+
 	public function __construct(
 		public ?string $font = null,
 		public ?Length $size = null,
@@ -13,6 +21,7 @@ class TextStyle implements Hashable {
 		public ?Color $color = null,
 		public ?Color $background = null,
 		public ?TextDecoration $decoration = null,
+		public ?FontStyle $fontStyle = null,
 	) {
 		assert(
 			$this->weight === null || is_string($this->weight) || $this->weight % 100 === 0,
@@ -40,6 +49,7 @@ class TextStyle implements Hashable {
 			$this->color,
 			$this->background,
 			$this->decoration,
+			$this->fontStyle,
 		);
 	}
 
@@ -57,6 +67,7 @@ class TextStyle implements Hashable {
 			$other->color ?? $this->color,
 			$other->background ?? $this->background,
 			$other->decoration ?? $this->decoration,
+			$other->fontStyle ?? $this->fontStyle,
 		);
 	}
 
@@ -69,6 +80,7 @@ class TextStyle implements Hashable {
 		?Color $color = null,
 		?Color $background = null,
 		?TextDecoration $decoration = null,
+		?FontStyle $fontStyle = null,
 	): TextStyle {
 		return new TextStyle(
 			$this->font ?? $font,
@@ -79,6 +91,7 @@ class TextStyle implements Hashable {
 			$this->color ?? $color,
 			$this->background ?? $background,
 			$this->decoration ?? $decoration,
+			$this->fontStyle ?? $fontStyle,
 		);
 	}
 
@@ -91,6 +104,7 @@ class TextStyle implements Hashable {
 		?Color $color = null,
 		?Color $background = null,
 		?TextDecoration $decoration = null,
+		?FontStyle $fontStyle = null,
 	): TextStyle {
 		return new TextStyle(
 			$font ?? $this->font,
@@ -101,6 +115,7 @@ class TextStyle implements Hashable {
 			$color ?? $this->color,
 			$background ?? $this->background,
 			$decoration ?? $this->decoration,
+			$fontStyle ?? $this->fontStyle,
 		);
 	}
 }
