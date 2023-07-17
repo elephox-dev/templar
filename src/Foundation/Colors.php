@@ -65,7 +65,7 @@ abstract class Colors {
 	}
 
 	public static function HotPink(): Color {
-		return self::Red()->mix(self::Magenta(), 0.5);
+		return self::Red()->mix(self::Magenta());
 	}
 
 	public static function Violet(): Color {
