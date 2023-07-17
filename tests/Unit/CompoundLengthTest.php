@@ -6,54 +6,25 @@ namespace Elephox\Templar\Tests\Unit;
 use Elephox\Templar\CompoundLength;
 use Elephox\Templar\Length;
 use Elephox\Templar\MathOperator;
-use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Elephox\Templar\CompoundLength
- * @covers \Elephox\Templar\Length
- * @covers \Elephox\Templar\Value
- * @covers \Elephox\Templar\HashBuilder
- * @uses   \Elephox\Templar\EnumStringable
- * @uses   \Elephox\Templar\HasEnumHashCode
- */
-class CompoundLengthTest extends TestCase {
-	public function testToString(): void {
+it(
+	'can be converted to string',
+	static function () {
 		$compound =
 			new CompoundLength(
 				[Length::inPx(1)],
 				MathOperator::Plus
 			);
 
-		static::assertSame(
-			'1px',
-			(string) $compound
-		);
-		static::assertSame(
-			'1px',
-			$compound->toEmittable()
-		);
+		expect((string) $compound)->toBe('1px');
 
 		$compound->concat(Length::inPx(2));
 
-		static::assertSame(
-			'3px',
-			(string)$compound
-		);
-		static::assertSame(
-			'3px',
-			$compound->toEmittable()
-		);
+		expect((string) $compound)->toBe('3px');
 
 		$compound->concat(Length::inRem(2));
 
-		static::assertSame(
-			'3px + 2rem',
-			(string)$compound
-		);
-		static::assertSame(
-			'calc(3px + 2rem)',
-			$compound->toEmittable()
-		);
+		expect((string) $compound)->toBe('3px + 2rem');
 
 		$compound->concat(
 			new CompoundLength(
@@ -62,14 +33,7 @@ class CompoundLengthTest extends TestCase {
 			)
 		);
 
-		static::assertSame(
-			'3px + (3px - 4rem) + 2rem',
-			(string)$compound
-		);
-		static::assertSame(
-			'calc(3px + (3px - 4rem) + 2rem)',
-			$compound->toEmittable()
-		);
+		expect((string) $compound)->toBe('3px + (3px - 4rem) + 2rem');
 
 		$compound->concat(
 			new CompoundLength(
@@ -78,17 +42,34 @@ class CompoundLengthTest extends TestCase {
 			)
 		);
 
-		static::assertSame(
-			'3px + (3px - 4rem) + 2rem + 5px + 6rem',
-			(string)$compound
-		);
-		static::assertSame(
-			'calc(3px + (3px - 4rem) + 2rem + 5px + 6rem)',
-			$compound->toEmittable()
-		);
+		expect((string) $compound)->toBe('3px + (3px - 4rem) + 2rem + 5px + 6rem');
 	}
+);
 
-	public function testGetHashCode(): void {
+it(
+	'has a correct implementation of toEmittable',
+	static function () {
+		$compound = new CompoundLength(
+			[Length::inPx(1)],
+			MathOperator::Plus,
+		);
+
+		expect($compound->toEmittable())->toBe('1px');
+
+		$compound->concat(Length::inPx(2));
+
+		expect($compound->toEmittable())->toBe('3px');
+
+		$compound->concat(Length::inRem(2));
+
+		expect($compound->toEmittable())->toBe('calc(3px + 2rem)');
+	}
+);
+
+it(
+	'produces a unique hash code',
+	static function () {
+
 		$a =
 			new CompoundLength(
 				[Length::inPx(1)],
@@ -110,29 +91,20 @@ class CompoundLengthTest extends TestCase {
 				MathOperator::Minus
 			);
 
-		static::assertSame(
-			$a->getHashCode(),
-			$b->getHashCode()
-		);
-		static::assertNotSame(
-			$a->getHashCode(),
+		expect($a->getHashCode())->toBe($b->getHashCode())->and($a->getHashCode())->not()->toBe(
 			$c->getHashCode()
-		);
-		static::assertNotSame(
-			$a->getHashCode(),
-			$d->getHashCode()
-		);
+		)->and($a->getHashCode())->not()->toBe($d->getHashCode());
 	}
+);
 
-	public function testNullValuesAreIgnored(): void {
+it(
+	'ignores null values passed to constructor',
+	static function () {
 		$compound = new CompoundLength(
 			[Length::inPx(1), null, Length::inPx(2)],
 			MathOperator::Plus
 		);
 
-		static::assertSame(
-			'3px',
-			(string)$compound
-		);
+		expect((string) $compound)->toBe('3px');
 	}
-}
+);
