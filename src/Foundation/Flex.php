@@ -121,8 +121,7 @@ class Flex extends HtmlRenderWidget {
 			$style .= "gap: $this->rowGap $this->columnGap;";
 		} elseif ($this->rowGap !== null) {
 			$style .= "row-gap: $this->rowGap;";
-		}
-		elseif ($this->columnGap !== null) {
+		} elseif ($this->columnGap !== null) {
 			$style .= "column-gap: $this->columnGap;";
 		}
 
