@@ -10,7 +10,6 @@ use Elephox\Templar\BorderSide;
 use Elephox\Templar\Color;
 use Elephox\Templar\EdgeInsets;
 use Elephox\Templar\EmittableLength;
-use Elephox\Templar\Gradient;
 use Elephox\Templar\HashBuilder;
 use Elephox\Templar\HasSingleRenderChild;
 use Elephox\Templar\HtmlRenderWidget;

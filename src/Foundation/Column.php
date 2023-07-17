@@ -4,13 +4,12 @@ declare(strict_types=1);
 namespace Elephox\Templar\Foundation;
 
 use Elephox\Templar\BuildWidget;
-use Elephox\Templar\ContentAlignment;
+use Elephox\Templar\CrossAxisAlignment;
 use Elephox\Templar\FlexDirection;
 use Elephox\Templar\FlexWrap;
-use Elephox\Templar\MainAxisAlignment;
 use Elephox\Templar\Length;
+use Elephox\Templar\MainAxisAlignment;
 use Elephox\Templar\RenderContext;
-use Elephox\Templar\CrossAxisAlignment;
 use Elephox\Templar\Widget;
 
 class Column extends BuildWidget {

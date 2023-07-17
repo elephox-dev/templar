@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Elephox\Templar\Foundation;
 
-use Closure;
 use Elephox\Templar\BackgroundValue;
 use Elephox\Templar\Border;
 use Elephox\Templar\BorderRadius;

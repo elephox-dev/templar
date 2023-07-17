@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Elephox\Templar\Foundation;
 
 use Elephox\Templar\BuildWidget;
-use Elephox\Templar\DocumentMeta;
 use Elephox\Templar\EdgeInsets;
 use Elephox\Templar\Length;
 use Elephox\Templar\RenderContext;

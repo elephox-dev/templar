@@ -5,6 +5,7 @@ namespace Elephox\Templar\Foundation;
 
 use Elephox\Templar\HtmlRenderWidget;
 use Elephox\Templar\RenderContext;
+use InvalidArgumentException;
 
 class Head extends HtmlRenderWidget {
 	protected array $children = [];
@@ -111,7 +112,7 @@ HTML;
 		foreach ($this->children as $child) {
 			if ($child instanceof Title) {
 				if ($titleRendered) {
-					throw new \InvalidArgumentException(
+					throw new InvalidArgumentException(
 						"Head can only contain one Title"
 					);
 				}

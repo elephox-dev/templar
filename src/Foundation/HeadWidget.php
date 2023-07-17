@@ -5,6 +5,7 @@ namespace Elephox\Templar\Foundation;
 
 use Elephox\Templar\HtmlRenderWidget;
 use Elephox\Templar\RenderContext;
+use InvalidArgumentException;
 
 abstract class HeadWidget extends HtmlRenderWidget {
 	public function render(RenderContext $context): string {
@@ -14,7 +15,7 @@ abstract class HeadWidget extends HtmlRenderWidget {
 			['base', 'meta', 'link', 'style', 'script', 'title'],
 			true
 		)) {
-			throw new \InvalidArgumentException(
+			throw new InvalidArgumentException(
 				"Tag '$tag' is not allowed in the head"
 			);
 		}
