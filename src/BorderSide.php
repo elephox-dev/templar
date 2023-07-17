@@ -5,7 +5,7 @@ namespace Elephox\Templar;
 
 use Stringable;
 
-class BorderSide implements Hashable, Stringable, Equatable {
+readonly class BorderSide implements Hashable, Stringable, Equatable {
 	public static function solid(
 		null|int|float|Length $width,
 		null|int|Color $color = null
@@ -111,9 +111,9 @@ class BorderSide implements Hashable, Stringable, Equatable {
 	}
 
 	public function __construct(
-		protected readonly BorderStyle $style,
-		protected readonly ?Length $width = null,
-		protected readonly ?Color $color = null,
+		protected BorderStyle $style,
+		protected ?Length $width = null,
+		protected ?Color $color = null,
 	) {}
 
 	public function __toString(): string {

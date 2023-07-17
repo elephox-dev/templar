@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Elephox\Templar;
 
-class Border implements Emittable {
+readonly class Border implements Emittable {
 	public static function all(BorderSide $side): Border {
 		return new Border(
 			$side,
@@ -44,10 +44,10 @@ class Border implements Emittable {
 	}
 
 	public function __construct(
-		protected readonly ?BorderSide $top,
-		protected readonly ?BorderSide $right,
-		protected readonly ?BorderSide $bottom,
-		protected readonly ?BorderSide $left,
+		protected ?BorderSide $top,
+		protected ?BorderSide $right,
+		protected ?BorderSide $bottom,
+		protected ?BorderSide $left,
 	) {}
 
 	public function __toString(): string {

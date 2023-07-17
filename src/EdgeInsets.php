@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Elephox\Templar;
 
-class EdgeInsets implements Hashable {
+readonly class EdgeInsets implements Hashable {
 	public static function all(null|int|float|Length $length = null): EdgeInsets {
 		return new EdgeInsets(
 			$length,
@@ -39,10 +39,10 @@ class EdgeInsets implements Hashable {
 		);
 	}
 
-	public readonly ?EmittableLength $left;
-	public readonly ?EmittableLength $top;
-	public readonly ?EmittableLength $right;
-	public readonly ?EmittableLength $bottom;
+	public ?EmittableLength $left;
+	public ?EmittableLength $top;
+	public ?EmittableLength $right;
+	public ?EmittableLength $bottom;
 
 	public function __construct(
 		null|int|float|EmittableLength $left,

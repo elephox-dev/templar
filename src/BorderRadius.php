@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Elephox\Templar;
 
-class BorderRadius implements Emittable {
+readonly class BorderRadius implements Emittable {
 	public static function zero(): self {
 		return new self(0, 0, 0, 0);
 	}
@@ -12,10 +12,10 @@ class BorderRadius implements Emittable {
 		return new self($radius, $radius, $radius, $radius);
 	}
 
-	protected readonly ?Length $topLeft;
-	protected readonly ?Length $topRight;
-	protected readonly ?Length $bottomRight;
-	protected readonly ?Length $bottomLeft;
+	protected ?Length $topLeft;
+	protected ?Length $topRight;
+	protected ?Length $bottomRight;
+	protected ?Length $bottomLeft;
 
 	public function __construct(
 		null|int|float|Length $topLeft = null,

@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Elephox\Templar;
 
-class Offset implements Hashable {
+readonly class Offset implements Hashable {
 	public static function both(null|int|float|Length $length): Offset {
 		return new Offset(
 			x: $length,
@@ -11,8 +11,8 @@ class Offset implements Hashable {
 		);
 	}
 
-	public readonly Length $x;
-	public readonly Length $y;
+	public Length $x;
+	public Length $y;
 
 	public function __construct(
 		null|int|float|Length $x = null,

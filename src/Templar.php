@@ -6,7 +6,7 @@ namespace Elephox\Templar;
 use Elephox\Templar\Foundation\Colors;
 use ErrorException;
 
-class Templar {
+readonly class Templar {
 	public static function getDefaultRenderContext(
 		?ColorScheme $lightColorScheme = null,
 		?ColorScheme $darkColorScheme = null,
@@ -59,7 +59,7 @@ class Templar {
 		);
 	}
 
-	public readonly RenderContext $context;
+	public RenderContext $context;
 
 	public function __construct(
 		?DocumentMeta $meta = null,

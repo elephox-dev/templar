@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace Elephox\Templar;
 
-class SvgIconData implements IconData {
+readonly class SvgIconData implements IconData {
 	public function __construct(
-		protected readonly string $name,
-		protected readonly string $svg,
+		protected string $name,
+		protected string $svg,
 	) {}
 
 	public function __toString(): string {

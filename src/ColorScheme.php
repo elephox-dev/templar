@@ -3,17 +3,17 @@ declare(strict_types=1);
 
 namespace Elephox\Templar;
 
-class ColorScheme {
+readonly class ColorScheme {
 	public function __construct(
-		public readonly ?Color $primary = null,
-		public readonly ?Color $secondary = null,
-		public readonly ?Color $tertiary = null,
-		public readonly ?Color $background = null,
-		public readonly ?Color $foreground = null,
-		public readonly ?Color $onPrimary = null,
-		public readonly ?Color $onSecondary = null,
-		public readonly ?Color $onTertiary = null,
-		public readonly ?Color $divider = null,
+		public ?Color $primary = null,
+		public ?Color $secondary = null,
+		public ?Color $tertiary = null,
+		public ?Color $background = null,
+		public ?Color $foreground = null,
+		public ?Color $onPrimary = null,
+		public ?Color $onSecondary = null,
+		public ?Color $onTertiary = null,
+		public ?Color $divider = null,
 	) {}
 
 	public function checkContrasts(): void {

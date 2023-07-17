@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace Elephox\Templar;
 
-class BackgroundImage implements BackgroundValue {
+readonly class BackgroundImage implements BackgroundValue {
 	public function __construct(
-		protected readonly string $src,
-		protected readonly BoxFit $fit = BoxFit::Fill,
+		protected string $src,
+		protected BoxFit $fit = BoxFit::Fill,
 	) {}
 
 	public function __toString(): string {

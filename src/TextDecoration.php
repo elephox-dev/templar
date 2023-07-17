@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Elephox\Templar;
 
-class TextDecoration implements Emittable {
+readonly class TextDecoration implements Emittable {
 	public static function none(): TextDecoration {
 		return new TextDecoration([TextDecorationPosition::None]);
 	}
@@ -21,12 +21,12 @@ class TextDecoration implements Emittable {
 		);
 	}
 
-	protected readonly ?Length $thickness;
+	protected ?Length $thickness;
 
 	public function __construct(
-		protected readonly ?iterable $positions = null,
-		protected readonly ?Color $color = null,
-		protected readonly ?TextDecorationStyle $style = null,
+		protected ?iterable $positions = null,
+		protected ?Color $color = null,
+		protected ?TextDecorationStyle $style = null,
 		null|Length|int|float $thickness = null,
 	) {
 		if ($this->positions !== null) {
