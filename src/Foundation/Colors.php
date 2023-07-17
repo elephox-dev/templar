@@ -5,7 +5,7 @@ namespace Elephox\Templar\Foundation;
 
 use Elephox\Templar\Color;
 
-abstract class Colors {
+final readonly class Colors {
 	public static function Blue(): Color {
 		return new Color(0x0000FFFF);
 	}
