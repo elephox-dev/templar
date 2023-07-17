@@ -8,8 +8,11 @@ namespace Elephox\Templar;
  *
  * @generated using tools/generate-icons.php
  * @formatter:off
+ * @license MIT
+ * @see https://github.com/primer/octicons
+ * @codeCoverageIgnore
  */
-abstract class Octicon {
+final readonly class Octicon {
 	public static function accessibility16(): SvgIconData {
 		return new SvgIconData(
 			'accessibility-16',

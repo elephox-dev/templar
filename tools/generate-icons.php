@@ -1,7 +1,6 @@
 <?php
 declare(strict_types=1);
 
-use Elephox\Collection\KeyValuePair;
 use Elephox\Files\Directory as ElephoxDirectory;
 use Elephox\Files\File;
 use Elephox\Files\Path;
@@ -14,6 +13,7 @@ require $root . '/vendor/autoload.php';
 $svgSources = [
 	[
 		'repo' => 'https://github.com/twbs/icons',
+		'license' => 'MIT',
 		'icon-folder' => 'icons',
 		'branch' => 'main',
 		'className' => 'BootstrapIcon',
@@ -27,6 +27,7 @@ $svgSources = [
 	],
 	[
 		'repo' => 'https://github.com/primer/octicons',
+		'license' => 'MIT',
 		'icon-folder' => 'icons',
 		'branch' => 'main',
 		'className' => 'Octicon',
@@ -64,6 +65,7 @@ $svgSources = [
 	],
 	[
 		'repo' => 'https://github.com/FortAwesome/Font-Awesome',
+		'license' => 'https://github.com/FortAwesome/Font-Awesome/blob/6.x/LICENSE.txt',
 		'icon-folder' => 'svgs/brands',
 		'branch' => '6.x',
 		'className' => 'FontAwesomeBrand',
@@ -77,6 +79,7 @@ $svgSources = [
 	],
 	[
 		'repo' => 'https://github.com/FortAwesome/Font-Awesome',
+		'license' => 'https://github.com/FortAwesome/Font-Awesome/blob/6.x/LICENSE.txt',
 		'icon-folder' => 'svgs/regular',
 		'branch' => '6.x',
 		'className' => 'FontAwesomeRegular',
@@ -90,6 +93,7 @@ $svgSources = [
 	],
 	[
 		'repo' => 'https://github.com/FortAwesome/Font-Awesome',
+		'license' => 'https://github.com/FortAwesome/Font-Awesome/blob/6.x/LICENSE.txt',
 		'icon-folder' => 'svgs/solid',
 		'branch' => '6.x',
 		'className' => 'FontAwesomeSolid',
@@ -116,8 +120,18 @@ function normalizeName(string $filename): string {
 	return $camelCase;
 }
 
-$iconStub =
-	"\tpublic static function %2\$s(): SvgIconData {\n\t\treturn new SvgIconData(\n\t\t\t'%1\$s',\n\t\t\t<<<SVG\n%3\$s\nSVG\n\t\t);\n\t}\n";
+$iconStub = <<<PHP
+	public static function %2\$s(): SvgIconData {
+		return new SvgIconData(
+			'%1\$s',
+			<<<SVG
+%3\$s
+SVG
+		);
+	}
+
+PHP;
+
 $classStub = <<<EOF
 <?php
 declare(strict_types=1);
@@ -129,9 +143,12 @@ namespace Elephox\Templar;
  *
  * @generated using tools/generate-icons.php
  * @formatter:off
+ * @license %3\$s
+ * @see %4\$s
+ * @codeCoverageIgnore
  */
-abstract class %s {
-%s
+final readonly class %1\$s {
+%2\$s
 }
 EOF;
 
@@ -148,6 +165,7 @@ foreach ($svgSources as $options) {
 	$repo = $options['repo'];
 	$name = md5($repo);
 	$branch = $options['branch'];
+	$license = $options['license'];
 	$className = $options['className'];
 	$workingDir = Path::join(
 		$tmpFolder,
@@ -174,11 +192,11 @@ foreach ($svgSources as $options) {
 		shell_exec("git clone $repo $name -b $branch");
 	}
 
-	$icons = (new ElephoxDirectory($sourceFolder))->getFiles()->select(
+	$icons = (new ElephoxDirectory($sourceFolder))->files()->select(
 		fn (File $file) => [
 			$file->getNameWithoutExtension(),
 			normalizeName($file->getNameWithoutExtension()),
-			$file->getContents(),
+			$file->contents(),
 		]
 	);
 
@@ -213,7 +231,9 @@ foreach ($svgSources as $options) {
 		implode(
 			"\n",
 			$icons
-		)
+		),
+		$license,
+		$repo
 	);
 
 	echo "Writing icons to $destFile" . PHP_EOL;

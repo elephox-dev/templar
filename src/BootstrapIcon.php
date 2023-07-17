@@ -8,8 +8,11 @@ namespace Elephox\Templar;
  *
  * @generated using tools/generate-icons.php
  * @formatter:off
+ * @license MIT
+ * @see https://github.com/twbs/icons
+ * @codeCoverageIgnore
  */
-abstract class BootstrapIcon {
+final readonly class BootstrapIcon {
 	public static function _1CircleFill(): SvgIconData {
 		return new SvgIconData(
 			'1-circle-fill',

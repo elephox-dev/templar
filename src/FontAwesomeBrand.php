@@ -8,8 +8,11 @@ namespace Elephox\Templar;
  *
  * @generated using tools/generate-icons.php
  * @formatter:off
+ * @license https://github.com/FortAwesome/Font-Awesome/blob/6.x/LICENSE.txt
+ * @see https://github.com/FortAwesome/Font-Awesome
+ * @codeCoverageIgnore
  */
-abstract class FontAwesomeBrand {
+final readonly class FontAwesomeBrand {
 	public static function _42Group(): SvgIconData {
 		return new SvgIconData(
 			'42-group',

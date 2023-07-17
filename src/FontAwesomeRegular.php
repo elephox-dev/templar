@@ -8,8 +8,11 @@ namespace Elephox\Templar;
  *
  * @generated using tools/generate-icons.php
  * @formatter:off
+ * @license https://github.com/FortAwesome/Font-Awesome/blob/6.x/LICENSE.txt
+ * @see https://github.com/FortAwesome/Font-Awesome
+ * @codeCoverageIgnore
  */
-abstract class FontAwesomeRegular {
+final readonly class FontAwesomeRegular {
 	public static function addressBook(): SvgIconData {
 		return new SvgIconData(
 			'address-book',
