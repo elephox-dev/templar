@@ -10,9 +10,14 @@ class SemanticTable extends Table {
 		?TableHead $head = null,
 		?TableBody $body = null,
 		?TableFoot $foot = null,
-		?Border $border = null,
+		?Border $cellBorder = null,
+		?Border $outerBorder = null,
 	) {
-		parent::__construct([], $border);
+		parent::__construct(
+			[],
+			$cellBorder,
+			$outerBorder
+		);
 
 		if ($head !== null) {
 			$head->renderParent = $this;
