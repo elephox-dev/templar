@@ -11,7 +11,7 @@ use Elephox\Templar\TextStyle;
 
 it(
 	'allows setting valid values',
-	function () {
+	static function () {
 		$style = new TextStyle(
 			font: 'Arial',
 			size: Length::inPx(12),
@@ -30,7 +30,7 @@ it(
 
 it(
 	'throws for invalid weight multiple',
-	function () {
+	static function () {
 		new TextStyle(weight: 123);
 	}
 )->throws(
@@ -40,7 +40,7 @@ it(
 
 it(
 	'throws for invalid weight range',
-	function (int $weight) {
+	static function (int $weight) {
 		expect(static fn() => new TextStyle(weight: $weight))->toThrow(
 			AssertionError::class,
 			sprintf("Weight must be between 100 and 900 (inclusive), but %s was given", $weight)
@@ -56,7 +56,7 @@ it(
 
 it(
 	'accepts HTML weight values',
-	function (string $weight) {
+	static function (string $weight) {
 		$style = new TextStyle(weight: $weight);
 
 		expect($style->weight)->toBe($weight);
@@ -72,7 +72,7 @@ it(
 
 it(
 	'throws for invalid textual weight values',
-	function (string $weight) {
+	static function (string $weight) {
 		expect(static fn() => new TextStyle(weight: $weight))->toThrow(
 			AssertionError::class,
 			sprintf(
@@ -91,7 +91,7 @@ it(
 
 it(
 	'allows overwriting values',
-	function () {
+	static function () {
 		$textStyle = new TextStyle(
 			font: 'Arial',
 			size: Length::inPx(12),
@@ -120,7 +120,7 @@ it(
 
 it(
 	'returns the same instance if overwriting with null',
-	function () {
+	static function () {
 		$textStyle = new TextStyle(
 			font: 'Arial',
 			size: Length::inPx(12),

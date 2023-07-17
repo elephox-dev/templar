@@ -8,7 +8,7 @@ use Elephox\Templar\Foundation\Colors;
 
 it(
 	'converts to and from HSLA',
-	function (array $rgba, array $hsla): void {
+	static function (array $rgba, array $hsla): void {
 		$color = Color::fromRGBA($rgba[0], $rgba[1], $rgba[2], $rgba[3]);
 		$arr = $color->toHslArray();
 		expect($hsla[0])->toBe($arr['hue'])
@@ -65,8 +65,7 @@ it(
 
 it(
 	'calculates the correct color brightness',
-	function (Color $c, float $ratio) {
-		$h = $c->toHex();
+	static function (Color $c, float $ratio) {
 		$actual = $c->brightness();
 
 		expect($actual)->toBe($ratio);
@@ -84,7 +83,7 @@ it(
 
 it(
 	'calculates the correct color contrast ratio',
-	function (Color $a, Color $b, float $ratio) {
+	static function (Color $a, Color $b, float $ratio) {
 		$actual = $a->contrastRatio($b);
 
 		expect($actual)->toBe($ratio);
@@ -104,7 +103,7 @@ it(
 
 it(
 	'calculates the correct color difference',
-	function (Color $a, Color $b, float $ratio) {
+	static function (Color $a, Color $b, float $ratio) {
 		$actual = $a->difference($b);
 
 		expect($actual)->toBe($ratio);
@@ -125,7 +124,7 @@ it(
 // check using https://webaim.org/resources/contrastchecker/
 it(
 	'validates WCAG tests correctly',
-	function (Color $a, Color $b, array $results) {
+	static function (Color $a, Color $b, array $results) {
 		$actual = $a->wcagTest($b);
 
 		expect($actual)->toBe($results);

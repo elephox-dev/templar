@@ -40,7 +40,7 @@ class ThrowsWhenRenderedBuildWidget extends BuildWidget {
 
 it(
 	'has the same hash code as other instances',
-	function () {
+	static function () {
 		$widgetA = new SimpleBuildWidget();
 		$widgetB = new SimpleBuildWidget();
 
@@ -53,7 +53,7 @@ it(
 
 it(
 	'has different hash code when properties are changed',
-	function () {
+	static function () {
 		$widgetA = new BuildWidgetWithProperties('a');
 		$widgetB = new BuildWidgetWithProperties('b');
 
@@ -66,7 +66,7 @@ it(
 
 it(
 	'builds a ThrowableWidget when an exception occurs',
-	function () {
+	static function () {
 		$container = new ThrowsWhenRenderedBuildWidget();
 
 		$context = Templar::getDefaultRenderContext();
