@@ -103,7 +103,14 @@ class Color implements BackgroundValue {
 		$m1 = $lightness * 2.0 - $m2;
 
 		$h2rgb = static function (float $t) use ($m1, $m2): float {
-			$t = $t < 0.0 ? $t + 1.0 : ($t > 1.0 ? $t - 1.0 : $t);
+			if ($t < 0.0) {
+				$t += 1.0;
+			} else {
+				if ($t > 1.0) {
+					$t -= 1.0;
+				}
+			}
+
 			if ($t * 6.0 < 1.0) {
 				return $m1 + ($m2 - $m1) * 6.0 * $t;
 			}
