@@ -122,9 +122,13 @@ class Color implements BackgroundValue {
 		$red = (int)round($h2rgb($hue + 1.0 / 3.0) * 255.0);
 		$green = (int)round($h2rgb($hue) * 255.0);
 		$blue = (int)round($h2rgb($hue - 1.0 / 3.0) * 255.0);
-		$alpha = (int)round($alpha * 255.0);
+		$rgbAlpha = (int) round($alpha * 255.0);
 
-		return self::fromRGBA($red, $green, $blue, $alpha);
+		return self::fromRGBA(
+			$red,
+			$green,
+			$blue,
+			$rgbAlpha);
 	}
 
 	public function mix(int|Color $other, float $t = 0.5): Color {
